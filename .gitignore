@@ -1,0 +1,6 @@
+.DS_store
+*.bin
+*.out
+*.class
+*.temp
+*.cph
