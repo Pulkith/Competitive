@@ -1,0 +1,1 @@
+{"name":"Local: B","url":"/Users/despicablemonkey/Desktop/Competitive/start/CodeForces/697/D3/B.cpp","tests":[{"id":1618253460013,"input":"5\n1\n4041\n4042\n8081\n8079","output":"NO\nYES\nYES\nYES\nNO"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/despicablemonkey/Desktop/Competitive/start/CodeForces/697/D3/B.cpp","group":"local","local":true}

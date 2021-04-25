@@ -1,0 +1,1 @@
+{"name":"Local: P2","url":"/Users/despicablemonkey/Desktop/Competitive/CodeQuest/2021/main/P2.java","tests":[{"id":1619274875948,"input":"3\n1 2 3 4\n30 15 20 10\n55 10 45 60 15 45 25 30","output":"4\n30\n60"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/despicablemonkey/Desktop/Competitive/CodeQuest/2021/main/P2.java","group":"local","local":true}

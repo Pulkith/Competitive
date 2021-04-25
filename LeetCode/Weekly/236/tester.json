@@ -1,0 +1,26 @@
+{
+    "username": "Username here",
+    "avatar_url": "https://lh3.googleusercontent.com/_4zBNFjA8S9yjNB_ONwqBvxTvyXYdC7Nh1jYZ2x6YEcldBr2fyijdjM2J5EoVdTpnkA=w300",
+    "embeds": [{
+        "title": "**Leetcode Weekly Contest**",
+        "description": "**Starts In: 20 Minutes**\nDuration: 2 Hours\nStarts At: 8:00 PM\n [Contest Link](https://discordapp.com)",
+        "url": "https://leetcode.com/contest/weekly-contest-236",
+        "color": 8631907,
+        "timestamp": "2021-04-11T01:45:05.351Z",
+        "footer": {
+          "icon_url": "https://cdn.discordapp.com/embed/avatars/0.png",
+          "text": "Reminder"
+        },
+        "author": {
+          "name": "MonkeyCS Contest Reminders",
+          "url": "https://discordapp.com",
+          "icon_url": "https://cdn.discordapp.com/embed/avatars/0.png"
+        },
+        "fields": [
+          {
+            "name": "Good Luck",
+            "value": "<@330163977156034562>"
+          }
+        ]
+      }]
+}

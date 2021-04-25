@@ -1,0 +1,1 @@
+{"name":"Local: C","url":"/Users/despicablemonkey/Desktop/Competitive/start/USACO/2021/Open/Bronze/C.cpp","tests":[{"id":1618356676997,"input":"4 5\n.CGGC\n.CGCG\nCGCG.\n.CC.C","output":"4"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/despicablemonkey/Desktop/Competitive/start/USACO/2021/Open/Bronze/C.cpp","group":"local","local":true}
