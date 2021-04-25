@@ -1,1 +1,0 @@
-{"name":"Local: 6","url":"/Users/despicablemonkey/Desktop/Competitive/CodeQuest/2021/main/6.cpp","tests":[{"id":1619275657958,"input":"4\ncode\nquest\ndot\nproblem","output":"27\n82\n39\n81"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/despicablemonkey/Desktop/Competitive/CodeQuest/2021/main/6.cpp","group":"local","local":true}

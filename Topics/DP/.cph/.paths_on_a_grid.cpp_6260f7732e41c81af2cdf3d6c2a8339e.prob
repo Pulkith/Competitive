@@ -1,1 +1,0 @@
-{"name":"Local: paths_on_a_grid","url":"/Users/despicablemonkey/Desktop/Competitive/Topics/DP/paths_on_a_grid.cpp","tests":[{"id":1619067149988,"input":"4\n....\n.*..\n...*\n*...","output":"3"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/despicablemonkey/Desktop/Competitive/Topics/DP/paths_on_a_grid.cpp","group":"local","local":true}

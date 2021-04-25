@@ -1,1 +1,0 @@
-{"name":"Local: G","url":"/Users/despicablemonkey/Desktop/Competitive/start/UIL/State/2013/G.cpp","tests":[{"id":1618478628313,"input":"220230 20000 0.06 360\n300000 15000 0.075 200","output":"$1201\n$2501"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/despicablemonkey/Desktop/Competitive/start/UIL/State/2013/G.cpp","group":"local","local":true}
