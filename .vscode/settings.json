@@ -4,6 +4,7 @@
         "iostream": "cpp",
         "functional": "cpp",
         "random": "cpp",
-        "sstream": "cpp"
+        "sstream": "cpp",
+        "*.tcc": "cpp"
     }
 }
