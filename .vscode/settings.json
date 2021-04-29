@@ -5,6 +5,19 @@
         "functional": "cpp",
         "random": "cpp",
         "sstream": "cpp",
-        "*.tcc": "cpp"
+        "*.tcc": "cpp",
+        "tuple": "cpp",
+        "cmath": "cpp",
+        "complex": "cpp",
+        "numbers": "cpp",
+        "array": "cpp",
+        "string_view": "cpp",
+        "initializer_list": "cpp",
+        "ranges": "cpp",
+        "span": "cpp",
+        "regex": "cpp",
+        "utility": "cpp",
+        "valarray": "cpp",
+        "stack": "cpp"
     }
 }

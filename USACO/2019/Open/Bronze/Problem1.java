@@ -5,10 +5,10 @@ import java.awt.*;
 
 public class Problem1 {
   public static void main(String[] args) throws Exception {
-    Scanner s = new Scanner(new File("tttt.in"));
-    //Scanner s = new Scanner(System.in);
-    PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("tttt.out")));
-    //PrintWriter out = new PrintWriter(System.out);
+    //Scanner s = new Scanner(new File("tttt.in"));
+    Scanner s = new Scanner(System.in);
+    //PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("tttt.out")));
+    PrintWriter out = new PrintWriter(System.out);
 
     char[][] c = new char[3][3];
     HashSet<Character> ind = new HashSet<>();

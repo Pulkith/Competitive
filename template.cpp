@@ -1,3 +1,13 @@
+/**
+ * 
+ * author: $%U%$
+ * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * 
+ * Potatoes FTW!
+ * 
+ **/ 
+
+
 #include <iostream>
 #include <vector>
 #include <map>
@@ -67,8 +77,7 @@ int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
-    int T;
-    cin >> T;
+    int T; cin >> T;
     TC(T){
        
     }
