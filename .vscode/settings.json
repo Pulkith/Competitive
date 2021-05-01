@@ -19,5 +19,8 @@
         "utility": "cpp",
         "valarray": "cpp",
         "stack": "cpp"
-    }
+    },
+    "editor.acceptSuggestionOnCommitCharacter": false,
+    "editor.quickSuggestions.other": false,
+    "editor.quickSuggestions": false
 }

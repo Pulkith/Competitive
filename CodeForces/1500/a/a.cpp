@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 04.30.2021 00:43:52
  * 
  * Potatoes FTW!
  * 
@@ -47,7 +47,6 @@ using pll = pair<ll, ll>;
 #define s second
 
 #define nl << "\n";
-#define cnl cout nl
 
 #define all(c) (c).begin(), (c).end()
 #define sz(x) (int)(x).size()
@@ -78,10 +77,25 @@ int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
-    int T; cin >> T;
-    TC(T){
-    
-    }
+    int n;
+    cin >> n;
+    vi ar(n);
+    FOR(i, 0, n)
+        cin >> ar[i];
+    bool ok = true;
+
+    int o, p, q, r;
+    for(int i = 0; i<n&&ok;++i)
+        for(int j = 0;j<n&&ok; ++j)
+            for(int x=0;x<n&&ok; ++x)
+                for(int y=0; y<n&&ok; ++y)
+                    if(i!=j&&i!=x&&i!=y&&j!=x&&j!=y&&x!=y)
+                        if(ar[i]+ar[j] == ar[x]+ar[y])
+                            ok=false, o=i, p=j, q=x,r=y;
+
+    cout << (!ok?"YES":"NO") nl
+    if(!ok)
+        cout << o+1 << " "<< p+1 << " " << q+1 << " " << r+1 nl
 
     return 0;
 }

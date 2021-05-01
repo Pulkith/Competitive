@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 04.30.2021 15:12:40
  * 
  * Potatoes FTW!
  * 
@@ -80,7 +80,27 @@ int main () {
 
     int T; cin >> T;
     TC(T){
-    
+       	int n, k;
+       	cin >> n >> k;
+       	vi a(n);
+    	FOR(i, 0, n)
+    		cin >> a[i];
+        sort(all(a));
+
+
+		int cnt = 0, days = 1;
+		while(sz(a) > 0) {
+			if(days > a[0]){
+				a.erase(a.begin());
+				continue;
+			}
+			int dif = min(sz(a), k);
+			cnt += dif;
+			a.erase(a.begin(), a.begin()+dif);
+			++days;
+		}
+		cout << "Case #"<<tt<<": "<< cnt nl
+
     }
 
     return 0;

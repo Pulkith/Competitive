@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.01.2021 02:38:33
  * 
  * Potatoes FTW!
  * 
@@ -74,13 +74,20 @@ const long long LLNF = (ll)10e17+7;
 
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
+int freq[1000];
+
 int main () {
     ios::sync_with_stdio(0);
-    cin.tie(0);
 
     int T; cin >> T;
     TC(T){
-    
+        int n;
+        cin >> n;
+        vi a(n);
+        FOR(i, 0, n)
+            cin >> a[i];
+        
+        
     }
 
     return 0;

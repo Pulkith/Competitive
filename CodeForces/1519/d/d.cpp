@@ -73,14 +73,44 @@ const long long LLNF = (ll)10e17+7;
 
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
+int n;
+void p_a(vi& a) {
+    for(int i  : a)
+        cout << i << " ";
+    cout nl
+}
+ll sum_array(vi& a, vi& b) {
+    ll sum = 0;
+    FOR(i, 0, n)
+        sum += a[i] * b[i];
+    return sum;
+}
+
 int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
-    int T; cin >> T;
-    TC(T){
-       
-    }
+    cin >> n;
+    vi a(n);
+    vi b(n);
 
+    FOR(i, 0, n)
+        cin >> a[i];
+    FOR(i, 0, n)
+        cin >> b[i];
+
+    ll maxx = sum_array(a, b);
+    FOR(i, 0, n){
+        for(int j = i+1; j < n; ++j) {
+            for(int k = j; k > i; --k)
+                swap(a[k], a[k-1]);
+            maxx =  max(maxx, sum_array(a, b));
+        }
+       reverse(a.begin()+i, a.end()); 
+    }
+    cout << maxx nl
     return 0;
 }
+// 1 2 3 4 5
+// 2 1 3 4 5 
+// 2 3 1 4 5

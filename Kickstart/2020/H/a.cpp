@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 04.30.2021 15:30:48
  * 
  * Potatoes FTW!
  * 
@@ -80,7 +80,11 @@ int main () {
 
     int T; cin >> T;
     TC(T){
-    
+        int n, k, s;
+        cin >> n >> k >> s;
+        int sum = (k-1);
+        sum += min(n+1, (n-s)+1 + (k-s));
+        cout << "Case #"<<tt<<": "<<sum nl
     }
 
     return 0;

@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.01.2021 03:13:23
  * 
  * Potatoes FTW!
  * 
@@ -80,7 +80,31 @@ int main () {
 
     int T; cin >> T;
     TC(T){
-    
+        int n;
+        cin >> n;
+        vector<vector<int>> g(n, vector<int>(n));
+        FOR(i, 0, n) {
+            FOR(j, 0, n) {
+                int x;
+                cin >> x;
+                g[i][j] = x;
+            }
+        }
+
+        ull maxx = 0;
+
+        FOR(i, 0, n) {
+            ull cur = 0;
+            for(int j = 0; i+(j)< n; ++j) 
+                cur += g[j][i+j];
+            maxx = max(maxx, cur);
+            cur = 0;
+            for(int j = 0; i+j<n; ++j)
+                cur += g[i+j][j];
+            maxx = max(maxx, cur);
+        }
+
+        cout << "Case #"<<tt<<": "<<maxx nl
     }
 
     return 0;

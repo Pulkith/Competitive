@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 04.30.2021 17:24:01
  * 
  * Potatoes FTW!
  * 
@@ -80,7 +80,34 @@ int main () {
 
     int T; cin >> T;
     TC(T){
-    
+        int n;
+        string s;
+        cin >> n >> s;
+        if(s[0] == '0' || s.back() == '0') cout << "NO" nl
+        else {
+            int cnt = 0;
+            FOR(i, 0, n) {
+                if(s[i] == 49) ++ cnt;
+            }
+            if(cnt%2==1 || cnt == 0) cout << "NO" nl
+            else {
+                string a = "", b = "";
+                bool flip = false;
+                int k = 0;
+                FOR(i, 0, n) {
+                    if(s[i] == '1') {
+                        a += (k*2 < cnt) ? '(' : ')';
+                        b += (k*2 < cnt) ? '(' : ')';
+                        ++k;
+                    } else {
+                        a += flip ? '(' : ')';
+                        b += flip ? ')' : '(';
+                        flip = !flip;
+                    }
+                }
+                cout << "YES" << endl << a << endl << b nl
+            }
+        }
     }
 
     return 0;

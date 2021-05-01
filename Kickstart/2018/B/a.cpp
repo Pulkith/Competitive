@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 04.30.2021 01:18:54
  * 
  * Potatoes FTW!
  * 
@@ -47,7 +47,6 @@ using pll = pair<ll, ll>;
 #define s second
 
 #define nl << "\n";
-#define cnl cout nl
 
 #define all(c) (c).begin(), (c).end()
 #define sz(x) (int)(x).size()
@@ -74,13 +73,37 @@ const long long LLNF = (ll)10e17+7;
 
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
+int has_nine(ll i) {
+    int in = 0;
+    while(i > 0) {
+        if(i%10 == 9) return in;
+        i/=10;
+        ++in;
+    }
+    return -1;
+}
+
 int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
     int T; cin >> T;
     TC(T){
-    
+        ll l, r;
+        cin >> l >> r;
+        ll ans = 0;
+        for(int i = l; i <= r;) {
+            ll res = has_nine(i);
+            if(res != -1)
+                i += pow(10, res);
+            else if(i%9==0)
+                ++i;
+            else {
+                ++i;
+                ++ans;
+            }
+        }
+        cout << "Case #"<< tt << ": " << ans nl
     }
 
     return 0;

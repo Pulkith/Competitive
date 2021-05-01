@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.01.2021 00:24:45
  * 
  * Potatoes FTW!
  * 
@@ -81,6 +81,29 @@ int main () {
     int T; cin >> T;
     TC(T){
     
+        int len;
+        string a, b;
+        cin >> len >> a >> b;
+        bool ok = true;
+        vector<bool> legal(len);
+        int cur = 0;
+        FORE(i, 1, len) {
+            if(a[i-1] == '1') ++ cur;
+            legal[i-1] = (cur == i/2 && i%2==0 && cur > 0) ? 1 : 0;
+        }
+
+       for(int i = 0; i < len&&ok; ++i) {
+            int j = i;
+            if(a[j] == b[j]) continue;
+            for(; j < len; ++j)
+                if(a[j] == b[j])
+                    break;
+            i += (j-i) - 1;
+            if(!legal[i])
+                ok = false;
+        }
+
+        cout << (ok?"YES":"NO") nl
     }
 
     return 0;

@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 04.30.2021 15:46:42
  * 
  * Potatoes FTW!
  * 
@@ -74,13 +74,30 @@ const long long LLNF = (ll)10e17+7;
 
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
+bool good(int n) {
+    string s = ts(n);
+    bool odd = true;
+    for(char c : s){
+        int l = (c-48);
+        if((odd&&l%2==0) || !odd&&(l%2==1)) return false;
+        odd = !odd;
+    }
+    return true;
+}
+
 int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
     int T; cin >> T;
     TC(T){
-    
+        ll l, r;
+        cin >> l >> r;
+        while(!good(l) && l < LLNF) l++;
+        while(!good(r) && r > 0) r--;
+        ll ans = (l>r) ? 0 : 25 * pow(10, sz(ts(r-l))-2);
+        cout << "Case #"<<tt<<": "<< ans nl
+
     }
 
     return 0;

@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.01.2021 00:14:32
  * 
  * Potatoes FTW!
  * 
@@ -73,14 +73,30 @@ const int MOD = 1000000007;
 const long long LLNF = (ll)10e17+7;
 
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
-
+bool isPal(string s) {
+    FOR(i, 0, sz(s) / 2) {
+        if(s[i] != s[sz(s) - 1 - i]) return false;
+    }
+    return true;
+}
 int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
     int T; cin >> T;
     TC(T){
-    
+        string s;
+        cin >> s;
+        bool all = true;
+        for(int i = 0; i < sz(s) && all; ++i)
+            if(s[i] != 'A' && s[i] != 'a')
+                all = false;
+
+        if(all) cout << "NO" nl
+        else {
+            cout << "YES" << endl << (isPal(s+'a') ? ('a' + s) : (s + 'a')) nl
+        }
+        
     }
 
     return 0;

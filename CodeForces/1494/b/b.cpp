@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.01.2021 01:22:02
  * 
  * Potatoes FTW!
  * 
@@ -78,9 +78,37 @@ int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
+    //Bitmask. 2^4 possible states. 
+
     int T; cin >> T;
     TC(T){
-    
+        int n, u,r,d,l;
+        cin >> n >> u >> r >> d >> l;
+        bool ok = false;
+        for(int i = 0; i < 16; ++i) {
+            int uu = u, rr = r, dd = d, lll = l;
+            if(i&1) {
+                uu -= 1;
+                rr -= 1;
+            }
+            if(i&2) {
+                uu -= 1;
+                lll -= 1;
+            }
+            if(i&4) {
+                lll -= 1;
+                dd-=1;
+            }
+            if(i&8) {
+                dd-= 1;
+                rr -=1;
+            }
+            if(min(min(lll, rr), min(uu, dd)) >= 0 && max(max(lll, rr), max(uu, dd)) <= n-2) {
+                ok = true;
+                break;
+            }
+        }
+        cout << (ok?"YES":"NO") nl
     }
 
     return 0;

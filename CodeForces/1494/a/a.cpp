@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.01.2021 01:22:02
  * 
  * Potatoes FTW!
  * 
@@ -74,13 +74,65 @@ const long long LLNF = (ll)10e17+7;
 
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
+
+bool valid(string s) {
+    int cnt = 0;
+    for(char c : s) {
+        if(c == '(') ++cnt;
+        else {
+            if(cnt == 0) return false;
+            --cnt;
+        }
+    }
+    return (cnt == 0) ? 1 : 0;
+}
+
 int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
     int T; cin >> T;
     TC(T){
-    
+        string s;
+        cin >> s;
+
+        if(s[0] == s[sz(s) - 1]) cout << "NO" << '\n';
+        else {
+            char f = s[0];
+            char l = s[sz(s)-1];
+            int rem = 0;
+
+            FOR(i, 0, sz(s)) {
+                if(s[i] == f)
+                    s[i] = '(';
+                else if(s[i] == l)
+                    s[i] = ')';
+                else
+                    ++rem;
+
+            }
+            if(rem == 0) 
+                cout << (valid(s) ? "YES" : "NO") nl
+            else {
+                string ne;
+                bool ok = false;
+                FOR(t, 0, 2) {
+                    char x = (t==0)?'(':')';
+                    ne = "";
+                    for(char c : s) {
+                        if(c == '(' || c == ')') ne.push_back(c);
+                        else ne.push_back(x);
+                    }
+                    if(valid(ne)) {
+                        ok = true;
+                        break;
+                    }
+                }
+                cout << (ok?"YES":"NO") nl
+                
+            }
+        }
+
     }
 
     return 0;
