@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.05.2021 16:43:17
  * 
  * Potatoes FTW!
  * 
@@ -74,17 +74,38 @@ const long long LLNF = (ll)10e17+7;
 
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
-template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
-template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i nl; return is;}
-
 int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
     int T; cin >> T;
     TC(T){
-    
+        int n;
+        cin >> n;
+        vector<char> a(n);
+        string s;
+        cin >> s;
+        double m = 0, cnt = 0;
+        FOR(i, 0, sz(s)){
+             a[i] = s[i];
+             if(a[i] == '*') {m+=(i+1); cnt++;}
+        }
+        if(cnt == 0){
+            cout << 0 nl; continue;
+        }
+        int in = round(m / cnt) - 1;
+        ll sum = 0;
+        int cur = 0, curl = 0;
+        for(int i = in-1; i >= 0; i--) {
+            if(a[i] == '*')
+                sum += (in - i - cur++ - 1);
+        }
+        for(int i = in+1; i < sz(s); ++i)
+            if(a[i] == '*')
+                sum += (i - in - curl++ - 1);
+        if(a[in] != '*')
+            sum += (min(curl, cur));
+       cout << sum nl
     }
-
     return 0;
 }

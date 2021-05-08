@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.05.2021 16:43:17
  * 
  * Potatoes FTW!
  * 
@@ -74,16 +74,29 @@ const long long LLNF = (ll)10e17+7;
 
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
-template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
-template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i nl; return is;}
+vi a;
+
+void calc() {
+    for(int i = 1; i < 10; ++i) {
+        string cur = "";
+        for(int j = 0; j < sz(ts(INF)) - 1; ++j){
+            cur += ts(i);
+            a.pb(stoi(cur));
+        }
+    }
+}
 
 int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
-
+    calc();
     int T; cin >> T;
+    sort(all(a));
     TC(T){
-    
+        int n;
+        cin >> n;
+        auto ans = upper_bound(a.begin(), a.end(), n);
+        cout << (ans - a.begin()) nl
     }
 
     return 0;

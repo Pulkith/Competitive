@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.02.2021 10:00:13
  * 
  * Potatoes FTW!
  * 
@@ -73,17 +73,23 @@ const int MOD = 1000000007;
 const long long LLNF = (ll)10e17+7;
 
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
-
-template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
-template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i nl; return is;}
-
+bool is(int i) {
+    int x = sqrt(i);
+    return x*x == i;
+}
 int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
     int T; cin >> T;
     TC(T){
-    
+        int n;
+        cin >> n;
+        bool ok = false;
+        if(n%2==0&&is(n/2) || n%4==0&&is(n/4))
+            ok = true;
+        cout << (ok?"YES":"NO") nl
+        //
     }
 
     return 0;

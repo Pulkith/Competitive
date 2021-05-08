@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.04.2021 18:14:42
  * 
  * Potatoes FTW!
  * 
@@ -74,16 +74,45 @@ const long long LLNF = (ll)10e17+7;
 
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
-template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
-template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i nl; return is;}
-
 int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
-    int T; cin >> T;
-    TC(T){
+    string s;
+    cin >> s;
+    vi freq(26, 0);
+
+    for(char c : s)
+        freq[c - 'A']++;
     
+    bool odd = false;
+    bool ok = true;
+    FOR(i, 0, 26) {
+        if(freq[i]%2 != 0) {
+            if(odd) {
+                ok = false;break;
+            }
+            else 
+                odd = true;
+        }
+    }
+
+    if(!ok) 
+        cout << "NO SOLUTION";
+    else {
+        string res = "";
+        FOR(i, 0, 26)
+            if(freq[i]%2==0)
+                FOR(j, 0, freq[i] / 2)
+                    res += (char)(i + 'A');
+        cout << res ;
+        FOR(i, 0, 26)
+            if(freq[i]&1)
+                FOR(j, 0, freq[i])
+                    cout << (char)(i + 'A');
+        reverse(all(res));
+        cout << res;
+
     }
 
     return 0;

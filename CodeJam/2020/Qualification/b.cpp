@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.01.2021 12:03:31
  * 
  * Potatoes FTW!
  * 
@@ -74,16 +74,34 @@ const long long LLNF = (ll)10e17+7;
 
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
-template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
-template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i nl; return is;}
-
 int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
     int T; cin >> T;
     TC(T){
-    
+        string s; cin >> s;
+        int depth = 1;
+        bool ok = false;
+        while(!ok) {
+            ok = true;
+            for(int i = 0; i < sz(s); ++i) {
+                if(s[i] == '(' || s[i] == ')') continue;
+                if(s[i] - 48 >= depth) {
+                    int last = i;
+                    for(int j = i; j < sz(s); ++j) {
+                        if(s[j] == '(' || s[j] == ')') continue;
+                        if(s[j] - 48 > depth) ok = false;
+                        if(s[j] - 48 < depth) break;
+                        last = j;
+                    }
+                 s = s.substr(0, i) + '(' + s.substr(i, last - i + 1) + ')' + s.substr(last+1, sz(s) - last);
+                 i = last+2;
+                }
+            }
+            ++depth;
+        }
+        cout << "Case #"<<tt<<": "<<s nl
     }
 
     return 0;

@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.08.2021 11:48:39
  * 
  * Potatoes FTW!
  * 
@@ -83,7 +83,22 @@ int main () {
 
     int T; cin >> T;
     TC(T){
-    
+        int n;
+        cin >> n;
+        vi a(n);
+        FOR(i, 0, n)
+            cin >> a[i];
+
+        int ok = false; 
+        for(int i = 0; i < n&&!ok; ++i) {
+            FOR(j, i + 2, n)
+                if(a[i] == a[j]) {
+                    ok = true;
+                    break;
+                }
+        }
+
+        cout << (ok?"YES":"NO") nl
     }
 
     return 0;

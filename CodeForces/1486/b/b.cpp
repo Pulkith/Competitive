@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.03.2021 00:32:57
  * 
  * Potatoes FTW!
  * 
@@ -74,16 +74,32 @@ const long long LLNF = (ll)10e17+7;
 
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
-template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
-template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i nl; return is;}
-
 int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
     int T; cin >> T;
     TC(T){
-    
+        vll x,y;
+        ll n;
+        cin >> n;
+        FOR(i, 0, n) {
+            ll a,b;
+            cin >> a >> b;
+            x.pb(a), y.pb(b);
+        }
+        sort(all(x));
+        sort(all(y));
+
+        /**
+         * (n+1)/2, and (n+2)/2 get indexes of the medians. If array is odd length it returns
+         * the same index, otherwise it returns the left median and right median respectivelly
+         */ 
+        ll x_size = sz(x), y_size = sz(y);
+        ll x_s = x[(x_size + 2) / 2  - 1] - x[(x_size + 1) / 2 - 1 ] + 1;
+        ll y_s = y[(y_size + 2) / 2 - 1] - y[(y_size + 1) / 2 - 1] + 1;
+        cout << (x_s*y_s) nl
+
     }
 
     return 0;

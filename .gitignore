@@ -4,3 +4,5 @@
 *.class
 *.temp
 *.cph
+in*.txt
+ans*.txt

@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.08.2021 11:48:39
  * 
  * Potatoes FTW!
  * 
@@ -81,10 +81,26 @@ int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
-    int T; cin >> T;
-    TC(T){
-    
-    }
+        int n;
+        cin >> n;
+        vi o(n),t(n),a(n);
+        FOR(i, 0, n)
+            cin >> o[i];
+        FOR(i, 0, n)
+            cin >> t[i];
+        FOR(i, 0, n)
+            a[i] = o[i] - t[i];
+        sort(all(a));
 
+        ll cnt = 0;
+        
+        ROF(i, 0, n) {
+            //find first index from index [0 -> i) where a[j] + a[i] > 0. a[j] may be < than 0.
+            auto it = lower_bound(a.begin(), a.begin() + i, -a[i] + 1);
+            //get distance from j to i;
+            cnt += ( i - (it - a.begin()));
+        }   
+
+        cout << cnt nl;
     return 0;
 }

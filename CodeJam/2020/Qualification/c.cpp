@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.01.2021 13:12:58
  * 
  * Potatoes FTW!
  * 
@@ -74,8 +74,24 @@ const long long LLNF = (ll)10e17+7;
 
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
-template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
-template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i nl; return is;}
+struct pt {
+    int first;
+    int second;
+    int index;
+
+    pt(int a, int b, int c) {
+        first = a; second = b; index = c;
+    }
+    pt(void) {
+
+    }
+};
+
+struct sort_by_first_low_to_high { 
+    inline bool operator() (const pt& struct1, const pt& struct2) {
+        return (struct1.f > struct2.f);
+    }
+};
 
 int main () {
     ios::sync_with_stdio(0);
@@ -83,7 +99,46 @@ int main () {
 
     int T; cin >> T;
     TC(T){
-    
+        int n;
+        cin >> n;
+        string res ="";
+        pt a,b;
+        priority_queue<pt, vector<pt>, sort_by_first_low_to_high> pq;
+        FOR(i, 0, n)
+            res += " ";
+        FOR(i, 0, n){
+            int a,b;
+            cin >> a >> b;
+            pq.push(pt(a,b,i));
+        }
+        if(!pq.empty()) {
+            a = pq.top(); pq.pop();
+            res[a.index] = 'C';
+        }
+        if(!pq.empty()) {
+            b = pq.top(); pq.pop();
+            res[b.index] = 'J';
+        }
+
+        while(!pq.empty()) {
+            pt c = pq.top();
+            pq.pop();
+
+            if(c.f >= a.s) {
+                a = c;
+                res[a.index] = 'C';
+            }
+            else if(c.f >= b.s) {
+                b = c;
+                res[b.index] = 'J';
+            }
+            else {
+                res = "IMPOSSIBLE";
+                break;
+            }
+        }
+  
+        cout << "Case #"<<tt<<": " << (res) nl
     }
 
     return 0;

@@ -9,6 +9,7 @@
 
 
 #include <iostream>
+#include <iomanip>
 #include <vector>
 #include <map>
 #include <set>
@@ -80,8 +81,29 @@ int main () {
 
     int T; cin >> T;
     TC(T){
-    
-    }
-
+        cout << fixed << showpoint; cout << setprecision(7);
+        int n, k; cin >> n >> k;
+        set<int> a;
+        FOR(i, 0, n){
+            int x; cin >> x; a.insert(x);
+        }
+        int lst = -1;
+        double both = 0;
+        priority_queue<int> mx;
+        mx.push(0); mx.push(0);
+           for(auto i : a) {
+                if(i == *a.rbegin()) mx.push(k - i);
+                if(lst == -1) mx.push(i-1);
+                else{
+                    mx.push((i - lst) / 2);
+                    both = max(both, (double)i - lst - 1);
+                }
+                lst = i;
+           }
+            double max1 = mx.top(); mx.pop(); double max2 = mx.top();
+            double sum = max1+max2;
+            // double sum = max(both, max1+max2);
+            cout << "Case #"<<tt<<": " << (sum / (double)k) nl
+        } 
     return 0;
 }

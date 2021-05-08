@@ -18,7 +18,15 @@
         "regex": "cpp",
         "utility": "cpp",
         "valarray": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "iomanip": "cpp",
+        "deque": "cpp",
+        "list": "cpp",
+        "string": "cpp",
+        "unordered_map": "cpp",
+        "unordered_set": "cpp",
+        "vector": "cpp",
+        "iosfwd": "cpp"
     },
     "editor.acceptSuggestionOnCommitCharacter": false,
     "editor.quickSuggestions.other": false,

@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.01.2021 14:41:24
  * 
  * Potatoes FTW!
  * 
@@ -74,17 +74,30 @@ const long long LLNF = (ll)10e17+7;
 
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
-template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
-template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i nl; return is;}
+int a[1000000000];
 
 int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
-    int T; cin >> T;
-    TC(T){
-    
-    }
+    freopen("haybales.in","r",stdin);
+	freopen("haybales.out","w",stdout);
 
+    int n,q ;
+    cin >> n >> q;
+    vi a(n);
+    FOR(i, 0, n) {
+        int x;
+        cin >> x;
+        a[x] = 1;
+    }
+    FORE(i, 1, 1000000000) {
+        a[i] = a[i-1] + a[i]; 
+    }
+    FOR(i, 0, q) {
+        int l, r;
+        cin >> l >> r;
+        cout << a[r] - a[(l == 0 ? 0 :l - 1)] nl
+    }
     return 0;
 }

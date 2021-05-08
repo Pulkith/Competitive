@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.03.2021 02:11:50
  * 
  * Potatoes FTW!
  * 
@@ -74,16 +74,37 @@ const long long LLNF = (ll)10e17+7;
 
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
-template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
-template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i nl; return is;}
-
 int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
     int T; cin >> T;
     TC(T){
-    
+        int n;
+        cin >> n;
+        vi a(n);
+        FOR(i, 0, n) {
+            int x;
+            cin >> x;
+            a[i] = x;
+        }
+        ll mn = 0;
+        ll eve = 1, odd = 0, sumeve = a[0], sumodd = 0, mineve = a[0], minodd = 0;
+        FOR(i, 1, n) {
+            if(i%2==0) {
+                ++eve;
+                sumeve += a[i];
+                mineve = min(mineve, (ll)a[i]);
+            } else {
+                ++odd;
+                sumodd += a[i];
+                if(i == 1) minodd = a[i];
+                else minodd = min((ll)a[i], minodd);;
+            }
+            if(i == 1) mn = (sumodd + minodd * (n-odd) + sumeve + mineve * (n-eve));
+            else mn = min(mn, (sumodd + minodd * (n-odd) + sumeve + mineve * (n-eve)));
+        }
+        cout << mn nl
     }
 
     return 0;

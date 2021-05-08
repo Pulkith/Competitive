@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.01.2021 12:03:31
  * 
  * Potatoes FTW!
  * 
@@ -73,17 +73,34 @@ const int MOD = 1000000007;
 const long long LLNF = (ll)10e17+7;
 
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
+string append(int l, char c) {
+    string res = "";
+    FOR(i, 0, l) 
+        res += c;
+    //scout << res nl
+    return res;
 
-template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
-template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i nl; return is;}
-
+}
 int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
     int T; cin >> T;
     TC(T){
-    
+        string s; cin >> s;
+        bool ok = false;
+        string fin = "";
+        s += '0';
+        int depth = 0;
+        for(int i = 0; i < sz(s); ++i) {
+            int cur = s[i] - 48;
+            if(cur != depth) fin += append((s[i] - 48) - depth,'(');
+            if(cur < depth)  fin += append(depth - (s[i]-48), ')');
+            depth = s[i] - 48;
+            fin += (i == sz(s) - 1) ? ' ' : s[i];
+        }
+
+        cout << "Case #"<<tt<<": "<<fin nl
     }
 
     return 0;

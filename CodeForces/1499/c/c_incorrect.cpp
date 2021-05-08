@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.03.2021 01:04:42
  * 
  * Potatoes FTW!
  * 
@@ -74,8 +74,16 @@ const long long LLNF = (ll)10e17+7;
 
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
-template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
-template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i nl; return is;}
+struct double_min {
+    int f = INF;
+    int s = INF;
+
+public: 
+    void check() {
+        if(s < f)
+            swap(s, f);
+    }
+};
 
 int main () {
     ios::sync_with_stdio(0);
@@ -83,8 +91,49 @@ int main () {
 
     int T; cin >> T;
     TC(T){
-    
+        int n;
+        cin >> n;
+        vi a(n);
+        double_min dm;
+        FOR(i, 0, n){
+            cin >> a[i];
+            if(i%2==0) dm.f = min(dm.f, a[i]);
+            else dm.s = min(dm.s, a[i]);
+        }
+        int x = 0, y = 0;
+        ll cost = 0;
+        bool turn = true; //true = right;
+        int index = 0;
+        while(x < n || y < n) {
+                if((a[index] == dm.f) && index%2==0) {
+                    cost += dm.f * (n - x);
+                    x = n;
+                }
+                else if((a[index] == dm.s) && index%2==1) {
+                    cost += dm.s * (n - y);
+                    y = n;
+                }
+                else {
+                    if(turn)
+                        x += 1;
+                    else
+                        y += 1;
+                    cost += a[index];
+                }
+            ++index;
+            if(x == n) turn = false;
+            else if(y == n) turn = true;
+            else turn = !turn;
+        }
+
+
+
+
+        printf("%lld\n", cost);
+        
+        
     }
+    
 
     return 0;
 }
