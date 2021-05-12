@@ -1,7 +1,7 @@
 /**
  * 
  * author: DespicableMonkey
- * created: 05.08.2021 11:48:39
+ * created: 05.11.2021 20:30:24
  * 
  * Potatoes FTW!
  * 
@@ -76,31 +76,41 @@ const long long LLNF = (ll)10e17+7;
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
 template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
-template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i nl; return is;}
+template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i << " "; return is;}
 
 int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
-        int n;
-        cin >> n;
-        vi o(n),t(n),a(n);
-        FOR(i, 0, n)
-            cin >> o[i];
-        FOR(i, 0, n)
-            cin >> t[i];
-        FOR(i, 0, n)
-            a[i] = o[i] - t[i];
-        sort(all(a));
+    int T; cin >> T;
+    TC(T){
+        string s;
+        cin >> s;
+        vi on, cn, os, cs;
+        FOR(i, 0, sz(s)) {
+            if(s[i] == '(') on.pb(i);
+            else if(s[i] == ')') cn.pb(i);
+            else if(s[i] == '[') os.pb(i);
+            else cs.pb(i);
+        }
+        int cnt = 0; int l = 0, r = 0;
+        while(l < sz(on) && r < sz(cn)) {
+            if(on[l] < cn[r]) {
+                ++cnt;
+                ++l;
+            }
+            ++r;
+        }
+        l = 0; r = 0;
+        while(l < sz(os) && r < sz(cs)) {
+            if(os[l] < cs[r]) {
+                ++cnt;
+                ++l;
+            }
+            ++r;
+        }
+        cout << cnt nl
+    }
 
-        ll cnt = 0;
-        
-        ROF(i, 0, n) {
-            //find first index from index [0 -> i) where a[j] + a[i] > 0. a[j] may be < than 0.
-            auto it = lower_bound(a.begin(), a.begin() + i, -a[i] + 1);
-            //get distance from j to i;
-            cnt += ( i - (it - a.begin()));
-        }   
-        cout << cnt nl;
     return 0;
 }

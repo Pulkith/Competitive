@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.11.2021 10:01:45
  * 
  * Potatoes FTW!
  * 
@@ -84,7 +84,62 @@ int main () {
 
     int T; cin >> T;
     TC(T){
-    
+        int a, b;
+        string s;
+        cin >> a >> b >> s;
+        int x[2];
+        x[0] = a;
+        x[1] = b;
+        bool ok = true;
+        for(int i = 0; i < sz(s) / 2 && ok; ++i) {
+            int opp = sz(s) -1 - i;
+            if(s[i] == s[opp] && s[i] != '?')
+                x[s[i] - '0'] -= 2;
+            else if(s[i] == s[opp] && s[i] == '?'){}
+            else if((s[i] == '1' || s[i] == '0') && s[opp] == '?' || (s[opp] == '1' || s[opp] == '0') && s[i] == '?'){
+                if(s[i] == '?') {
+                    x[s[opp] - '0'] -= 2;
+                    s[i] = s[opp];
+                } else {
+                    x[s[i] - '0'] -=2;
+                    s[opp] = s[i];
+                }
+            } else {
+                ok = false;
+            }
+        }
+        if(sz(s) % 2 != 0 && ok) {
+            int md = sz(s) / 2;
+            if(s[md] != '?') x[s[md]-'0']--;
+            else {
+                if(x[0] % 2 == 1 ) {
+                    --x[0];
+                     s[md] = '0';
+                } else if( x[1] % 2 == 1){ 
+                    --x[1];
+                     s[md] = '1';
+                } else {
+                    ok = false;
+                }
+            }
+         }
+         FOR(i, 0, sz(s) / 2) {
+            int opp = sz(s) -1 - i;
+             if(!(s[i] == '?' && s[opp] == '?')) continue;
+                if(x[1] > x[0]){ 
+                    x[1] -= 2;
+                    s[i] = '1'; s[opp] = '1';
+                }
+                else{
+                    s[i] = '0';
+                    s[opp] = '0';
+                    x[0] -=2;
+                }
+         }
+        if(!ok || x[0] != 0 || x[1] != 0)
+            cout << "-1" nl
+        else
+            cout << s nl
     }
 
     return 0;

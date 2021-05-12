@@ -1,7 +1,7 @@
 /**
  * 
  * author: DespicableMonkey
- * created: 05.08.2021 11:48:39
+ * created: 05.11.2021 14:03:47
  * 
  * Potatoes FTW!
  * 
@@ -76,31 +76,57 @@ const long long LLNF = (ll)10e17+7;
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
 template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
-template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i nl; return is;}
-
+template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i << " "; return is;}
 int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
+    int T; cin >> T;
+    TC(T){
         int n;
         cin >> n;
-        vi o(n),t(n),a(n);
-        FOR(i, 0, n)
-            cin >> o[i];
-        FOR(i, 0, n)
-            cin >> t[i];
-        FOR(i, 0, n)
-            a[i] = o[i] - t[i];
+        n += 2;
+        vi a(n);
+        ll total = 0;
+        FOR(i, 0, n){
+            cin >> a[i];
+            total += a[i];
+        }
         sort(all(a));
+        int res = -1;
+        int index = sz(a)-1;
+        int comp = a[sz(a)-1];
+        total -= comp;
+        FOR(i, 0, n-1) {
+            if(total - a[i] == comp) {
+                res = i;
+                break;
+            }
+        }
+        total = total + comp - a[sz(a) - 2];
+        if(res == -1) {
+            comp = a[sz(a) - 2];
+            index = sz(a) - 2;
+            FOR(i, 0, n) {
+                if(i != sz(a) - 2) {
+                    if(total - a[i] == comp) {
+                        res = i;
+                        break;
+                    }
+                }
+            }
+        }
 
-        ll cnt = 0;
-        
-        ROF(i, 0, n) {
-            //find first index from index [0 -> i) where a[j] + a[i] > 0. a[j] may be < than 0.
-            auto it = lower_bound(a.begin(), a.begin() + i, -a[i] + 1);
-            //get distance from j to i;
-            cnt += ( i - (it - a.begin()));
-        }   
-        cout << cnt nl;
+        if(res == -1) cout << "-1" nl
+        else {
+            FOR(i, 0, n)
+                if(i != res && i != index)
+                    cout << a[i] << " ";
+                cnl
+        }
+
+
+    }
+
     return 0;
 }

@@ -1,7 +1,7 @@
 /**
  * 
  * author: DespicableMonkey
- * created: 05.08.2021 11:48:39
+ * created: 05.11.2021 15:47:11
  * 
  * Potatoes FTW!
  * 
@@ -76,31 +76,66 @@ const long long LLNF = (ll)10e17+7;
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
 template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
-template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i nl; return is;}
+template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i << " "; return is;}
+int rev(int n) {
+    string s = ts(n);
+    if(sz(s) < 2)
+        s = "0" + s;
+    string res = "";
+    ROF(i, 0, sz(s)) {
+        if(s[i] == '2')
+            res.pb('5');
+        else if(s[i] == '5')
+            res.pb('2');
+        else
+            res.pb(s[i]);
+    }
+    return stoi(res);
+}
+
+int chk(int n) {
+    while(n > 0) {
+        int c = n%10;
+        if(c != 0 && c !=1 && c!=2 && c!= 5 && c!= 8) return false;
+        n/=10;
+    }
+    return true;
+}
 
 int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
-        int n;
-        cin >> n;
-        vi o(n),t(n),a(n);
-        FOR(i, 0, n)
-            cin >> o[i];
-        FOR(i, 0, n)
-            cin >> t[i];
-        FOR(i, 0, n)
-            a[i] = o[i] - t[i];
-        sort(all(a));
+    int T; cin >> T;
+    TC(T){
+        int h, m;
+        cin >> h >> m;
+        string time;
+        cin >> time;
 
-        ll cnt = 0;
+        int curH = stoi(time.substr(0, 2)), curM = stoi(time.substr(3, 2));
+        while(curH > 0 || curM > 0) {
+            if(chk(curM) && chk(curH) && rev(curM) < h && rev(curH) < m) {
+                break;
+            } else {
+                ++curM;
+                if(curM == m) {
+                    ++curH;
+                    curM = 0;
+                    if(curH == h)
+                        curH = 0;
+                }
+            }
+         }
+         string nh = ts(curH), nm = ts(curM);
+        if(sz(nh) < 2) nh = "0" + nh;
+        if(sz(nm) < 2) nm = "0" + nm;
+        cout << nh << ":" << nm nl
+
+
         
-        ROF(i, 0, n) {
-            //find first index from index [0 -> i) where a[j] + a[i] > 0. a[j] may be < than 0.
-            auto it = lower_bound(a.begin(), a.begin() + i, -a[i] + 1);
-            //get distance from j to i;
-            cnt += ( i - (it - a.begin()));
-        }   
-        cout << cnt nl;
+
+    }
+
     return 0;
 }

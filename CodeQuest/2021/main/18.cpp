@@ -110,14 +110,7 @@ int main () {
 
                 sort(all(result));
                 sort(all(cur));
-                // for(char c : cur)
-                //     cout << c << " ";
-                // cout nl
-                // for(char c : result)
-                //     cout << c << " ";
-                // cout nl
                 if(same(cur, result) < 0) {
-                    // cout << "hit" nl
                     result.clear();
                     for(char c : cur)
                         result.pb(c);

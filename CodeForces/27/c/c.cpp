@@ -1,7 +1,7 @@
 /**
  * 
  * author: DespicableMonkey
- * created: 05.08.2021 11:48:39
+ * created: 05.09.2021 01:44:00
  * 
  * Potatoes FTW!
  * 
@@ -82,25 +82,26 @@ int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
-        int n;
-        cin >> n;
-        vi o(n),t(n),a(n);
-        FOR(i, 0, n)
-            cin >> o[i];
-        FOR(i, 0, n)
-            cin >> t[i];
-        FOR(i, 0, n)
-            a[i] = o[i] - t[i];
-        sort(all(a));
+   int n;
+   cin >> n;
+   vi a(n);
+   FOR(i, 0, n)
+    cin >> a[i];
+    vi sol;
+    bool ok = false;
+    FOR(i, 0, n-2) {
+        if(!((a[i] > a[i+1] && a[i+1] > a[i+2])||(a[i] < a[i+1] && a[i+1] < a[i+2])) && a[i] != a[i+1] && a[i+1] != a[i+2]) {
+            ok = true;
+            sol.pb(i+1); sol.pb(i+2); sol.pb(i+3);
+            break;
+        }
+    }
 
-        ll cnt = 0;
-        
-        ROF(i, 0, n) {
-            //find first index from index [0 -> i) where a[j] + a[i] > 0. a[j] may be < than 0.
-            auto it = lower_bound(a.begin(), a.begin() + i, -a[i] + 1);
-            //get distance from j to i;
-            cnt += ( i - (it - a.begin()));
-        }   
-        cout << cnt nl;
+    if(!ok) cout << "0" nl
+    else {
+        cout << 3 nl
+        cout << sol[0] << " " << sol[1] << " " << sol[2];
+    }
+
     return 0;
 }

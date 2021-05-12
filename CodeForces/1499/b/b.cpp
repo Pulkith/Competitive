@@ -1,7 +1,7 @@
 /**
  * 
  * author: DespicableMonkey
- * created: 05.08.2021 11:48:39
+ * created: 05.11.2021 14:46:09
  * 
  * Potatoes FTW!
  * 
@@ -76,31 +76,29 @@ const long long LLNF = (ll)10e17+7;
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
 template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
-template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i nl; return is;}
-
+template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i << " "; return is;}
+bool sorted(string s) {
+    FOR(i, 1, sz(s)) {
+        if(s[i-1] > s[i]) return false;
+    }
+    return true;
+}
 int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
-        int n;
-        cin >> n;
-        vi o(n),t(n),a(n);
-        FOR(i, 0, n)
-            cin >> o[i];
-        FOR(i, 0, n)
-            cin >> t[i];
-        FOR(i, 0, n)
-            a[i] = o[i] - t[i];
-        sort(all(a));
+    int T; cin >> T;
+    TC(T){
+        string s; cin >> s;
+        bool ok = true;
+        int zz = -1, oo = INF; //last index of 0s, first index of 1s
+        FOR(i, 0, sz(s)-1) {
+            if(s.substr(i, 2) == "11") oo = min(oo, i);
+            else if(s.substr(i, 2) == "00") zz = max(zz, i);
+        }
 
-        ll cnt = 0;
-        
-        ROF(i, 0, n) {
-            //find first index from index [0 -> i) where a[j] + a[i] > 0. a[j] may be < than 0.
-            auto it = lower_bound(a.begin(), a.begin() + i, -a[i] + 1);
-            //get distance from j to i;
-            cnt += ( i - (it - a.begin()));
-        }   
-        cout << cnt nl;
+        cout << (zz < oo ? "YES" : "NO") nl
+    }
+
     return 0;
 }

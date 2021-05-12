@@ -1,7 +1,7 @@
 /**
  * 
  * author: DespicableMonkey
- * created: 05.08.2021 11:48:39
+ * created: 05.10.2021 21:45:43
  * 
  * Potatoes FTW!
  * 
@@ -76,31 +76,54 @@ const long long LLNF = (ll)10e17+7;
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
 template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
-template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i nl; return is;}
+template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i << " "; return is;}
 
 int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
-        int n;
-        cin >> n;
-        vi o(n),t(n),a(n);
-        FOR(i, 0, n)
-            cin >> o[i];
-        FOR(i, 0, n)
-            cin >> t[i];
-        FOR(i, 0, n)
-            a[i] = o[i] - t[i];
-        sort(all(a));
+    int T; cin >> T;
+    TC(T){
+        int n, p;
+        cin >> n >> p;
 
-        ll cnt = 0;
-        
-        ROF(i, 0, n) {
-            //find first index from index [0 -> i) where a[j] + a[i] > 0. a[j] may be < than 0.
-            auto it = lower_bound(a.begin(), a.begin() + i, -a[i] + 1);
-            //get distance from j to i;
-            cnt += ( i - (it - a.begin()));
-        }   
-        cout << cnt nl;
+        unordered_map<int, vi> mp;
+        vi a(n),b(n), first_index(n+2, INF), pnt(p), chk, res(p);
+
+        FOR(i, 0, n)  cin >> a[i]; FOR(j,0, n) cin >> b[j]; FOR(i, 0, p)  cin >> pnt[i];
+
+        FOR(i, 0, n) {
+            if(a[i] != b[i])
+                mp[b[i]].pb(i+1);
+            first_index[b[i]] = min(first_index[b[i]], i+1 );
+        }
+        FOR(i, 0, p) {
+            int ind; bool rem = true;
+            if(sz(mp[pnt[i]])) {
+                ind = *(mp[pnt[i]].rbegin());
+                res[i] = ind;
+                mp[pnt[i]].pop_back();
+           } else {
+                if(first_index[pnt[i]] != INF)
+                    ind = res[i] = first_index[pnt[i]];
+                else
+                    chk.pb(i), rem = false;
+            }
+            if(sz(chk) && rem){
+                for(int j : chk)
+                    res[j] = ind;
+                chk.clear();
+            }
+        }
+        int ok = true;
+        for(auto k : mp)
+            if(sz(k.s)) 
+                ok = false;
+        if(!ok || sz(chk)) cout << "NO" nl 
+        else cout << "YES\n" << res nl
+
+
+    }
+
     return 0;
 }
