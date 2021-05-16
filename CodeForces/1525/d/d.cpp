@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.16.2021 11:09:33
  * 
  * Potatoes FTW!
  * 
@@ -84,9 +84,11 @@ int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
-    int T; cin >> T;
-    TC(T){
+    int n; cin >> n;
+    vi a(n);
     
+    FOR(i, 0, n) {
+        cin >> a[i];
     }
 
     return 0;

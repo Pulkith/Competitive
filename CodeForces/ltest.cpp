@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.15.2021 10:20:11
  * 
  * Potatoes FTW!
  * 
@@ -29,7 +29,6 @@
 #include <ios>
 #include <cstring>
 #include <numeric> 
-#include <cassert>
 
 using namespace std;
 
@@ -71,23 +70,40 @@ using pll = pair<ll, ll>;
 #define lower(sl) transform(sl.begin(), sl.end(), sl.begin(), ::tolower)
 
 const int INF = 1000000007;
-const int MOD = 1000000007;
 const long long LLNF = (ll)10e17+7;
 
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
 template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
 template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i << " "; return is;}
-void ff() { fflush(stdout); }
 
-int main () {
-    ios::sync_with_stdio(0);
-    cin.tie(0);
-
-    int T; cin >> T;
-    TC(T){
-    
+    int sumOfFlooredPairs(vector<int>& nums) {
+        const int N = 120000;
+        int freq[N] = { 0 };
+        const int MOD = 1000000007;
+        for (int i = 0; i < nums.size(); i++)
+            freq[nums[i]]++;
+        for (int i = 1; i < N; i++) 
+            freq[i] += freq[i - 1];
+        ll ans = 0;
+        for (int i = 1; i < N; i++) {
+            for (int j = i; j < N; j += i) {
+                ans += (j / i - 1) * ((freq[j - 1] - freq[(j - i - 1) < 0 ? 0 : (j-i-1)])) * (freq[i] - freq[i-1]);
+                ans %= MOD;
+            }
+        }
+        return ans;
     }
-
+ 
+// Driver code
+int main()
+{
+    int arr[] = { 34912,57940,45747 };
+    vi nums;
+    for(auto i : arr)
+        nums.pb(i);
+ 
+    cout << sumOfFlooredPairs(nums) << endl;
+ 
     return 0;
 }

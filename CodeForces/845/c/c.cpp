@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.12.2021 12:28:43
  * 
  * Potatoes FTW!
  * 
@@ -29,7 +29,6 @@
 #include <ios>
 #include <cstring>
 #include <numeric> 
-#include <cassert>
 
 using namespace std;
 
@@ -78,16 +77,32 @@ const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
 template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
 template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i << " "; return is;}
-void ff() { fflush(stdout); }
 
 int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
-    int T; cin >> T;
-    TC(T){
-    
+   int n; cin >> n;
+   priority_queue<pii, vector<pii>, greater<pii>> a;
+   FOR(i, 0, n) {
+       int x, b;
+       cin >> x >> b;
+        a.push({x, b});
+   }
+    pii tv1 = {-1, -1}, tv2 = {-1, -1};
+    bool ok = true;
+
+    while(!a.empty() && ok) {
+        auto x = a.top(); a.pop();
+        if(x.f > tv1.s) 
+            tv1 = x;
+        else if(x.f > tv2.s)
+            tv2 = x;
+        else
+            ok = false;
     }
+
+    cout << (ok?"YES":"NO") nl
 
     return 0;
 }

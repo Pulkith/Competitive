@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.15.2021 12:21:28
  * 
  * Potatoes FTW!
  * 
@@ -79,14 +79,26 @@ const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
 template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i << " "; return is;}
 void ff() { fflush(stdout); }
-
 int main () {
-    ios::sync_with_stdio(0);
-    cin.tie(0);
 
-    int T; cin >> T;
+    int T, n;
+    scanf("%d%d", &T, &n);
     TC(T){
-    
+        for(int i = 1; i < n; ++i) {
+            printf("M %d %d\n", i, n);
+            ff();
+            int x;
+            scanf("%d", &x);
+            if(x == i) continue;
+            printf("S %d %d\n", i, x);
+            ff();
+            scanf("%d", &x);
+        }
+        printf("D\n");
+        int x;
+        ff();
+        scanf("%d", &x);
+        assert(x == 1);
     }
 
     return 0;

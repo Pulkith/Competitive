@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.15.2021 17:08:16
  * 
  * Potatoes FTW!
  * 
@@ -80,13 +80,29 @@ template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& 
 template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i << " "; return is;}
 void ff() { fflush(stdout); }
 
+int g[3][3];
+
 int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
-    int T; cin >> T;
-    TC(T){
-    
+    FOR(i, 0, 3) {
+        FOR(j, 0, 3) {
+            cin >> g[i][j];
+        }
+    }
+
+    FOR(i, 0, 3) {
+        FOR(j, 0, 3) {
+            int cnt = 1;
+            cnt += g[i][j];
+            if(i != 0) cnt += g[i-1][j];
+            if(i != 2) cnt += g[i+1][j];
+            if(j != 0) cnt += g[i][j-1];
+            if(j != 2) cnt += g[i][j+1];
+            cout << (cnt&1);
+        }
+        cnl
     }
 
     return 0;

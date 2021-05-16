@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.16.2021 11:09:33
  * 
  * Potatoes FTW!
  * 
@@ -86,7 +86,21 @@ int main () {
 
     int T; cin >> T;
     TC(T){
-    
+        int n;
+        int tm;
+        cin >> n; int x = 100;
+        tm = n;
+        if(x % n == 0) {
+            x /= n;
+            n = 1;
+        }
+        for(int i = x-1; i >= 2; --i) {
+            while(n % i == 0 && x% i == 0) {
+                n /= i;
+                x /= i;
+            }
+        }
+        cout << (n + (x - n)) nl
     }
 
     return 0;

@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.14.2021 09:30:03
  * 
  * Potatoes FTW!
  * 
@@ -29,7 +29,6 @@
 #include <ios>
 #include <cstring>
 #include <numeric> 
-#include <cassert>
 
 using namespace std;
 
@@ -78,7 +77,6 @@ const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
 template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
 template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i << " "; return is;}
-void ff() { fflush(stdout); }
 
 int main () {
     ios::sync_with_stdio(0);
@@ -86,7 +84,10 @@ int main () {
 
     int T; cin >> T;
     TC(T){
-    
+        ll dp[2005][2005];
+        unordered_map< ll, unordered_set<set<ll>> > mp;
+
+        
     }
 
     return 0;

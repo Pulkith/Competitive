@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.16.2021 11:09:33
  * 
  * Potatoes FTW!
  * 
@@ -86,8 +86,23 @@ int main () {
 
     int T; cin >> T;
     TC(T){
-    
-    }
-
+        int n;cin >> n;
+        vi a(n);
+        FOR(i, 0, n)
+            cin >> a[i];
+        if(is_sorted(all(a))) cout << "0" nl
+        else {
+            bool fir = a[0] == 1;
+            bool la = a[n-1] == n;
+            if(fir && la || fir ^ la) {
+                cout << "1" nl;
+            }
+            else if(a[0] == n && a[n-1] == 1) {
+                    cout << "3" nl
+            } else {
+                cout << "2" nl
+            }
+        }
+    }       
     return 0;
 }

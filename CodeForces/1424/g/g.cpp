@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.16.2021 01:00:27
  * 
  * Potatoes FTW!
  * 
@@ -84,10 +84,33 @@ int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
-    int T; cin >> T;
-    TC(T){
-    
+    int n;
+    cin >> n;
+    vector<pii> a(n);
+    FOR(i, 0, n) {
+        int x ,y;
+        cin >> x >> y;
+        a[i] = {x,y};
     }
+    sort(all(a));
+    int mx = 0, index = 1;
+    int cur = 0;
+    priority_queue<int, vector<int>, greater<int>> ar;
+    for(int i = 0; i < n; ++i) {
+        ++cur;
+        ar.push(a[i].s);
+        int sub = 0;
+        while(!ar.empty() && ar.top() <= a[i].f) {
+            ++sub;
+            ar.pop();
+        }
+        cur -= sub;
+        if(cur > mx) {
+            mx = cur;
+            index = a[i].f;
+        }
+    }
+    cout << index << " " << mx nl
 
     return 0;
 }

@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.15.2021 03:20:41
  * 
  * Potatoes FTW!
  * 
@@ -29,7 +29,6 @@
 #include <ios>
 #include <cstring>
 #include <numeric> 
-#include <cassert>
 
 using namespace std;
 
@@ -78,7 +77,6 @@ const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
 template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
 template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i << " "; return is;}
-void ff() { fflush(stdout); }
 
 int main () {
     ios::sync_with_stdio(0);
@@ -86,7 +84,49 @@ int main () {
 
     int T; cin >> T;
     TC(T){
-    
+        ll mn = 0;
+        ll n, w;
+        cin >> n >> w;
+        vi a(n);
+        FOR(i, 0, n) {
+            cin >> a[i];
+            if(i == 0) mn = a[i];
+            else mn = min(mn, (ll)a[i]);
+        }
+        if(mn > w) {
+            cout << -1 nl
+            continue;
+        }
+        vi sol;
+        ll cur = 0;
+        bool ok = 0;
+        FOR(i, 0, n) {
+            if((a[i] <= w ) && ((w&1 && a[i] > w/2) || (w%2==0&&a[i]>=w/2))) {
+                cout << 1 nl
+                cout << (i+1) nl;
+                ok = 1;
+                break;
+            }
+        }
+        if(ok) continue;
+
+        FOR(i, 0, n) {
+            if(a[i] < w) {
+                cur += a[i];
+                sol.pb(i+1);
+            }
+            if((w&1 && cur > w/2) || (w%2==0 && cur >= w/2)) {
+                ok = 1;
+                break;
+            }
+        }
+
+        if(!ok) cout << -1 nl
+        else {
+            cout << (sz(sol)) nl
+            cout << sol nl
+        }
+
     }
 
     return 0;

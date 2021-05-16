@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.12.2021 02:32:41
  * 
  * Potatoes FTW!
  * 
@@ -29,7 +29,6 @@
 #include <ios>
 #include <cstring>
 #include <numeric> 
-#include <cassert>
 
 using namespace std;
 
@@ -78,16 +77,15 @@ const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
 template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
 template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i << " "; return is;}
-void ff() { fflush(stdout); }
 
-int main () {
-    ios::sync_with_stdio(0);
-    cin.tie(0);
-
-    int T; cin >> T;
-    TC(T){
-    
-    }
-
-    return 0;
+int main() {
+  // ios_base::sync_with_stdio(0);
+  // cin.tie(0);
+  // cout << fixed << setprecision(11);
+  // cerr << fixed << setprecision(6);
+ 
+  string s;
+  while (getline(cin, s)) {
+    cout << "NO\n";
+  }
 }

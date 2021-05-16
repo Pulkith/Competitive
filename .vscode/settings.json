@@ -27,7 +27,10 @@
         "unordered_set": "cpp",
         "vector": "cpp",
         "iosfwd": "cpp",
-        "forward_list": "cpp"
+        "forward_list": "cpp",
+        "map": "cpp",
+        "cassert": "cpp",
+        "numeric": "cpp"
     },
     "editor.acceptSuggestionOnCommitCharacter": false,
     "editor.quickSuggestions.other": false,

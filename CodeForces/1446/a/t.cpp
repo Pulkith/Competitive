@@ -1,13 +1,3 @@
-/**
- * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
- * 
- * Potatoes FTW!
- * 
- **/ 
-
-
 #include <iostream>
 #include <vector>
 #include <map>
@@ -28,8 +18,6 @@
 #include <initializer_list>
 #include <ios>
 #include <cstring>
-#include <numeric> 
-#include <cassert>
 
 using namespace std;
 
@@ -49,7 +37,6 @@ using pll = pair<ll, ll>;
 #define s second
 
 #define nl << "\n";
-#define cnl cout nl
 
 #define all(c) (c).begin(), (c).end()
 #define sz(x) (int)(x).size()
@@ -57,37 +44,29 @@ using pll = pair<ll, ll>;
 #define rall(x) x.rbegin(), x.rend()
 #define sortt(x) sort(all(x))
 #define rtn return
+#define ins(x) insert(x)
 
 #define FOR(i,a,b) for (int i = (a); i < (b); ++i)
 #define F0R(i,a) FOR(i,0,a)
 #define ROF(i,a,b) for (int i = (b)-1; i >= (a); --i)
 #define R0F(i,a) ROF(i,0,a)
-#define TC(i) for(int tt = (1); tt <= (i); ++tt)
-#define FORE(i, a, b) for(int i = (a); i<= (b); ++i)
-
 #define rep(a) F0R(_,a)
 #define each(a,x) for (auto& a: x)
+#define TC(i) for(int tt = (1); tt <= (i); ++tt)
+#define FORE(i, a, b) for(int i = (a); i<= (b); ++i)
 
 #define lower(sl) transform(sl.begin(), sl.end(), sl.begin(), ::tolower)
 
 const int INF = 1000000007;
 const int MOD = 1000000007;
 const long long LLNF = (ll)10e17+7;
-
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
-
-template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
-template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i << " "; return is;}
-void ff() { fflush(stdout); }
 
 int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
-
-    int T; cin >> T;
-    TC(T){
-    
-    }
+    int x = 6;
+    cout << (!(x&1)) nl
 
     return 0;
 }

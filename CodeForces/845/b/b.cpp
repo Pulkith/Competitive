@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.12.2021 12:07:28
  * 
  * Potatoes FTW!
  * 
@@ -29,7 +29,6 @@
 #include <ios>
 #include <cstring>
 #include <numeric> 
-#include <cassert>
 
 using namespace std;
 
@@ -78,16 +77,30 @@ const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
 template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
 template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i << " "; return is;}
-void ff() { fflush(stdout); }
 
 int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
-    int T; cin >> T;
-    TC(T){
-    
-    }
+    string s;
+    cin >> s;
+    int ans = INF;
+    FOR(a, 0, 10)
+        FOR(b, 0, 10)
+            FOR(c, 0, 10)
+                FOR(d, 0, 10)
+                    FOR(e, 0, 10)
+                        FOR(g, 0, 10) {
+                            int cnt = 0;
+                            cnt += (s[0] != a+'0');
+                            cnt += (s[1] != b+'0');
+                            cnt += (s[2] != c+'0');
+                            cnt += (s[3] != d+'0');
+                            cnt += (s[4] != e+'0');
+                            cnt += (s[5] != g+'0');
 
+                            if(a+b+c == d+e+g) ans = min(ans, cnt);
+                        }
+    cout << ans nl
     return 0;
 }

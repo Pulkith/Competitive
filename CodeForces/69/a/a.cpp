@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.15.2021 16:57:44
  * 
  * Potatoes FTW!
  * 
@@ -84,10 +84,17 @@ int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
-    int T; cin >> T;
-    TC(T){
-    
+    int n; cin >> n;
+    ll x = 0, y = 0, z = 0;
+    FOR(i, 0, n) {
+        int a,b,c;
+        cin >> a >> b >> c;
+        x += a; y += b; z += c;
     }
+    if(x == 0 && y == 0 && z == 0)
+        cout << "YES" nl
+    else
+        cout << "NO" nl 
 
     return 0;
 }

@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.15.2021 17:12:50
  * 
  * Potatoes FTW!
  * 
@@ -79,15 +79,35 @@ const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
 template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i << " "; return is;}
 void ff() { fflush(stdout); }
-
+bool isPrime(int n) {
+    if(n == 2) return true;
+    if(!(n&1)) return false;
+    for(int i = 3; i * i <= n; ++i) {
+        if(n % i == 0)
+            return false;
+    }
+    return true;
+}
 int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
-    int T; cin >> T;
-    TC(T){
-    
-    }
+   int n, m;
+   cin >> n >> m;
+   if(m <= n) cout << "NO" nl
+   else {
+       if(!isPrime(n) || !isPrime(m)) {
+           cout << "NO" nl
+       } else {
+           FOR(i, n+1, m-1) {
+               if(isPrime(i)){
+                   cout << "NO" nl
+                   return 0;
+               }
+           }
+           cout << "YES" nl
+       }
+   }
 
     return 0;
 }

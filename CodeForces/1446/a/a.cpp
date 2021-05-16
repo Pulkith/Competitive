@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.15.2021 02:44:32
  * 
  * Potatoes FTW!
  * 
@@ -29,7 +29,6 @@
 #include <ios>
 #include <cstring>
 #include <numeric> 
-#include <cassert>
 
 using namespace std;
 
@@ -78,7 +77,6 @@ const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
 template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
 template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i << " "; return is;}
-void ff() { fflush(stdout); }
 
 int main () {
     ios::sync_with_stdio(0);
@@ -86,7 +84,43 @@ int main () {
 
     int T; cin >> T;
     TC(T){
-    
+        ll n, w;
+        cin >> n >> w;
+        vi a (n);
+        ll mn = -1;
+        unordered_map<int, queue<int>> mp;
+        FOR(i, 0, n) {
+            cin >> a[i];
+            if(i == 0)
+                mn = a[i];
+            else
+                mn = min(mn, (ll)a[i]);
+            mp[a[i]].push(i);
+        }
+        if(mn > w) {
+            cout << -1 nl continue;
+        }
+        sort(all(a));
+        ll sum = 0;
+        vi sol;
+        ROF(i, 0, n) {
+            if(a[i] + sum <= w) {
+                sum += a[i];
+                sol.pb(mp[a[i]].front()+1);
+                mp[a[i]].pop();
+            }
+            if((w % 2 == 0 && sum >= w/2) || (w&1 && sum > w / 2)) {
+                break;
+            }
+        }
+        if((w % 2 == 0 && sum >= w/2) || (w&1 && sum > w / 2)) {
+            sort(all(sol));
+            cout << sz(sol) nl
+            cout << sol nl
+        } else {
+            cout << -1 nl
+        }
+
     }
 
     return 0;

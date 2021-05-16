@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.15.2021 17:03:28
  * 
  * Potatoes FTW!
  * 
@@ -84,10 +84,22 @@ int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
-    int T; cin >> T;
-    TC(T){
-    
+    string s;
+    cin >> s;
+    string out = "";
+    FOR(i, 0, sz(s)) {
+        if(i < sz(s) - 1 && s.substr(i, 2) == "-.") {
+            out += "1";
+            ++i;
+        }
+        else if(i < sz(s) - 1 && s.substr(i, 2) == "--") {
+            out += "2";
+            ++i;
+        }
+        else
+            out += "0";
     }
+    cout << out nl
 
     return 0;
 }

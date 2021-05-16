@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.15.2021 21:56:03
  * 
  * Potatoes FTW!
  * 
@@ -80,14 +80,32 @@ template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& 
 template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i << " "; return is;}
 void ff() { fflush(stdout); }
 
-int main () {
-    ios::sync_with_stdio(0);
-    cin.tie(0);
-
-    int T; cin >> T;
-    TC(T){
-    
+vector<string> split(const string &s, char delim) {
+    vector<string> elems;
+    stringstream ss(s);
+    string item;
+    while (getline(ss, item, delim))
+        elems.push_back(item);
+ 
+    return elems;
+}   
+int PowerSet(vector<int> nums, int n){
+    int sum = 0;
+    vector<string> list;
+    for (int i = 0; i < (int) pow(2, n); i++){
+        int cur = 0;
+        for (int j = 0; j < n; j++)
+            if ((i & (1 << j)) != 0){
+                if(j == 0) 
+                    cur = nums[j];
+                else {
+                    cur ^= nums[j];
+                }
+            }
+        sum += cur;
     }
-
-    return 0;
+    return sum;
+}
+int main() {
+    cout << PowerSet({3,4,5,6,7,8}, 6);
 }

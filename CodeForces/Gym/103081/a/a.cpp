@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.14.2021 22:07:12
  * 
  * Potatoes FTW!
  * 
@@ -29,7 +29,6 @@
 #include <ios>
 #include <cstring>
 #include <numeric> 
-#include <cassert>
 
 using namespace std;
 
@@ -78,16 +77,37 @@ const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
 template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
 template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i << " "; return is;}
-void ff() { fflush(stdout); }
 
 int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
-    int T; cin >> T;
-    TC(T){
-    
+    int n, k;
+    cin >> n >> k;
+    string dy; getline(cin, dy);
+    map<string, int> mp;
+    map<string, int> recent;
+    FOR(i, 0, 3*n) {
+        string s;
+        getline(cin, s);
+        ++mp[s];
+        recent[s] = i;
     }
+    map<int, priority_queue<pair<int, string>>, greater<int>> mp2;
+    for(auto kx: mp) {
+        mp2[kx.s].push({recent[kx.f], kx.f});
+    }
+        int count = 0;
+       for(auto& e : mp2) {
+          while(!e.s.empty()) {
+            auto val = e.s.top(); e.s.pop();
+            cout << val.s nl
+
+              if(++count == k) 
+                break;
+          }
+          if(count == k) break;
+       } 
 
     return 0;
 }
