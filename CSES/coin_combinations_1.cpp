@@ -1,7 +1,7 @@
 /**
  * 
  * author: DespicableMonkey
- * created: 05.15.2021 21:56:03
+ * created: 05.18.2021 01:07:25
  * 
  * Potatoes FTW!
  * 
@@ -80,32 +80,29 @@ template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& 
 template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i << " "; return is;}
 void ff() { fflush(stdout); }
 
-vector<string> split(const string &s, char delim) {
-    vector<string> elems;
-    stringstream ss(s);
-    string item;
-    while (getline(ss, item, delim))
-        elems.push_back(item);
- 
-    return elems;
-}   
-int PowerSet(vector<int> nums, int n){
-    int sum = 0;
-    vector<string> list;
-    for (int i = 0; i < (int) pow(2, n); i++){
-        int cur = 0;
-        for (int j = 0; j < n; j++)
-            if ((i & (1 << j)) != 0){
-                if(j == 0) 
-                    cur = nums[j];
-                else {
-                    cur ^= nums[j];
-                }
+ll dp[1000005];
+
+int main () {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+
+    int n, x;
+    cin >> n >> x;
+    vi a (n);
+    FOR(i, 0, n)
+        cin >> a[i];
+    dp[0] = 1;
+    FORE(i, 0, x) {
+        FOR(j, 0, n) {
+            if(i+a[j] <= x){
+                dp[i+a[j]] += dp[i] ;
+                dp[i+a[j]] %= MOD;
             }
-        sum += cur;
+        }
     }
-    return sum;
-}
-int main() {
-    cout << PowerSet({3,4,5,6,7,8}, 6);
+        
+    cout << dp[x]%MOD nl
+
+
+    return 0;
 }

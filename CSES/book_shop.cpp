@@ -1,7 +1,9 @@
 /**
  * 
  * author: DespicableMonkey
- * created: 04.28.2021 17 45 31
+ * created: 05.18.2021 01:54:08
+ * 
+ * Potatoes FTW!
  * 
  **/ 
 
@@ -26,6 +28,8 @@
 #include <initializer_list>
 #include <ios>
 #include <cstring>
+#include <numeric> 
+#include <cassert>
 
 using namespace std;
 
@@ -45,6 +49,7 @@ using pll = pair<ll, ll>;
 #define s second
 
 #define nl << "\n";
+#define cnl cout nl
 
 #define all(c) (c).begin(), (c).end()
 #define sz(x) (int)(x).size()
@@ -71,22 +76,46 @@ const long long LLNF = (ll)10e17+7;
 
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
+template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
+template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i << " "; return is;}
+void ff() { fflush(stdout); }
+
+int dp[100000];
+
+
 int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
-    int n;
-    cin >> n;
-    unordered_set<int> x;
-
+    int n, x;
+    cin >> n >> x;
+    vector<pii> a;
     FOR(i, 0, n) {
-        int in; cin >> in;
-        if(in != 0)
-            x.insert(in);
-
+        int b;
+        cin >> b;
+        a.pb({b, 0});
     }
 
-    cout << sz(x) nl
+    FOR(i, 0, n) {
+        int b;
+        cin >> b;
+        a[i].s = b;
+    }
+    memset(dp, -1, sizeof(dp));
+    dp[0] = 0;
+    FOR(i, 0, n) {
+        for(int j = x; j >= 0; j--) {
+            if(j-a[i].f >= 0 && dp[j-a[i].f] != -1) {
+                dp[j] = max(dp[j], dp[j - a[i].f] + a[i].s);
+            }
+        }
+    }
 
-    return;
+    int maxx = 0;
+    FORE(i, 0, x)
+        maxx = max(maxx, dp[i]);
+    cout << maxx nl
+
+
+    return 0;
 }

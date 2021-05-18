@@ -1,7 +1,9 @@
 /**
  * 
  * author: DespicableMonkey
- * created: 04.28.2021 17 45 31
+ * created: 05.18.2021 01:46:12
+ * 
+ * Potatoes FTW!
  * 
  **/ 
 
@@ -26,6 +28,8 @@
 #include <initializer_list>
 #include <ios>
 #include <cstring>
+#include <numeric> 
+#include <cassert>
 
 using namespace std;
 
@@ -45,6 +49,7 @@ using pll = pair<ll, ll>;
 #define s second
 
 #define nl << "\n";
+#define cnl cout nl
 
 #define all(c) (c).begin(), (c).end()
 #define sz(x) (int)(x).size()
@@ -71,22 +76,37 @@ const long long LLNF = (ll)10e17+7;
 
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
+template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
+template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i << " "; return is;}
+void ff() { fflush(stdout); }
+
+int dp[1005][1005];
+char grid[1005][1005];
 int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
-    int n;
-    cin >> n;
-    unordered_set<int> x;
-
+    int n; cin >> n;
+    
     FOR(i, 0, n) {
-        int in; cin >> in;
-        if(in != 0)
-            x.insert(in);
-
+        string s;
+        cin >> s;
+        FOR(j, 0, n)
+            grid[i][j] = s[j];
+    }
+    dp[1][1] = 1;
+    FORE(i, 1, n) {
+        FORE(j, 1, n) {
+            if(i > 0)
+                dp[i][j] += dp[i-1][j];
+            if(j > 0)
+                dp[i][j] += dp[i][j-1];
+            if(grid[i-1][j-1] == '*')
+                dp[i][j] = 0;
+            dp[i][j] %= MOD;
+        }
     }
 
-    cout << sz(x) nl
-
-    return;
+    cout << dp[n][n];
+    return 0;
 }

@@ -1,7 +1,9 @@
 /**
  * 
  * author: DespicableMonkey
- * created: 04.28.2021 17 45 31
+ * created: 05.16.2021 22:36:32
+ * 
+ * Potatoes FTW!
  * 
  **/ 
 
@@ -26,6 +28,8 @@
 #include <initializer_list>
 #include <ios>
 #include <cstring>
+#include <numeric> 
+#include <cassert>
 
 using namespace std;
 
@@ -45,6 +49,7 @@ using pll = pair<ll, ll>;
 #define s second
 
 #define nl << "\n";
+#define cnl cout nl
 
 #define all(c) (c).begin(), (c).end()
 #define sz(x) (int)(x).size()
@@ -71,22 +76,46 @@ const long long LLNF = (ll)10e17+7;
 
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
+template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
+template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i << " "; return is;}
+void ff() { fflush(stdout); }
+
 int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
-    int n;
-    cin >> n;
-    unordered_set<int> x;
-
+    int s, n;
+    cin >> s >> n;
+    map<int, int> mp;
     FOR(i, 0, n) {
-        int in; cin >> in;
-        if(in != 0)
-            x.insert(in);
-
+        int a;
+        cin >> a;
+        ++mp[a];
     }
 
-    cout << sz(x) nl
+    ll sum = 0;
+    vll a(s);
+    FOR(i, 0, s) {
+        if(mp.find(i+1) != mp.end())
+            sum += mp[i+1];
+        a[i] = sum;
+    }
 
-    return;
+    int q;
+    cin >> q;
+    FOR(i, 0, q) {
+        int x; cin >> x;
+        cout << (upper_bound(a.begin(), a.end(), x) - a.begin() ) nl
+    }
+
+
+
+    return 0;
 }
+/*
+
+4 6
+2 2 2 4 4 4
+
+
+*/

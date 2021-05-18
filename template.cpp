@@ -76,13 +76,23 @@ const long long LLNF = (ll)10e17+7;
 
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
+template<class T> using pqg = priority_queue<T,vector<T>,greater<T>>;
+
 template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
 template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i << " "; return is;}
 void ff() { fflush(stdout); }
+void IO(string name = "") {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+	if(sz(name)){
+		freopen((name+".in").c_str(), "r", stdin); // see Input & Output
+		freopen((name+".out").c_str(), "w", stdout);
+	}
+}
+
 
 int main () {
-    ios::sync_with_stdio(0);
-    cin.tie(0);
+    IO();
 
     int T; cin >> T;
     TC(T){

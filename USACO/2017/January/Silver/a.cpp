@@ -1,7 +1,9 @@
 /**
  * 
  * author: DespicableMonkey
- * created: 04.28.2021 17 45 31
+ * created: 05.18.2021 04:20:20
+ * 
+ * Potatoes FTW!
  * 
  **/ 
 
@@ -26,6 +28,8 @@
 #include <initializer_list>
 #include <ios>
 #include <cstring>
+#include <numeric> 
+#include <cassert>
 
 using namespace std;
 
@@ -45,6 +49,7 @@ using pll = pair<ll, ll>;
 #define s second
 
 #define nl << "\n";
+#define cnl cout nl
 
 #define all(c) (c).begin(), (c).end()
 #define sz(x) (int)(x).size()
@@ -71,22 +76,64 @@ const long long LLNF = (ll)10e17+7;
 
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
+template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
+template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i << " "; return is;}
+void ff() { fflush(stdout); }
+
+int n, m;
+vector<int> a;
+
+bool works(int k) {
+    int last = 0;
+    priority_queue<int, vector<int>, greater<int>> pq;
+
+    for(int i = 0; i < n; ++i) {
+        if(sz(pq) == k) {
+            last = pq.top(); pq.pop();
+        }
+        if(last + a[i] > m) return false;
+        pq.push(last + a[i]);
+    }
+    return true;
+}
+
 int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
-    int n;
-    cin >> n;
-    unordered_set<int> x;
+    freopen("cowdance.in", "r", stdin);
+    freopen("cowdance.out", "w", stdout);
 
-    FOR(i, 0, n) {
-        int in; cin >> in;
-        if(in != 0)
-            x.insert(in);
-
+    cin >> n >> m;
+    FOR(i, 0, n){
+        int x;
+        cin >> x;
+        a.pb(x);
     }
 
-    cout << sz(x) nl
+    int lo = 1, hi = n;
 
-    return;
+    while(lo != hi) {
+        int mid = (lo+hi) / 2;
+        if(works(mid)) 
+            hi = mid;
+        else
+            lo = mid + 1;
+    }
+
+
+    cout << lo nl
+
+    return 0;
 }
+/*
+
+
+6
+3
+4
+1
+7
+
+
+*/

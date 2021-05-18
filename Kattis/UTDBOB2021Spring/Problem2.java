@@ -35,6 +35,8 @@ public class Problem2 {
         String add = "";
         while(fin.length() + add.length() < K)
             add += "0";
-		System.out.println(add+fin);
+        System.out.println(add+fin);
+        
+        s.close();
     }
 }
