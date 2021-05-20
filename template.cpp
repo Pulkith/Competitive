@@ -30,6 +30,7 @@
 #include <cstring>
 #include <numeric> 
 #include <cassert>
+#include <iomanip>
 
 using namespace std;
 
@@ -76,27 +77,46 @@ const long long LLNF = (ll)10e17+7;
 
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
+inline namespace FileIO {
+	void setIn(string s)  { (void)!freopen(s.c_str(),"r",stdin); }
+	void setOut(string s) { (void)!freopen(s.c_str(),"w",stdout); }
+	void setIO(string s = "") {
+		cin.tie(nullptr)->sync_with_stdio(0);
+		cin.exceptions(cin.failbit); // throws exception when do smth illegal ex. try to read letter into int
+		if (sz(s)) setIn(s+".in"), setOut(s+".out"); // for old USACO
+	}
+    void setIO(string s, string t) {
+        cin.tie(nullptr)->sync_with_stdio(0);
+        setIn(s); 
+        setIn(t);
+    }
+}
+
 template<class T> using pqg = priority_queue<T,vector<T>,greater<T>>;
 
 template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
 template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i << " "; return is;}
 void ff() { fflush(stdout); }
-void IO(string name = "") {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-	if(sz(name)){
-		freopen((name+".in").c_str(), "r", stdin); // see Input & Output
-		freopen((name+".out").c_str(), "w", stdout);
-	}
+
+struct pred {
+    bool operator()(const std::pair<int, int> &l, const std::pair<int, int> &r) {
+        return l.s < r.s;
+    }
+};
+
+void solve() {
+    
 }
 
-
 int main () {
-    IO();
+    setIO();
 
-    int T; cin >> T;
+    int T = 1; 
+    cin >> T;
+
     TC(T){
-    
+        //cout << "Case #" << tt << ": "
+        solve();
     }
 
     return 0;

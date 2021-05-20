@@ -78,13 +78,33 @@ const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
 template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i << " "; return is;}
 
+bool factors[10000005]{true};
+int ans[10000005]{-1};
+vi fac;
+void seive(int limit) {
+    factors[2] = true;
+    for(int i = 4; i <= limit; i += 2)
+        factors[i] = false;
+    for(int i = 3; i <= limit; i += 2) {
+        if(factors[i]) {
+            for(int j = i*2; i <= limit; j += i)
+                factors[j] = false;
+            fac.pb(i);
+        }
+    }
+}
+
 int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
+    seive(10000000);
+    FORE(i, 1, 10000000) {
+
+    }
     int T; cin >> T;
     TC(T){
-    
+        
     }
 
     return 0;

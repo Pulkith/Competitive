@@ -1,13 +1,3 @@
-/**
- * 
- * author: DespicableMonkey
- * created: 05.02.2021 10:00:13
- * 
- * Potatoes FTW!
- * 
- **/ 
-
-
 #include <iostream>
 #include <vector>
 #include <map>
@@ -47,7 +37,6 @@ using pll = pair<ll, ll>;
 #define s second
 
 #define nl << "\n";
-#define cnl cout nl
 
 #define all(c) (c).begin(), (c).end()
 #define sz(x) (int)(x).size()
@@ -55,55 +44,48 @@ using pll = pair<ll, ll>;
 #define rall(x) x.rbegin(), x.rend()
 #define sortt(x) sort(all(x))
 #define rtn return
+#define ins(x) insert(x)
 
-#define FOR(i,a,b) for (int i = (a); i < (b); ++i)
-#define F0R(i,a) FOR(i,0,a)
-#define ROF(i,a,b) for (int i = (b)-1; i >= (a); --i)
-#define R0F(i,a) ROF(i,0,a)
-#define TC(i) for(int tt = (1); tt <= (i); ++tt)
-#define FORE(i, a, b) for(int i = (a); i<= (b); ++i)
-
-#define rep(a) F0R(_,a)
-#define each(a,x) for (auto& a: x)
+#define FOR(i, a, b) for (int i = (a); i < (b); ++i)
+#define F0R(i, a) FOR(i, 0, a)
+#define ROF(i, a, b) for (int i = (b)-1; i >= (a); --i)
+#define R0F(i, a) ROF(i, 0, a)
+#define rep(a) F0R(_, a)
+#define each(a, x) for (auto &a : x)
+#define TC(i) for (int tt = (1); tt <= (i); ++tt)
+#define FORE(i, a, b) for (int i = (a); i <= (b); ++i)
 
 #define lower(sl) transform(sl.begin(), sl.end(), sl.begin(), ::tolower)
 
 const int INF = 1000000007;
 const int MOD = 1000000007;
-const long long LLNF = (ll)10e17+7;
+const long long LLNF = (ll)10e17 + 7;
+const int dx[4] = {1, 0, -1, 0}, dy[4] = {0, 1, 0, -1};
 
-const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
-
-int main () {
+int main()
+{
     ios::sync_with_stdio(0);
     cin.tie(0);
 
-    int T; cin >> T;
-    TC(T){
-        int n, m, x;
-        cin >> n >> m >> x;
-        multiset<pii> pq;
-        vi sol;
-        FOR(i, 0, n) {
-            int in;
-            cin >> in;
-            if(pq.size() != m)
-                pq.insert({in, i+1}), sol.pb(i+1);
-            else {
-                pii top = *pq.begin();
-                pq.erase(pq.begin());
-                pq.insert({top.f+in, top.s});
-                sol.pb(top.s);
-            }
+    int T;
+    cin >> T;
+    TC(T)
+    {
+        int N, K;
+        cin >> N >> K;
+        vector<int> a(N);
+        for (int j = 0; j < N; j++)
+            cin >> a[j];
+        for (int j = 0; j < N - 1; j++)
+        {
+            int s = min(K, a[j]);
+            a[j] -= s;
+            a[N - 1] += s;
+            K -= s;
         }
-            bool ok = true; 
-            int min = (*pq.begin()).f, last = (*pq.rbegin()).f;
-            cout << (abs(last - min) > x ? "NO" : "YES") nl
-            if(last-min <= x) {
-                for(auto i : sol)
-                    cout << i << " ";
-                cnl
-            }
+        for (int j = 0; j < N; j++)
+            cout << a[j] << " ";
+        cout nl
     }
 
     return 0;

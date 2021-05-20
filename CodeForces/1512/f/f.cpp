@@ -78,14 +78,46 @@ const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
 template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i << " "; return is;}
 
+int dp[200005][3];
+
+int solve(int cur, int increment, int goal) {
+    if(cur >= goal) return 0;
+    if(cur + increment > goal) return 1;
+    if((goal - cur) % increment)
+        return (goal - cur) / increment + 1;
+    return (goal - cur) / increment;
+}
+
+
 int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
     int T; cin >> T;
     TC(T){
-    
-    }
+        int n, c;
+        cin >> n >> c;
+        vi a(n), b(n-1);
+        FOR(i, 0, n) cin >> a[i];
+        FOR(i, 0, n-1) cin >> b[i];
+        dp[0][0] = solve(0, a[0], c); //0 : days to get comp at cur job
+        dp[0][1] = solve(0, a[0], b[0]); //1: days to get to next job
+        dp[0][2] = dp[0][1] * a[0] - b[0]; //2: left over money from last promotion;
+        FOR(i, 1, n) {
+            dp[i][0] = solve(dp[i-1][2], a[i], c);
+            if(i == n-1) break;
+            dp[i][1] = solve(dp[i-1][2], a[i], b[i]);
+            dp[i][2] = dp[i-1][2] + (dp[i][1]) * a[i] - b[i];
+        }
+
+        ll mn = dp[0][0];
+        ll dys = dp[0][1] + 1;
+        FOR(i, 1, n){
+            mn = min(mn, dys + dp[i][0]);
+            dys += dp[i][1] + 1;
+        }
+        cout << mn nl
+     }
 
     return 0;
 }
