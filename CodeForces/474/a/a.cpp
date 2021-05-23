@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.22.2021 18:00:35
  * 
  * Potatoes FTW!
  * 
@@ -84,13 +84,13 @@ inline namespace FileIO {
 	void setIn(string s)  { (void)!freopen(s.c_str(),"r",stdin); }
 	void setOut(string s) { (void)!freopen(s.c_str(),"w",stdout); }
     void setDefault() {
-        	cin.tie(nullptr)->sync_with_stdio(0);
+        	//cin.tie(nullptr)->sync_with_stdio(0);
             std::cout << std::fixed << std::showpoint;
             std::cout << std::setprecision(14);
     }
 	void setIO(string s = "") {
         setDefault();
-		cin.exceptions(cin.failbit); // throws exception when do smth illegal ex. try to read letter into int
+	//	cin.exceptions(cin.failbit); // throws exception when do smth illegal ex. try to read letter into int
 		if (sz(s)) setIn(s+".in"), setOut(s+".out"); // for old USACO
 	}
     void setIO(string s, string t) {
@@ -112,8 +112,6 @@ template<typename T> void dbg(T arg, T arg2) {cout << arg << " " << arg2 << " " 
 template<typename T> void dbg(T arg, T arg2, T arg3) {cout << arg << " " << arg2 << " " << arg3 << " " << '\n';}
 template<typename T> void dbg(T arg, T arg2, T arg3, T arg4) {cout << arg << " " << arg2 << " " << arg3 << " " << arg4 << " " << '\n';}
 template<typename T> void dbg(T arg, T arg2, T arg3, T arg4, T arg5) {cout << arg << " " << arg2 << " " << arg3 << " " << arg4 << " " << arg5 << '\n';}
-#define debug(...) " [" << #__VA_ARGS__ ": " << (__VA_ARGS__) << "] "
-// debug & operator << (debug & dd, P p) { dd << "(" << p.x << ", " << p.y << ")"; return dd; }
 struct pred {
     bool operator()(const std::pair<int, int> &l, const std::pair<int, int> &r) { return l.s < r.s; } };
 
@@ -139,14 +137,33 @@ template<class T> void puts(T s) {
 |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| 
 */
 void solve() {
+    // char c; cin >> c;
+    // vector<string> ks = {
+    //     "qwertyuiop",
+    //     "asdfghjkl;",
+    //     "zxcvbnm,./"};
+    // map<char, pii> mp;
+    // for(int i = 0; i < ks.size(); ++i) {
+    //     for(int j = 0; j < ks[i].size(); ++j) {
+    //         mp[ks[i][j]] = {i, j};
+    //     }
+    // }
+    // int dir = (c == 'R' ? -1 : 1);
     
+    // string s; cin >> s;
+    // for (char c : s) {
+    //     pii p = mp[c];
+    //     p.second += dir;
+    //     cout << ks[p.first][p.second];
+    // }
+    // cout << endl;
 }
 
 int main () {
     setIO();
 
     int T = 1; 
-    cin >> T;
+    //cin >> T;
 
     TC(T){
         //cout << "Case #" << tt << ": ";

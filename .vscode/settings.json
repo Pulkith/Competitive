@@ -86,5 +86,7 @@
     },
     "editor.acceptSuggestionOnCommitCharacter": false,
     "editor.quickSuggestions.other": false,
-    "editor.quickSuggestions": false
+    "editor.quickSuggestions": false,
+    "workbench.editor.showTabs": true,
+    "editor.fontSize": 16
 }

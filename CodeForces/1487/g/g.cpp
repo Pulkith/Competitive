@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.21.2021 22:37:42
  * 
  * Potatoes FTW!
  * 
@@ -79,7 +79,6 @@ const long long LLNF = (ll)10e17+7;
 
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
-/* 64 mil =  ~1 second */
 inline namespace FileIO {
 	void setIn(string s)  { (void)!freopen(s.c_str(),"r",stdin); }
 	void setOut(string s) { (void)!freopen(s.c_str(),"w",stdout); }
@@ -107,13 +106,11 @@ template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i
 
 void ff() { fflush(stdout); }
 
-template<typename T> void dbg(T arg) {cout << arg << '\n';}
-template<typename T> void dbg(T arg, T arg2) {cout << arg << " " << arg2 << " " << '\n';}
-template<typename T> void dbg(T arg, T arg2, T arg3) {cout << arg << " " << arg2 << " " << arg3 << " " << '\n';}
-template<typename T> void dbg(T arg, T arg2, T arg3, T arg4) {cout << arg << " " << arg2 << " " << arg3 << " " << arg4 << " " << '\n';}
-template<typename T> void dbg(T arg, T arg2, T arg3, T arg4, T arg5) {cout << arg << " " << arg2 << " " << arg3 << " " << arg4 << " " << arg5 << '\n';}
-#define debug(...) " [" << #__VA_ARGS__ ": " << (__VA_ARGS__) << "] "
-// debug & operator << (debug & dd, P p) { dd << "(" << p.x << ", " << p.y << ")"; return dd; }
+template<typename T> void debug(T arg) {cout << arg << '\n';}
+template<typename T> void debug(T arg, T arg2) {cout << arg << " " << arg2 << " " << '\n';}
+template<typename T> void debug(T arg, T arg2, T arg3) {cout << arg << " " << arg2 << " " << arg3 << " " << '\n';}
+template<typename T> void debug(T arg, T arg2, T arg3, T arg4) {cout << arg << " " << arg2 << " " << arg3 << " " << arg4 << " " << '\n';}
+template<typename T> void debug(T arg, T arg2, T arg3, T arg4, T arg5) {cout << arg << " " << arg2 << " " << arg3 << " " << arg4 << " " << arg5 << '\n';}
 struct pred {
     bool operator()(const std::pair<int, int> &l, const std::pair<int, int> &r) { return l.s < r.s; } };
 
@@ -126,17 +123,12 @@ template<class T> bool ckmin(T& a, const T& b) {
 template<class T> bool ckmax(T& a, const T& b) {
 	return a < b ? a = b, 1 : 0; }
 
-template<class T> void outv(vector<T> v) {
+template<class T> void out_vector(vector<T> v) {
     for(T& i : v) cout << i << " "; cout << '\n'; }
-template<class T> void outarr(T a[], int N) {
+template<class T> void out_arr(T a[], int N) {
     for(int i = 0; i < N; ++i) cout << a[i] << " "; cout << '\n'; }
-template<class T> void puts(T s) {
-    cout << s << '\n';
-}
 /*
-|||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| 
-|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| 
-|||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| 
+    64 mil =  ~1 second
 */
 void solve() {
     

@@ -1,7 +1,7 @@
 /**
  * 
  * author: DespicableMonkey
- * created: 05.21.2021 18:40:22
+ * created: 05.22.2021 00:51:02
  * 
  * Potatoes FTW!
  * 
@@ -131,54 +131,99 @@ template<class T> void out_arr(T a[], int N) {
     64 mil =  ~1 second
 */
 
-int a[105];
-bool dp[200005];
-int N;
-bool partitionPossible() {
-    //https://www.geeksforgeeks.org/partition-problem-dp-18/
-    ll sum = 0;
-    for(int i = 0; i < N; ++i)
-        sum += a[i];
-    if(sum%2)
-        return false;
-    ll mxSum = sum / 2;
 
-    for(int i = 0; i < N; ++i) {
-        for(int j = mxSum; j>= a[i]; j--)
-            if(dp[j - a[i]] == true || j == a[i])
-                dp[j] = true;
-    }
-    return dp[sum / 2];
+int freq[100005];
+int third(int a, int b, int c, int x, int y) {
+    if((x == a && b == y) || (a == y && b == x)) return c;
+    if(x == a && y == c || x == c && y == a) return b;
+    else return a;
 }
-
 void solve() {
-    cin >> N;
-    FOR(i, 0, N)
-        cin >> a[i];
-    if(partitionPossible()) {
-        bool ok = 0;
-        FOR(i, 0, N) {
-            if(a[i]&1) {
-                cout << "1\n" << (i+1) nl
-                ok = 1;
-                break;
-            }
+    int n; cin >> n;
+    multimap<string, vi> mp;
+    FOR(i, 0, n-2) {
+        int a, b, c;
+        cin >> a >> b >> c;
+        int x = min(a, min(b, c));
+        int y = max(a, max(b, c));
+        int z = third(a, b, c, x, y);
+        vi arr; arr.pb(x); arr.pb(z); arr.pb(y);
+        ++freq[a]; ++freq[b]; ++freq[c];
+        mp.insert({ts(x)+"|"+ts(y), arr});
+        mp.insert({ts(x)+"|"+ts(z), arr});
+        mp.insert({ts(z)+"|"+ts(y), arr});
+    }
+
+    vi nxt;
+    for(auto& a : mp) {
+        bool ok = false;
+        for(auto& i : a.s)
+            if(freq[i] == 1)
+                ok = true;
+        if(ok){
+            nxt = a.s;
+            break;
         }
-        while(!ok) {
-            for(int i = 0; i < N && !ok; ++i) {
-                if((a[i] / 2)&1) {
-                    cout << "1\n" << (i+1) nl
-                    ok = 1;
-                    ff();
-                } else {
-                    a[i] /= 2;
+    }
+    vi ans;
+    string key;
+    
+    for(int i = 0; i < 3; ++i) {
+        if(freq[nxt[i]] == 1) {
+            ans.pb(nxt[i]);
+            for(int j = 0; j < 3; ++j) {
+                if(i != j && freq[nxt[j]] == 2) {
+                    ans.pb(nxt[j]);
+                    int lst = (i==0) ? (j == 1) ? 2 : 1 : (i == 1) ? (j ==0) ? 2 : 0 : (j==1 ? 0 : 1);
+                    ans.pb(nxt[lst]);
+                    key = ts(min(nxt[lst], nxt[j])) + "|"+ ts(max(nxt[lst], nxt[j]));
+                    auto it = mp.equal_range(key);
+                    nxt = (((*it.f).s == nxt) ? (*it.s).s : (*it.f).s);
+                    bool ok = true;
+                    for(int x = 0; x < 3 && ok; ++x) {
+                        FOR(y, 0, 3) {
+                            if(x != y && nxt[x] != ans[0] && nxt[y] != ans[0]) {
+                                 key = ts(min(nxt[x], nxt[y])) + "|"+ ts(max(nxt[x], nxt[y]));
+                                 auto it2 = mp.equal_range(key); 
+                                 if((*it2.f).s == nxt)
+                                    mp.erase(it2.f);
+                                else
+                                    mp.erase(--it2.s);
+                                ok = false;
+                                break;
+                            }
+                        }
+                    }
+                    break;
                 }
             }
         }
-    } else {
-        cout << "0" nl
     }
-
+    FOR(i, 1, n-2) {
+        FOR(j, 0, 3) {
+            if(nxt[j] != ans.back()) {
+                key = ts(min(nxt[j], ans.back())) + "|"+ ts(max(ans.back(), nxt[j]));
+                if(mp.find(key) != mp.end()) {
+                    FOR(k, 0, 3) {
+                        if(nxt[k] != ans.back() && nxt[k] != ans[sz(ans)-2]){
+                            ans.pb(nxt[k]);
+                            break;
+                        }
+                    }
+                    if(!(i == n-3))
+                        nxt = (*mp.find(key)).s;
+                    debug(key);
+                    out_vector(nxt);
+                    out_vector(ans);
+                    mp.erase(key);
+                    break;
+                }
+            }
+        }
+    }
+// 1 3 2 4 5 6 7 8
+// (1,3, 2), (3, 2, 4), (2,4,5), (4,5,6), (5, 6, 7), (6, 7, 8);
+    cout << ans nl
 }
 
 int main () {

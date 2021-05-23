@@ -1,14 +1,14 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.22.2021 18:00:35
  * 
  * Potatoes FTW!
  * 
  **/ 
 
 
-#include <iostream>
+#include <iostream> 
 #include <vector>
 #include <map>
 #include <set>
@@ -112,8 +112,6 @@ template<typename T> void dbg(T arg, T arg2) {cout << arg << " " << arg2 << " " 
 template<typename T> void dbg(T arg, T arg2, T arg3) {cout << arg << " " << arg2 << " " << arg3 << " " << '\n';}
 template<typename T> void dbg(T arg, T arg2, T arg3, T arg4) {cout << arg << " " << arg2 << " " << arg3 << " " << arg4 << " " << '\n';}
 template<typename T> void dbg(T arg, T arg2, T arg3, T arg4, T arg5) {cout << arg << " " << arg2 << " " << arg3 << " " << arg4 << " " << arg5 << '\n';}
-#define debug(...) " [" << #__VA_ARGS__ ": " << (__VA_ARGS__) << "] "
-// debug & operator << (debug & dd, P p) { dd << "(" << p.x << ", " << p.y << ")"; return dd; }
 struct pred {
     bool operator()(const std::pair<int, int> &l, const std::pair<int, int> &r) { return l.s < r.s; } };
 
@@ -138,8 +136,70 @@ template<class T> void puts(T s) {
 |||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| 
 |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| 
 */
+
+struct pt{
+    int x, y;
+};
+/*
+    Check if 4 points make a square of area > 0
+*/
+int distSq(pt p, pt q){ return (p.x - q.x) * (p.x - q.x) + (p.y - q.y) * (p.y - q.y);}
+bool isSquare(pt p1, pt p2, pt p3, pt p4){
+    int d2 = distSq(p1, p2), d3 = distSq(p1, p3), d4 = distSq(p1, p4); 
+    if (d2 == 0 || d3 == 0 || d4 == 0)    return false;
+    if (d2 == d3 && 2 * d2 == d4 && 2 * distSq(p2, p4) == distSq(p2, p3)) return true;
+    if (d3 == d4 && 2 * d3 == d2  && 2 * distSq(p3, p2) == distSq(p3, p4)) return true;
+    if (d2 == d4 && 2 * d2 == d3 && 2 * distSq(p2, p3) == distSq(p2, p4))  return true; 
+    return false;
+}
+pt loc[4][2];
+int go(int a, int b, int c, int d) {
+    int mov[4]{a, b, c, d};
+    pt newloc[4];
+    FOR(i, 0, 4)
+        newloc[i] = loc[i][0];
+
+    FOR(i, 0, 4) {
+         /*
+            Rotate a point 90 degres CC around another point(home) move[i] number of times
+        */
+        FOR(j, 0, mov[i]){
+            int xx = newloc[i].x;
+            int yy = newloc[i].y;
+
+            newloc[i].x = (-(yy - loc[i][1].y)) + loc[i][1].x;
+            newloc[i].y = (xx - loc[i][1].x) + loc[i][1].y;
+        }
+    }
+
+    if(isSquare(newloc[0], newloc[1], newloc[2], newloc[3]))
+        return a+b+c+d;
+    else
+        return -1;
+}
+
 void solve() {
-    
+    FOR(i, 0, 4) {
+        int a, b, c, d;
+        cin >> a >> b >> c >> d;
+        loc[i][0] = pt{a, b};
+        loc[i][1] = pt{c, d};
+    }
+    int ans = 1000000;
+    FOR(i, 0, 4) {
+        FOR(j, 0, 4) {
+            FOR(k, 0, 4) {
+                FOR(l, 0, 4) {
+                    if(i + j + k + l < ans) {
+                        int val = go(i, j, k, l);
+                        ans = (val != -1 ? val : ans);
+                    }
+                }
+            }
+        }
+    }
+    cout << (ans == 1000000 ? -1 : ans) nl
+    vi a;
 }
 
 int main () {

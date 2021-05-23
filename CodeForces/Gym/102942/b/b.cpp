@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.22.2021 14:48:31
  * 
  * Potatoes FTW!
  * 
@@ -107,13 +107,11 @@ template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i
 
 void ff() { fflush(stdout); }
 
-template<typename T> void dbg(T arg) {cout << arg << '\n';}
-template<typename T> void dbg(T arg, T arg2) {cout << arg << " " << arg2 << " " << '\n';}
-template<typename T> void dbg(T arg, T arg2, T arg3) {cout << arg << " " << arg2 << " " << arg3 << " " << '\n';}
-template<typename T> void dbg(T arg, T arg2, T arg3, T arg4) {cout << arg << " " << arg2 << " " << arg3 << " " << arg4 << " " << '\n';}
-template<typename T> void dbg(T arg, T arg2, T arg3, T arg4, T arg5) {cout << arg << " " << arg2 << " " << arg3 << " " << arg4 << " " << arg5 << '\n';}
-#define debug(...) " [" << #__VA_ARGS__ ": " << (__VA_ARGS__) << "] "
-// debug & operator << (debug & dd, P p) { dd << "(" << p.x << ", " << p.y << ")"; return dd; }
+template<typename T> void debug(T arg) {cout << arg << '\n';}
+template<typename T> void debug(T arg, T arg2) {cout << arg << " " << arg2 << " " << '\n';}
+template<typename T> void debug(T arg, T arg2, T arg3) {cout << arg << " " << arg2 << " " << arg3 << " " << '\n';}
+template<typename T> void debug(T arg, T arg2, T arg3, T arg4) {cout << arg << " " << arg2 << " " << arg3 << " " << arg4 << " " << '\n';}
+template<typename T> void debug(T arg, T arg2, T arg3, T arg4, T arg5) {cout << arg << " " << arg2 << " " << arg3 << " " << arg4 << " " << arg5 << '\n';}
 struct pred {
     bool operator()(const std::pair<int, int> &l, const std::pair<int, int> &r) { return l.s < r.s; } };
 
@@ -139,7 +137,24 @@ template<class T> void puts(T s) {
 |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| 
 */
 void solve() {
-    
+    int N; cin >> N;
+    vi a(N);
+    bool odd = 0;
+    FOR(i, 0, N){ 
+        cin >> a[i];
+        if(a[i]&1)
+            odd = true;
+    }
+    if(!odd)
+        cout << -1 nl
+    else {
+        int cnt = 0;
+        FOR(i, 0, N) {
+            if(!(a[i]&1))
+                ++cnt;
+        }
+        cout << cnt nl
+    }
 }
 
 int main () {

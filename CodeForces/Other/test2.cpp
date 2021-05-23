@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.23.2021 10:31:04
  * 
  * Potatoes FTW!
  * 
@@ -145,8 +145,8 @@ void solve() {
 int main () {
     setIO();
 
-    int T = 1; 
-    cin >> T;
+    int T = 100; 
+    //cin >> T;
 
     TC(T){
         //cout << "Case #" << tt << ": ";

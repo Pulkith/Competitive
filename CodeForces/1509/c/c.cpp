@@ -1,7 +1,7 @@
 /**
  * 
  * author: DespicableMonkey
- * created: 05.20.2021 16:49:54
+ * created: 05.20.2021 22:06:13
  * 
  * Potatoes FTW!
  * 
@@ -88,7 +88,7 @@ inline namespace FileIO {
     void setIO(string s, string t) {
         cin.tie(nullptr)->sync_with_stdio(0);
         setIn(s); 
-        setIn(t);
+        setOut(t);
     }
 }
 
@@ -104,15 +104,35 @@ struct pred {
     }
 };
 
+ll dp[2005][2005];
+
 void solve() {
+    int N; cin >> N;
+    vll a(N);
+    cin >> a;
+    sort(all(a));
     
+    memset(dp, -1, sizeof(dp));
+    FORE(i, 1, N)
+        dp[i][i] = 0;
+
+    for(int i = N; i >= 1; i--) {
+        for(int j = i + 1; j <= N; j++){
+            dp[i][j] = a[j-1] - a[i-1] + min(dp[i][j-1], dp[i+1][j]);
+        }
+    }
+
+    cout << dp[1][N] nl
+
+
+
 }
 
 int main () {
     setIO();
 
     int T = 1; 
-    cin >> T;
+    //cin >> T;
 
     TC(T){
         //cout << "Case #" << tt << ": "

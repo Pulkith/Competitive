@@ -1,7 +1,7 @@
 /**
  * 
  * author: DespicableMonkey
- * created: 05.20.2021 16:48:48
+ * created: 05.22.2021 00:51:02
  * 
  * Potatoes FTW!
  * 
@@ -49,8 +49,10 @@ using pll = pair<ll, ll>;
 #define f first
 #define s second
 
-#define nl << "\n";
+#define nl << '\n';
+#define nn '\n'
 #define cnl cout nl
+
 
 #define all(c) (c).begin(), (c).end()
 #define sz(x) (int)(x).size()
@@ -60,9 +62,9 @@ using pll = pair<ll, ll>;
 #define rtn return
 
 #define FOR(i,a,b) for (int i = (a); i < (b); ++i)
-#define F0R(i,a) FOR(i,0,a)
-#define ROF(i,a,b) for (int i = (b)-1; i >= (a); --i)
-#define R0F(i,a) ROF(i,0,a)
+#define FR(i,a) FOR(i,0,a)
+#define ROF(i,a,b) for (int i = a; i >= b; --i)
+#define RF(i,a) ROF(i,a,0)
 #define TC(i) for(int tt = (1); tt <= (i); ++tt)
 #define FORE(i, a, b) for(int i = (a); i<= (b); ++i)
 
@@ -80,15 +82,20 @@ const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 inline namespace FileIO {
 	void setIn(string s)  { (void)!freopen(s.c_str(),"r",stdin); }
 	void setOut(string s) { (void)!freopen(s.c_str(),"w",stdout); }
+    void setDefault() {
+        	cin.tie(nullptr)->sync_with_stdio(0);
+            std::cout << std::fixed << std::showpoint;
+            std::cout << std::setprecision(14);
+    }
 	void setIO(string s = "") {
-		cin.tie(nullptr)->sync_with_stdio(0);
+        setDefault();
 		cin.exceptions(cin.failbit); // throws exception when do smth illegal ex. try to read letter into int
 		if (sz(s)) setIn(s+".in"), setOut(s+".out"); // for old USACO
 	}
     void setIO(string s, string t) {
-        cin.tie(nullptr)->sync_with_stdio(0);
+        setDefault();
         setIn(s); 
-        setIn(t);
+        setOut(t);
     }
 }
 
@@ -96,14 +103,33 @@ template<class T> using pqg = priority_queue<T,vector<T>,greater<T>>;
 
 template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
 template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i << " "; return is;}
+
 void ff() { fflush(stdout); }
 
+template<typename T> void debug(T arg) {cout << arg << '\n';}
+template<typename T> void debug(T arg, T arg2) {cout << arg << " " << arg2 << " " << '\n';}
+template<typename T> void debug(T arg, T arg2, T arg3) {cout << arg << " " << arg2 << " " << arg3 << " " << '\n';}
+template<typename T> void debug(T arg, T arg2, T arg3, T arg4) {cout << arg << " " << arg2 << " " << arg3 << " " << arg4 << " " << '\n';}
+template<typename T> void debug(T arg, T arg2, T arg3, T arg4, T arg5) {cout << arg << " " << arg2 << " " << arg3 << " " << arg4 << " " << arg5 << '\n';}
 struct pred {
-    bool operator()(const std::pair<int, int> &l, const std::pair<int, int> &r) {
-        return l.s < r.s;
-    }
-};
+    bool operator()(const std::pair<int, int> &l, const std::pair<int, int> &r) { return l.s < r.s; } };
 
+
+ll cdiv(ll a, ll b) { return a/b+((a^b)>0&&a%b); } // divide a by b rounded up
+ll fdiv(ll a, ll b) { return a/b-((a^b)<0&&a%b); } // divide a by b rounded down
+
+template<class T> bool ckmin(T& a, const T& b) {
+	return b < a ? a = b, 1 : 0; } // set a = min(a,b)
+template<class T> bool ckmax(T& a, const T& b) {
+	return a < b ? a = b, 1 : 0; }
+
+template<class T> void out_vector(vector<T> v) {
+    for(T& i : v) cout << i << " "; cout << '\n'; }
+template<class T> void out_arr(T a[], int N) {
+    for(int i = 0; i < N; ++i) cout << a[i] << " "; cout << '\n'; }
+/*
+    64 mil =  ~1 second
+*/
 void solve() {
     
 }
@@ -115,7 +141,7 @@ int main () {
     cin >> T;
 
     TC(T){
-        //cout << "Case #" << tt << ": "
+        //cout << "Case #" << tt << ": ";
         solve();
     }
 

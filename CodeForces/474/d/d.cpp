@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.22.2021 18:00:35
  * 
  * Potatoes FTW!
  * 
@@ -112,8 +112,6 @@ template<typename T> void dbg(T arg, T arg2) {cout << arg << " " << arg2 << " " 
 template<typename T> void dbg(T arg, T arg2, T arg3) {cout << arg << " " << arg2 << " " << arg3 << " " << '\n';}
 template<typename T> void dbg(T arg, T arg2, T arg3, T arg4) {cout << arg << " " << arg2 << " " << arg3 << " " << arg4 << " " << '\n';}
 template<typename T> void dbg(T arg, T arg2, T arg3, T arg4, T arg5) {cout << arg << " " << arg2 << " " << arg3 << " " << arg4 << " " << arg5 << '\n';}
-#define debug(...) " [" << #__VA_ARGS__ ": " << (__VA_ARGS__) << "] "
-// debug & operator << (debug & dd, P p) { dd << "(" << p.x << ", " << p.y << ")"; return dd; }
 struct pred {
     bool operator()(const std::pair<int, int> &l, const std::pair<int, int> &r) { return l.s < r.s; } };
 
@@ -138,15 +136,41 @@ template<class T> void puts(T s) {
 |||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| 
 |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| 
 */
+
+int q, k;
+int dp[100005];
+
+
 void solve() {
-    
+    cin >> q >> k;
+    memset(dp, 0, sizeof(dp));
+    dp[0] = 1;
+    FOR(j, 0, 2) {
+        FORE(i, 1, 100000) {
+            if(j == 0) {
+               dp[i] = dp[i-1];
+                if(i+1 > k)
+                    dp[i] += dp[i-k];
+            } 
+            else
+                dp[i] += dp[i-1];
+            dp[i] %= MOD;
+        }   
+    }
+
+    while(q--) {
+        int a, b; cin >> a >> b;
+        int ans = (dp[b] - dp[a-1]);
+        if(ans < 0) ans += MOD;
+        cout << ans nl
+    }
 }
 
 int main () {
     setIO();
 
     int T = 1; 
-    cin >> T;
+   // cin >> T;
 
     TC(T){
         //cout << "Case #" << tt << ": ";

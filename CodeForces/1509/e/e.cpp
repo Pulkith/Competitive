@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.21.2021 15:08:56
  * 
  * Potatoes FTW!
  * 
@@ -62,9 +62,9 @@ using pll = pair<ll, ll>;
 #define rtn return
 
 #define FOR(i,a,b) for (int i = (a); i < (b); ++i)
-#define FR(i,a) FOR(i,0,a)
-#define ROF(i,a,b) for (int i = a; i >= b; --i)
-#define RF(i,a) ROF(i,a,0)
+#define F0R(i,a) FOR(i,0,a)
+#define ROF(i,a,b) for (int i = (b)-1; i >= (a); --i)
+#define R0F(i,a) ROF(i,0,a)
 #define TC(i) for(int tt = (1); tt <= (i); ++tt)
 #define FORE(i, a, b) for(int i = (a); i<= (b); ++i)
 
@@ -79,22 +79,16 @@ const long long LLNF = (ll)10e17+7;
 
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
-/* 64 mil =  ~1 second */
 inline namespace FileIO {
 	void setIn(string s)  { (void)!freopen(s.c_str(),"r",stdin); }
 	void setOut(string s) { (void)!freopen(s.c_str(),"w",stdout); }
-    void setDefault() {
-        	cin.tie(nullptr)->sync_with_stdio(0);
-            std::cout << std::fixed << std::showpoint;
-            std::cout << std::setprecision(14);
-    }
 	void setIO(string s = "") {
-        setDefault();
+		cin.tie(nullptr)->sync_with_stdio(0);
 		cin.exceptions(cin.failbit); // throws exception when do smth illegal ex. try to read letter into int
 		if (sz(s)) setIn(s+".in"), setOut(s+".out"); // for old USACO
 	}
     void setIO(string s, string t) {
-        setDefault();
+        cin.tie(nullptr)->sync_with_stdio(0);
         setIn(s); 
         setOut(t);
     }
@@ -104,41 +98,60 @@ template<class T> using pqg = priority_queue<T,vector<T>,greater<T>>;
 
 template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
 template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i << " "; return is;}
-
 void ff() { fflush(stdout); }
 
-template<typename T> void dbg(T arg) {cout << arg << '\n';}
-template<typename T> void dbg(T arg, T arg2) {cout << arg << " " << arg2 << " " << '\n';}
-template<typename T> void dbg(T arg, T arg2, T arg3) {cout << arg << " " << arg2 << " " << arg3 << " " << '\n';}
-template<typename T> void dbg(T arg, T arg2, T arg3, T arg4) {cout << arg << " " << arg2 << " " << arg3 << " " << arg4 << " " << '\n';}
-template<typename T> void dbg(T arg, T arg2, T arg3, T arg4, T arg5) {cout << arg << " " << arg2 << " " << arg3 << " " << arg4 << " " << arg5 << '\n';}
-#define debug(...) " [" << #__VA_ARGS__ ": " << (__VA_ARGS__) << "] "
-// debug & operator << (debug & dd, P p) { dd << "(" << p.x << ", " << p.y << ")"; return dd; }
 struct pred {
-    bool operator()(const std::pair<int, int> &l, const std::pair<int, int> &r) { return l.s < r.s; } };
-
-
-ll cdiv(ll a, ll b) { return a/b+((a^b)>0&&a%b); } // divide a by b rounded up
-ll fdiv(ll a, ll b) { return a/b-((a^b)<0&&a%b); } // divide a by b rounded down
-
-template<class T> bool ckmin(T& a, const T& b) {
-	return b < a ? a = b, 1 : 0; } // set a = min(a,b)
-template<class T> bool ckmax(T& a, const T& b) {
-	return a < b ? a = b, 1 : 0; }
-
-template<class T> void outv(vector<T> v) {
-    for(T& i : v) cout << i << " "; cout << '\n'; }
-template<class T> void outarr(T a[], int N) {
-    for(int i = 0; i < N; ++i) cout << a[i] << " "; cout << '\n'; }
-template<class T> void puts(T s) {
-    cout << s << '\n';
-}
+    bool operator()(const std::pair<int, int> &l, const std::pair<int, int> &r) {
+        return l.s < r.s;
+    }
+};
 /*
-|||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| 
-|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| 
-|||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| 
+    64 mil =  ~1 second
 */
+ull N, Kin;
+
+void recurs(ull base, ull amt, ull K, ull num) {
+    if(num >= N) return;
+    ull sum = 0;
+    int cnt = 1;
+    cout << amt;
+    ff();
+    while(sum + amt < K) {
+       // cout << sum << " " << amt nl
+        ff();
+        ++cnt;
+        sum += amt;
+        if(cnt == N - base)
+            amt = 1;
+        else
+            amt /= 2;
+    }
+    for(int i = (base+cnt); i > base; --i)
+        cout << i << " ";
+    num += ((base+cnt) - (base+1) + 1);
+    recurs(base + cnt, amt == 1 ? 1 : amt / 2  , K - sum, num);
+    
+}
 void solve() {
+    cin >> N >> Kin;
+    if(N<=63 && 1LL<<(N-1) < Kin){
+        cout << -1 nl
+        rtn;
+    }
+    if(N == 1) {
+        cout << 1 nl
+        rtn;
+    }
+    else if(N == 2) {
+        if(Kin == 1)
+            cout << "1 2" nl
+        else
+            cout << "2 1" nl
+        rtn;
+    }
+    //recurs(0, 1ULL << (N-2), Kin, 0);
+    recurs(0, N - 2, Kin, 0);
+    cnl
     
 }
 
@@ -147,11 +160,43 @@ int main () {
 
     int T = 1; 
     cin >> T;
-
     TC(T){
-        //cout << "Case #" << tt << ": ";
-        solve();
+       // cout << "Case #" << tt << ": "
+      solve();
     }
 
     return 0;
 }
+/*
+
+N = 2; tot = 2;
+1: 1
+2: 1
+
+N = 3; tot = 4
+1: 2
+2: 1
+3: 1
+
+N = 4; tot = 8
+1: 4
+2: 2
+3: 1
+4: 1
+
+N = 5; tot = 16
+1: 8
+2: 4
+3: 2
+4: 1
+5: 1
+
+N = 6; tot = 32
+1: 16
+2: 8
+3: 4
+4: 2
+5: 1
+6: 1
+
+*/

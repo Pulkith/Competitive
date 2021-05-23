@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.22.2021 18:00:35
  * 
  * Potatoes FTW!
  * 
@@ -112,8 +112,6 @@ template<typename T> void dbg(T arg, T arg2) {cout << arg << " " << arg2 << " " 
 template<typename T> void dbg(T arg, T arg2, T arg3) {cout << arg << " " << arg2 << " " << arg3 << " " << '\n';}
 template<typename T> void dbg(T arg, T arg2, T arg3, T arg4) {cout << arg << " " << arg2 << " " << arg3 << " " << arg4 << " " << '\n';}
 template<typename T> void dbg(T arg, T arg2, T arg3, T arg4, T arg5) {cout << arg << " " << arg2 << " " << arg3 << " " << arg4 << " " << arg5 << '\n';}
-#define debug(...) " [" << #__VA_ARGS__ ": " << (__VA_ARGS__) << "] "
-// debug & operator << (debug & dd, P p) { dd << "(" << p.x << ", " << p.y << ")"; return dd; }
 struct pred {
     bool operator()(const std::pair<int, int> &l, const std::pair<int, int> &r) { return l.s < r.s; } };
 
@@ -139,14 +137,27 @@ template<class T> void puts(T s) {
 |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| 
 */
 void solve() {
-    
+    int N;
+    cin >> N;
+    vll a(N);
+    FOR(i, 0, N) {
+        cin >> a[i];
+        if(i != 0)
+            a[i] += a[i-1];
+    }
+    int Q;
+    cin >> Q;
+    while(Q--) {
+        int n; cin >> n;
+        cout << distance(a.begin(), lower_bound(a.begin(), a.end(), n))+1 nl
+    }
 }
 
 int main () {
     setIO();
 
     int T = 1; 
-    cin >> T;
+    //cin >> T;
 
     TC(T){
         //cout << "Case #" << tt << ": ";

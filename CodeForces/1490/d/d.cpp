@@ -1,7 +1,7 @@
 /**
  * 
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.22.2021 14:19:28
  * 
  * Potatoes FTW!
  * 
@@ -79,7 +79,6 @@ const long long LLNF = (ll)10e17+7;
 
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
-/* 64 mil =  ~1 second */
 inline namespace FileIO {
 	void setIn(string s)  { (void)!freopen(s.c_str(),"r",stdin); }
 	void setOut(string s) { (void)!freopen(s.c_str(),"w",stdout); }
@@ -107,13 +106,11 @@ template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i
 
 void ff() { fflush(stdout); }
 
-template<typename T> void dbg(T arg) {cout << arg << '\n';}
-template<typename T> void dbg(T arg, T arg2) {cout << arg << " " << arg2 << " " << '\n';}
-template<typename T> void dbg(T arg, T arg2, T arg3) {cout << arg << " " << arg2 << " " << arg3 << " " << '\n';}
-template<typename T> void dbg(T arg, T arg2, T arg3, T arg4) {cout << arg << " " << arg2 << " " << arg3 << " " << arg4 << " " << '\n';}
-template<typename T> void dbg(T arg, T arg2, T arg3, T arg4, T arg5) {cout << arg << " " << arg2 << " " << arg3 << " " << arg4 << " " << arg5 << '\n';}
-#define debug(...) " [" << #__VA_ARGS__ ": " << (__VA_ARGS__) << "] "
-// debug & operator << (debug & dd, P p) { dd << "(" << p.x << ", " << p.y << ")"; return dd; }
+template<typename T> void debug(T arg) {cout << arg << '\n';}
+template<typename T> void debug(T arg, T arg2) {cout << arg << " " << arg2 << " " << '\n';}
+template<typename T> void debug(T arg, T arg2, T arg3) {cout << arg << " " << arg2 << " " << arg3 << " " << '\n';}
+template<typename T> void debug(T arg, T arg2, T arg3, T arg4) {cout << arg << " " << arg2 << " " << arg3 << " " << arg4 << " " << '\n';}
+template<typename T> void debug(T arg, T arg2, T arg3, T arg4, T arg5) {cout << arg << " " << arg2 << " " << arg3 << " " << arg4 << " " << arg5 << '\n';}
 struct pred {
     bool operator()(const std::pair<int, int> &l, const std::pair<int, int> &r) { return l.s < r.s; } };
 
@@ -134,12 +131,37 @@ template<class T> void puts(T s) {
     cout << s << '\n';
 }
 /*
-|||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| 
-|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| 
-|||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| 
+    64 mil =  ~1 second
 */
+
+map<int, int> mp;
+int a[105];
+int N;
+
+void recurse(int lo, int hi, int dpth = 0) {
+    if(lo < 0 || lo >= N || hi < 0 || hi >= N || lo > hi) rtn;
+    int maxx = 0, indx = 0;
+    FORE(i, lo, hi) {
+        if(a[i] > maxx) {
+            maxx = a[i]; indx = i;
+        }
+    }
+    mp[maxx] = dpth;
+    if(hi == lo) rtn;
+    recurse(lo, indx-1, dpth+1);
+    recurse(indx+1, hi, dpth+1);
+}
+
 void solve() {
-    
+    cin >> N;
+    mp.clear();
+    FOR(i, 0, N)
+        cin >> a[i];
+    recurse(0, N-1);
+
+    FOR(i, 0, N)
+        cout << mp[a[i]] << " ";
+    cnl
 }
 
 int main () {
