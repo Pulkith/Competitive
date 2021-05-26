@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.26.2021 02:38:49
  * 
  * Potatoes FTW!
  **/ 
@@ -158,21 +158,42 @@ template<class T> void put(T s) {
 |||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| 
 |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| 
 */
-
+/***
+ * Special Question
+ * Review Math
+ */ 
 void solve() {
-
+    string s; 
+    cin >> s;
+    int v = 1, v1 = 0;
+    for(int i = 0; i < sz(s); ++i) {
+        if(s[i] == 'm' || s[i] == 'w' ) {
+            put("0"); rtn;
+        }
+        if(s[i] == s[i-1] && (s[i] == 'u' || s[i] == 'n')) {
+            v += v1;
+            v1 = v - v1;
+            v %= MOD;
+        }
+        else
+            v1 = v;
+    }
+    cout << v nl
 }
+
+//
 
 int main () {
     setIO();
 
     #if LOCAL
         //setIn("in1.txt");
-        use_clock();
     #endif
 
     int T = 1; 
-    cin >> T;
+    //cin >> T;
+
+    use_clock();
 
     TC(T){
         //cout << "Case #" << tt << ": ";

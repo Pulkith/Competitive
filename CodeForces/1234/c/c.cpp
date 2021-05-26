@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.26.2021 02:28:21
  * 
  * Potatoes FTW!
  **/ 
@@ -159,20 +159,36 @@ template<class T> void put(T s) {
 |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| 
 */
 
-void solve() {
+pii move(int move, int x, int y) {
+    if(move == 1)
+        return {x+1, y};
+    if(move == 2)
+        return {x, y+1};
+    if(move == 3)
+        return {}
+}
 
+void solve() {
+    int N; cin >> N;
+    string x, u;
+    cin >> x >> u;
+    vector<vector<int>> a(N, vi(2));
+    FR(i, 2)
+        FR(j, N)
+            a[i][j] = ((i == 0 ? x[i] : u[i]) - '0');
 }
 
 int main () {
     setIO();
 
     #if LOCAL
-        //setIn("in1.txt");
-        use_clock();
+        setIn("in1.txt");
     #endif
 
     int T = 1; 
     cin >> T;
+
+    use_clock();
 
     TC(T){
         //cout << "Case #" << tt << ": ";

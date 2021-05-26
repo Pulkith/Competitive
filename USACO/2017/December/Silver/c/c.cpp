@@ -1,9 +1,12 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * 
+ * author: DespicableMonkey
+ * created: 05.24.2021 14:17:42
  * 
  * Potatoes FTW!
+ * 
  **/ 
+
 
 #include <iostream>
 #include <vector>
@@ -109,7 +112,7 @@ inline namespace ExecTime {
             if(!start) {
                 auto _stop_time = cur_t;
                 auto duration = duration_cast<milliseconds>(_stop_time - _start_time);
-                cerr << '\n' << "[Time: " << to_string(duration.count()) << " ms] " << '\n' << '\n'; 
+                cerr << " [Time: " << to_string(duration.count()) << " ms] " << '\n'; 
             }
             else
                 _start_time = cur_t;
@@ -132,15 +135,12 @@ void ff() { fflush(stdout); }
 #define GET_MACRO(_1,_2,_3,_4,_5,NAME,...) NAME
 #define dbg(...) GET_MACRO(__VA_ARGS__, dbg5, dbg4, dbg3, dbg2, dbg1)(__VA_ARGS__)
 
-struct pred { bool operator()(const std::pair<int, int> &l, const std::pair<int, int> &r) { return l.s < r.s; } };
+struct pred {
+    bool operator()(const std::pair<int, int> &l, const std::pair<int, int> &r) { return l.s < r.s; } };
+
 
 ll cdiv(ll a, ll b) { return a/b+((a^b)>0&&a%b); } // divide a by b rounded up
 ll fdiv(ll a, ll b) { return a/b-((a^b)<0&&a%b); } // divide a by b rounded down
-
-#define setbits(X)  __builtin_popcountll(X) //number of "on" bits in num
-
-#define mem0(X) memset((X), 0, sizeof((X)))
-#define mem1(X) memset((X), -1, sizeof((X)))
 
 template<class T> bool ckmin(T& a, const T& b) {
 	return b < a ? a = b, 1 : 0; } // set a = min(a,b)
@@ -151,28 +151,69 @@ template<class T> void outv(vector<T> v) {
     for(T& i : v) cout << i << " "; cout << '\n'; }
 template<class T> void outarr(T a[], int N) {
     for(int i = 0; i < N; ++i) cout << a[i] << " "; cout << '\n'; }
-template<class T> void put(T s) {
-    cout << s << '\n'; }
+template<class T> void puts(T s) {
+    cout << s << '\n';
+}
 /*
 |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| 
 |||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| 
 |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| 
 */
+bool cycle[100005];
+int adj[100005]{-1};
 
+void dfs(int parent, int cur, vector<int> list) {
+    if(!cycle[cur]) {
+        if(cur == parent) {
+            for(auto i : list)
+                cycle[i] = 1;
+        }
+        else if(find(all(list), cur) != list.end()) {
+            bool hit = false;
+            FOR(i, 0, sz(list)) {
+                if(list[i] == cur){
+                    if(hit) break;
+                    else hit = 1;
+                }
+                cycle[list[i]] = 1;
+            }
+        }
+        else {
+            list.pb(cur);
+            if(adj[cur] != -1)
+                dfs(parent, adj[cur], list);
+        } 
+    }
+}
 void solve() {
+    int N; cin >> N;
+    N = 75000;
+    FOR(i, 1, N+1) {
+        int x; cin >> x;
+        if(i == x)
+            cycle[i] = 1;
+        else
+            adj[i] = x;
+    }
+    
+    FOR(i, 0, N+1){
+        if(adj[i] != -1 && !cycle[i])
+            dfs(i, adj[i], {i});
+    }
 
+    int cnt = 0;
+    FOR(i, 1, N+1)
+        if(cycle[i])
+            ++cnt;
+    cout << cnt nl
 }
 
 int main () {
-    setIO();
-
-    #if LOCAL
-        //setIn("in1.txt");
-        use_clock();
-    #endif
-
+    // setIO("shuffle");
+    setIn("in1.txt");
     int T = 1; 
-    cin >> T;
+    //cin >> T;
+    use_clock();
 
     TC(T){
         //cout << "Case #" << tt << ": ";

@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.25.2021 00:32:55
  * 
  * Potatoes FTW!
  **/ 
@@ -132,7 +132,7 @@ void ff() { fflush(stdout); }
 #define GET_MACRO(_1,_2,_3,_4,_5,NAME,...) NAME
 #define dbg(...) GET_MACRO(__VA_ARGS__, dbg5, dbg4, dbg3, dbg2, dbg1)(__VA_ARGS__)
 
-struct pred { bool operator()(const std::pair<int, int> &l, const std::pair<int, int> &r) { return l.s < r.s; } };
+struct pred { bool operator()(const std::pair<int, vector<int>> &l, const std::pair<int, vector<int>> &r) { return sz(l.s) < sz(r.s); } };
 
 ll cdiv(ll a, ll b) { return a/b+((a^b)>0&&a%b); } // divide a by b rounded up
 ll fdiv(ll a, ll b) { return a/b-((a^b)<0&&a%b); } // divide a by b rounded down
@@ -151,7 +151,7 @@ template<class T> void outv(vector<T> v) {
     for(T& i : v) cout << i << " "; cout << '\n'; }
 template<class T> void outarr(T a[], int N) {
     for(int i = 0; i < N; ++i) cout << a[i] << " "; cout << '\n'; }
-template<class T> void put(T s) {
+template<class T> void puts(T s) {
     cout << s << '\n'; }
 /*
 |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| 
@@ -160,19 +160,57 @@ template<class T> void put(T s) {
 */
 
 void solve() {
+    int F, N;
+    cin >> F >> N;
+    vector<pair<int, vector<int>>> a;
 
+    FR(i, N) {
+        int n; cin >> n;
+        a.pb({i, {}});
+        FR(j, n) {
+            int x; cin >> x;
+            a[i].s.pb(x);
+        }
+    }
+
+    sort(all(a), pred());
+    vi ans(N);
+    map<int, int> mp;
+    FR(i, N) {
+        if(sz(a[i].s) == 1) {
+            ans[a[i].f] = a[i].s[0];
+            ++mp[a[i].s[0]];
+            if(mp[a[i].s[0]] * 2 > N) {
+                puts("NO"); rtn;
+            }
+        } else {
+            int minn = INF; int index = -1;
+            FR(j, sz(a[i].s)) {
+                if(mp[a[i].s[j]] < minn) {
+                    minn = mp[a[i].s[j]];
+                    index = a[i].s[j];
+                }
+            }
+            ++mp[index];
+            ans[a[i].f] = index;
+            if(mp[index] * 2 > N) {
+                puts("NO"); rtn;
+            }
+        }
+    }
+    cout << "YES" << '\n';
+    FR(i, N)
+        cout << ans[i] << " ";
+    cnl
 }
 
 int main () {
     setIO();
-
-    #if LOCAL
-        //setIn("in1.txt");
-        use_clock();
-    #endif
-
+    //setIn("in1.txt");
     int T = 1; 
     cin >> T;
+
+    use_clock();
 
     TC(T){
         //cout << "Case #" << tt << ": ";

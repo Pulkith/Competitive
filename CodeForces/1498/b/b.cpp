@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.25.2021 14:34:47
  * 
  * Potatoes FTW!
  **/ 
@@ -160,19 +160,43 @@ template<class T> void put(T s) {
 */
 
 void solve() {
+    int N, W; 
+    cin >> N >> W;
+
+    map<int, int, greater<int>> mp;
+    FOR(i, 0, N) {
+        int x; cin >> x;
+        ++mp[x];
+    }
+
+    int height = 0;
+    int left = sz(mp);
+    while(left) {
+        int cur = W;
+        ++height;
+        for(auto [x, y] : mp) {
+            if(mp[x] == 0) continue;
+            int dif = min(y, cur / x);
+            mp[x] -= dif;
+            if(mp[x] == 0) --left;
+            cur -= dif * x;
+        }
+    }
+    cout << height nl
 
 }
-
+    
 int main () {
     setIO();
-
+    
     #if LOCAL
-        //setIn("in1.txt");
-        use_clock();
+        setIn("in1.txt");
     #endif
 
     int T = 1; 
     cin >> T;
+
+    use_clock();
 
     TC(T){
         //cout << "Case #" << tt << ": ";

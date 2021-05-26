@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.25.2021 15:17:44
  * 
  * Potatoes FTW!
  **/ 
@@ -160,6 +160,35 @@ template<class T> void put(T s) {
 */
 
 void solve() {
+    int N; cin >> N;
+    map<int, vi> mp;
+    FR(i, N) {
+        int x;
+        cin >> x;
+        mp[x].pb(i);
+    }
+
+    if(sz(mp) == 1)  {
+        put("0");
+        rtn;
+    }
+    int minn = INF;
+
+    for(auto [x, y] : mp) {
+        int seg = 0;
+        FR(i, sz(y)-1) {
+            if(y[i+1] - y[i] > 1)
+                ++seg;
+        }
+        if(y[0] != 0)
+            ++seg;
+        if(y[sz(y) -1] != N-1)
+            ++seg;
+        ckmin(minn, seg);
+    }
+
+    put(minn);
+
 
 }
 
@@ -168,11 +197,12 @@ int main () {
 
     #if LOCAL
         //setIn("in1.txt");
-        use_clock();
     #endif
 
     int T = 1; 
     cin >> T;
+
+    use_clock();
 
     TC(T){
         //cout << "Case #" << tt << ": ";

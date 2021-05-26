@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.25.2021 17:58:38
  * 
  * Potatoes FTW!
  **/ 
@@ -83,7 +83,7 @@ inline namespace FileIO {
 	void setIn(string s)  { (void)!freopen(s.c_str(),"r",stdin); }
 	void setOut(string s) { (void)!freopen(s.c_str(),"w",stdout); }
     void setDefault() {
-        	cin.tie(nullptr)->sync_with_stdio(0);
+        	//cin.tie(nullptr)->sync_with_stdio(0);
             std::cout << std::fixed << std::showpoint;
             std::cout << std::setprecision(14);
     }
@@ -158,9 +158,32 @@ template<class T> void put(T s) {
 |||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| 
 |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| 
 */
-
+//1 2 3
+//  3 6
+//
+//1 4 4 6 7 8
 void solve() {
+    int N; cin >> N;
+    vll a(N+1);
+    FORE(i, 2, N) {
+        put("? 1 " + ts(i));
+        ff();
+        ll sum;
+        cin >> sum;
+        a[i] = sum;
+    }
+    put("? 2 " + ts(N)); 
+    ff();
+    ll exclude;
+    cin >> exclude;
+    a[1] = a[N] - exclude;
+    cout << "! " << a[1] << " ";
 
+    FORE(i, 2, N) {
+        cout << a[i] - a[i-1]<< " ";
+    }
+    cnl
+    ff();
 }
 
 int main () {
@@ -168,11 +191,12 @@ int main () {
 
     #if LOCAL
         //setIn("in1.txt");
-        use_clock();
     #endif
 
     int T = 1; 
-    cin >> T;
+    //cin >> T;
+
+    use_clock();
 
     TC(T){
         //cout << "Case #" << tt << ": ";

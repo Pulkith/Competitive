@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.26.2021 12:40:25
  * 
  * Potatoes FTW!
  **/ 
@@ -158,9 +158,46 @@ template<class T> void put(T s) {
 |||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| 
 |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| 
 */
-
+int freq(vi a) {
+    int ocount = 0, zcount = 0;
+    each(i, a) {
+        if(i == 0)
+            ++zcount;
+        else
+            ++ocount;
+    }
+    return(zcount > ocount ? 0 : 1);
+}
 void solve() {
+    int N; cin >> N;
+    vi a(N);
+    cin >> a;
+    int f = freq(a);
+    vi sol;
+    each(i, a) {
+        if(i == f)
+            sol.pb(i);
+    }
+    if(sz(sol)&1 && f == 1 ) {
+        int ocount = 0;
+        each(i, a) {
+            if(i == 1)
+                ++ocount;
+            else {
+                    if(ocount&1)
+                        sol[ocount-1] = 0;
+                    else
+                        sol[ocount] = 0;
+                    break;
+            }
+        }
+    }
+    
 
+    cout << sz(sol) nl
+    each(i, sol)
+        cout << i << " ";
+    cnl 
 }
 
 int main () {
@@ -168,11 +205,12 @@ int main () {
 
     #if LOCAL
         //setIn("in1.txt");
-        use_clock();
     #endif
 
     int T = 1; 
     cin >> T;
+
+    use_clock();
 
     TC(T){
         //cout << "Case #" << tt << ": ";

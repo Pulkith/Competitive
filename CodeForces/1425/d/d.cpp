@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.25.2021 17:58:36
  * 
  * Potatoes FTW!
  **/ 
@@ -160,19 +160,20 @@ template<class T> void put(T s) {
 */
 
 void solve() {
-
+ 
 }
 
 int main () {
     setIO();
 
     #if LOCAL
-        //setIn("in1.txt");
-        use_clock();
+        setIn("in1.txt");
     #endif
 
     int T = 1; 
     cin >> T;
+
+    use_clock();
 
     TC(T){
         //cout << "Case #" << tt << ": ";

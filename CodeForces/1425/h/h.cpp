@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.25.2021 17:43:26
  * 
  * Potatoes FTW!
  **/ 
@@ -160,7 +160,14 @@ template<class T> void put(T s) {
 */
 
 void solve() {
+    int A, B, C, D;
+    cin >> A >> B >> C >> D;
 
+    int sign = ((A+B)&1) ? -1 : 1;
+    cout << (sign == -1 && (A>0 || D>0) ? "Ya " : "Tidak ");
+    cout << (sign == -1 && (B > 0 || C > 0) ? "Ya " : "Tidak ");
+    cout << (sign == 1 && (B > 0 || C > 0) ? "Ya " : "Tidak ");
+    cout << (sign == 1 && (A > 0 || D > 0) ? "Ya" : "Tidak") nl
 }
 
 int main () {
@@ -168,11 +175,12 @@ int main () {
 
     #if LOCAL
         //setIn("in1.txt");
-        use_clock();
     #endif
 
     int T = 1; 
     cin >> T;
+
+    use_clock();
 
     TC(T){
         //cout << "Case #" << tt << ": ";

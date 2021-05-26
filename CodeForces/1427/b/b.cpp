@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.25.2021 01:26:29
  * 
  * Potatoes FTW!
  **/ 
@@ -160,19 +160,85 @@ template<class T> void put(T s) {
 */
 
 void solve() {
+    int N, K;
+    string s;
+    cin >> N >> K >> s;
+    for(int i = 0; i < N-2 && K > 0; ++i) {
+        if(s[i] == 'W' && s[i+1] == 'L' && s[i+2] == 'W') {
+            --K;
+            s[i+1] = 'W';
+        }
+    }
+    pqg<pair<int, int>> pq;
+    for(int i = 0; i < N; ++i) {
+        if(s[i] == 'W') {
+            for(int j = i+1; j < N; ++j) {
+                if(s[j] == 'W') {
+                    if(j - 1 -i > 0)
+                        pq.push({j-i - 1, i+1});
+                    i = j;
+                }
+            }
+        }
+    }
+    FR(i, N) {
+        if(s[i] == 'W'){
+            if(i == 0) break;
+            pq.push({i, 0});
+            break;
+        }
+    }
+    for(int i = N-1; i >= 0; --i) {
+        if(s[i] == 'W') {
+            if(i == N-1) break;
+            pq.push({N-i-1, i+1});
+            break;
+        }
+    }
+    //7 1
+    //LWLWLWL
 
+
+    if(sz(pq) == 0)
+        pq.push({N, 0});
+    while(!pq.empty() && K) {
+        auto tp = pq.top(); pq.pop();
+        if(s[0] != 'W' && tp.s == 0) {
+            for(int i = tp.s +tp.f - 1; i >= tp.s; --i) {
+                s[i] = 'W';
+                --K;
+                if(K == 0) break;
+            }
+        }
+        else {
+            FOR(i, tp.s, tp.s+tp.f){
+                s[i] = 'W';
+                --K;
+                if(K == 0) break;
+            }
+        }
+    }
+
+    int score = 0;
+    bool before = 0;
+    FR(i, N) {
+        if(s[i] == 'W') {
+            score += (before ? 2 : 1);
+            before = 1;
+        }
+        else
+            before = 0;
+    }
+    cout << score nl
 }
 
 int main () {
     setIO();
-
-    #if LOCAL
-        //setIn("in1.txt");
-        use_clock();
-    #endif
-
+    //setIn("in1.txt");
     int T = 1; 
     cin >> T;
+
+    use_clock();
 
     TC(T){
         //cout << "Case #" << tt << ": ";

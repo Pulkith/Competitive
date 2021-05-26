@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.26.2021 13:17:11
  * 
  * Potatoes FTW!
  **/ 
@@ -159,20 +159,36 @@ template<class T> void put(T s) {
 |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| 
 */
 
+//Get last 5 digits of x ^ 5. powint, modint
 void solve() {
-
+    string n; cin >> n;
+    string ans = "11111";
+    ans[0] = n[0];
+    ans[1] = n[2];
+    ans[2] = n[4];
+    ans[3] = n[3];
+    ans[4] = n[1];
+    ll ansn = stoi(ans);
+    ll res = 1;
+    FOR(i, 0, 5)
+                            // 10^(number of digits wanted);
+        res = (res * ansn) % 100000;
+    string boom = ts(res);
+    while(sz(boom) < 5)
+        boom = "0" + boom;
+    put(boom);
 }
 
 int main () {
     setIO();
 
     #if LOCAL
-        //setIn("in1.txt");
+        setIn("in1.txt");
         use_clock();
     #endif
 
     int T = 1; 
-    cin >> T;
+    //cin >> T;
 
     TC(T){
         //cout << "Case #" << tt << ": ";

@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 05.24.2021 22:52:03
  * 
  * Potatoes FTW!
  **/ 
@@ -151,7 +151,7 @@ template<class T> void outv(vector<T> v) {
     for(T& i : v) cout << i << " "; cout << '\n'; }
 template<class T> void outarr(T a[], int N) {
     for(int i = 0; i < N; ++i) cout << a[i] << " "; cout << '\n'; }
-template<class T> void put(T s) {
+template<class T> void puts(T s) {
     cout << s << '\n'; }
 /*
 |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| 
@@ -160,19 +160,49 @@ template<class T> void put(T s) {
 */
 
 void solve() {
+    int N; cin >> N;
+    priority_queue<int> odds, evens;
+    FOR(i, 0, N) {
+        int x; cin>> x;
+        if(x&1)odds.push(x);
+        else evens.push(x);
+    }
+
+    ll aliceScore = 0, bobScore = 0;
+
+    bool turn = 0;
+    while(sz(odds) > 0 || sz(evens) > 0) {
+        if(!turn) {
+            if(sz(odds) && sz(evens) && evens.top() > odds.top() || !sz(odds) && sz(evens)) {
+                aliceScore += evens.top(); evens.pop();
+            } else 
+                odds.pop();
+        } else {
+            if(sz(odds) && sz(evens) && odds.top() > evens.top() || sz(odds) && !sz(evens)) {
+                bobScore += odds.top(); odds.pop();
+            } else
+                evens.pop();
+        }
+
+        turn = !turn;
+    }
+
+
+    if(aliceScore == bobScore)
+        puts("Tie");
+    else
+        puts(aliceScore > bobScore ? "Alice" : "Bob");
+
 
 }
 
 int main () {
     setIO();
-
-    #if LOCAL
-        //setIn("in1.txt");
-        use_clock();
-    #endif
-
+    setIn("in1.txt");
     int T = 1; 
     cin >> T;
+
+    use_clock();
 
     TC(T){
         //cout << "Case #" << tt << ": ";

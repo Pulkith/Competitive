@@ -1,9 +1,12 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * 
+ * author: DespicableMonkey
+ * created: 05.24.2021 11:35:28
  * 
  * Potatoes FTW!
+ * 
  **/ 
+
 
 #include <iostream>
 #include <vector>
@@ -28,10 +31,8 @@
 #include <numeric> 
 #include <cassert>
 #include <iomanip>
-#include <chrono>
 
 using namespace std;
-using namespace std::chrono;
 
 #define ll long long
 #define ld long double
@@ -99,24 +100,6 @@ inline namespace FileIO {
     }
 }
 
-inline namespace ExecTime {
-    #define cur_t chrono::high_resolution_clock::now()
-    auto _start_time = cur_t;
-    bool use = 0;
-    void use_clock() { use = 1; }
-    void log_time(bool start = true) {
-        if(use) {
-            if(!start) {
-                auto _stop_time = cur_t;
-                auto duration = duration_cast<milliseconds>(_stop_time - _start_time);
-                cerr << '\n' << "[Time: " << to_string(duration.count()) << " ms] " << '\n' << '\n'; 
-            }
-            else
-                _start_time = cur_t;
-        }
-    }
-}
-
 template<class T> using pqg = priority_queue<T,vector<T>,greater<T>>;
 
 template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
@@ -124,23 +107,20 @@ template<typename T, typename U> ostream& operator<<(ostream& is, pair<T, U> &v)
 template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i << " "; return is;}
 
 void ff() { fflush(stdout); }
-#define dbg1(arg) cerr << " [" << #arg << ": " << arg << "] " << '\n';
-#define dbg2(arg, arg2) cerr << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << "] " << '\n';
-#define dbg3(arg, arg2, arg3) cerr << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << ", " << #arg3 << ": " << arg3 << "] " << '\n';
-#define dbg4(arg, arg2, arg3, arg4) cerr << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << ", " << #arg3 << ": " << arg3 << ", " << #arg4 << ": " << arg4 << "] " << '\n';
-#define dbg5(arg, arg2, arg3, arg4, arg5) cerr << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << ", " << #arg3 << ": " << arg3 << "] " << ", " << #arg4 << ": " << arg4 << ", " << #arg5 << ": " << arg5 << '\n';
-#define GET_MACRO(_1,_2,_3,_4,_5,NAME,...) NAME
-#define dbg(...) GET_MACRO(__VA_ARGS__, dbg5, dbg4, dbg3, dbg2, dbg1)(__VA_ARGS__)
 
-struct pred { bool operator()(const std::pair<int, int> &l, const std::pair<int, int> &r) { return l.s < r.s; } };
+template<typename T> void dbg(T arg) {cout << arg << '\n';}
+template<typename T> void dbg(T arg, T arg2) {cout << arg << " " << arg2 << " " << '\n';}
+template<typename T> void dbg(T arg, T arg2, T arg3) {cout << arg << " " << arg2 << " " << arg3 << " " << '\n';}
+template<typename T> void dbg(T arg, T arg2, T arg3, T arg4) {cout << arg << " " << arg2 << " " << arg3 << " " << arg4 << " " << '\n';}
+template<typename T> void dbg(T arg, T arg2, T arg3, T arg4, T arg5) {cout << arg << " " << arg2 << " " << arg3 << " " << arg4 << " " << arg5 << '\n';}
+#define debug(...) " [" << #__VA_ARGS__ ": " << (__VA_ARGS__) << "] "
+// debug & operator << (debug & dd, P p) { dd << "(" << p.x << ", " << p.y << ")"; return dd; }
+struct pred {
+    bool operator()(const std::pair<int, int> &l, const std::pair<int, int> &r) { return l.s < r.s; } };
+
 
 ll cdiv(ll a, ll b) { return a/b+((a^b)>0&&a%b); } // divide a by b rounded up
 ll fdiv(ll a, ll b) { return a/b-((a^b)<0&&a%b); } // divide a by b rounded down
-
-#define setbits(X)  __builtin_popcountll(X) //number of "on" bits in num
-
-#define mem0(X) memset((X), 0, sizeof((X)))
-#define mem1(X) memset((X), -1, sizeof((X)))
 
 template<class T> bool ckmin(T& a, const T& b) {
 	return b < a ? a = b, 1 : 0; } // set a = min(a,b)
@@ -151,25 +131,34 @@ template<class T> void outv(vector<T> v) {
     for(T& i : v) cout << i << " "; cout << '\n'; }
 template<class T> void outarr(T a[], int N) {
     for(int i = 0; i < N; ++i) cout << a[i] << " "; cout << '\n'; }
-template<class T> void put(T s) {
-    cout << s << '\n'; }
+template<class T> void puts(T s) {
+    cout << s << '\n';
+}
 /*
 |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| 
 |||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| 
 |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| 
 */
-
 void solve() {
+    int N; cin >> N;
+    int minn = INF;
+    vi a(N);
+    FOR(i, 0, N) {
+        cin >> a[i];
+            ckmin(minn, a[i]);
+    }
 
+    int cnt = 0;
+    FOR(i, 0, N) {
+        if(a[i] > minn)
+            ++cnt;
+    }
+
+    cout << cnt nl
 }
 
 int main () {
     setIO();
-
-    #if LOCAL
-        //setIn("in1.txt");
-        use_clock();
-    #endif
 
     int T = 1; 
     cin >> T;
@@ -178,8 +167,6 @@ int main () {
         //cout << "Case #" << tt << ": ";
         solve();
     }
-
-    log_time(0);
 
     return 0;
 }
