@@ -85,22 +85,51 @@ int main () {
    int n;
    cin >> n;
    vi a(n);
-   FOR(i, 0, n)
-    cin >> a[i];
-    vi sol;
-    bool ok = false;
-    FOR(i, 0, n-2) {
-        if(!((a[i] > a[i+1] && a[i+1] > a[i+2])||(a[i] < a[i+1] && a[i+1] < a[i+2])) && a[i] != a[i+1] && a[i+1] != a[i+2]) {
-            ok = true;
-            sol.pb(i+1); sol.pb(i+2); sol.pb(i+3);
-            break;
-        }
+   FOR(i, 0, n) cin >> a[i];
+
+
+    vi ans(3, -1);
+
+    int mnstart = a[0], mxstart = a[0]; multiset<int> mnend;
+    multiset<int, greater<int>> mxend; 
+    for(int i = n-1; i >= 1; --i){
+        mxend.insert(a[i]);
+        mnend.insert(a[i]);
     }
 
-    if(!ok) cout << "0" nl
+    FOR(i, 1, n-1) {
+        mxend.erase(mxend.equal_range(a[i]).f);
+        mnend.erase(mnend.equal_range(a[i]).f);
+        if(a[i] > mnstart && a[i] > *mnend.begin()) {
+            ans[1] = i+1;
+            for(int k = i-1; k >= 0; --k)
+                if(a[k] == mnstart)
+                    ans[0] = k+1;
+            for(int k = i+1; k < n; ++k)
+                if(a[k] == *mnend.begin())
+                    ans[2] = k+1;
+
+            break;
+        }
+        else if(a[i] < mxstart && a[i] < *mxend.begin()) {
+            ans[1] = i+1;
+
+            for(int k = i-1; k >= 0; --k)
+                if(a[k] == mxstart)
+                    ans[0] = k+1;
+            for(int k = i+1; k < n; ++k)
+                if(a[k] == *mxend.begin())
+                    ans[2] = k+1;
+            break;
+        }
+
+        mnstart = min(mnstart, a[i]);
+        mnstart = max(mnstart, a[i]);
+    }
+    if(ans[0] == -1) cout << "0" nl
     else {
-        cout << 3 nl
-        cout << sol[0] << " " << sol[1] << " " << sol[2];
+        cout << "3" nl
+        cout << ans[0] << " " << ans[1] << " " << ans[2] nl
     }
 
     return 0;

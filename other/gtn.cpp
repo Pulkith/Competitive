@@ -61,7 +61,7 @@ void solve() {
     cout << "Max is: " ; ff();
     int mx;
     cin >> mx;
-    int lo = 0, hi = mx;
+    int lo = 0, hi = mx;t
     while(lo < hi) {
         int mid = (lo+hi) / 2;
         cout << mid nl

@@ -140,32 +140,40 @@ template<class T> void puts(T s) {
 |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| 
 */
 void solve() {
-    int n; cin >> n;
-    map<string, pii> mp;
-    string mxn = ""; int mxnum =0 ; int index = INF;
-    FOR(i, 0, n) {
-        string s; cin >> s;
-        int score; cin >> score;
-        mp[s].f += score;
-
-        if(score >= 0)
-            mp[s].s = i;
+    int N; cin >> N;
+    map<string, int> mp;
+    vector<pair<string, int>> hold;
+    FOR(i, 0, N) {
+        string name; int score;
+        cin >> name >> score;
+        mp[name] += score;
+        hold.pb({name, score});
     }
-
-    for(auto [x, y] : mp) {
-        if(y.f > mxnum ) {
-            mxnum = y.f;
-            mxn = x; 
-            index = y.s;
-        } else if(y.f == mxnum && y.s < index) {
-            mxnum = y.f;
-            mxn = x;
-            index = y.s;
+    int maxx = -INF;
+    vector<string> poss;
+    for(auto [x, y] : mp){
+        if(y > maxx) {
+            maxx = y;
+            poss.clear();
+            poss.pb(x);
+        }
+        else if(y == maxx) {
+            poss.pb(x);
         }
     }
-    dbg(mp["jpdwmyke"], mp["aawtvezfntstrcpgbzjbf"]);
+    
 
-    cout << mxn nl
+
+    map<string, int> mp2;
+    for(pair<string, int> x : hold) {
+        if(find(poss.begin(), poss.end(), x.f) != poss.end()) {
+            mp2[x.f] += x.s;
+            if(mp2[x.f] >= maxx) {
+                cout << x.f nl;
+                rtn;
+            }
+        }
+    }
 }
 
 int main () {

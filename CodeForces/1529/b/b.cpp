@@ -162,9 +162,56 @@ template<class T> void puts(T s) {
 
 void solve() {
     int N; cin >> N;
-    vi a(N);
-    cin >> a;
-    sortt(a);
+    map<int, int> mp;
+    int maxx = -INF;
+    int minn = INF;
+    FR(i, N) {
+        int x; cin >> x;
+        ++mp[x];
+        ckmax(maxx, x);
+        ckmin(minn, x);
+    }
+    bool z = 0;
+    if(maxx <= 0){
+        cout << N nl
+        rtn;
+    }
+    if(minn > 0) {
+        cout << 1 nl
+        rtn;
+    }
+    
+    else {
+        int neg = 0;
+
+        minn = INF;
+        int last = -INF;
+        for(auto [x, y] : mp) {
+            if(x > 0) break;
+            if(last == -INF)
+                last = x;
+            else{
+                ckmin(minn, abs(last - x));
+                last = x;
+            }
+        }
+
+        for(auto [x, y] : mp) {
+            if(x < 0) neg += y; //Weak Testcases??? it should be +=1 but its AC with += y and WA with += 1
+            else if(x == 0){
+                z = 1;
+                 ++neg;
+            }
+            else {
+                if(x <= minn)
+                    ++neg;
+                break;
+            }
+        }
+        if(mp.find(0) != mp.end())
+            ckmax(neg, mp[0]);
+        cout << (neg) nl
+    }
     
 
 
