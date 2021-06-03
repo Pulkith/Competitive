@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 06.03.2021 16:17:48
  * Potatoes FTW!
  **/ 
 
@@ -112,7 +112,20 @@ template<class T> bool cmax(T& a, const T& b) {
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
 void solve() {
+    int N; cin >> N;
+    map<int, int> mp;
+    FOR(i, 0, N) {
+        string s; cin >> s;
+        for(char c : s) 
+            ++mp[c];
+    }
 
+    for(auto [x, y] : mp) {
+        if(y%N != 0) {
+            put("NO"); return;
+        }
+    }
+    put("YES");
 }
 
 int main () {

@@ -35,15 +35,15 @@
 using namespace std;
 
 bool factors[10000005]{true};
-int ans[10000005]{-1};
 vector<int> fac;
 void seive(int limit) {
-    factors[2] = true;
+    memset(factors, true, sizeof(factors));
+    factors[2] = true; fac.pb(2);
     for(int i = 4; i <= limit; i += 2)
         factors[i] = false;
     for(int i = 3; i <= limit; i += 2) {
         if(factors[i]) {
-            for(int j = i*2; i <= limit; j += i)
+            for(int j = i*2; j <= limit; j += i)
                 factors[j] = false;
             fac.push_back(i);
         }

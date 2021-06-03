@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 06.03.2021 12:14:10
  * Potatoes FTW!
  **/ 
 
@@ -112,9 +112,23 @@ template<class T> bool cmax(T& a, const T& b) {
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
 void solve() {
+    int N; 
+    cin >> N;
+    vi a(N);
+    FOR(i, 0, N) cin >> a[i];
+    sort(all(a));
 
+    vi ans(N);
+    int f = 0, l = N/2;
+    FOR(i, 0, N)
+        ans[i] = (i&1?a[f++]:a[l++]);
+
+    int cnt = 0;
+    FOR(i, 1, N-1)
+        if(ans[i] < ans[i-1] && ans[i] < ans[i+1]) ++cnt;
+    put(cnt);
+    outv(ans);
 }
-
 int main () {
     CP::IO::setIO();
     CP::IO::FastIO();
@@ -126,7 +140,7 @@ int main () {
     #endif
 
     CoMpIlAtIoN_ErRoR_oN_TeSt_CaSe_69420
-    cin >> T;
+    //cin >> T;
 
     for(int tt = 1; tt <= T; ++tt){
         //cout << "Case #" << tt << ": ";

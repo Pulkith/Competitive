@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 06.03.2021 16:12:54
  * Potatoes FTW!
  **/ 
 

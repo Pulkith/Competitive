@@ -171,13 +171,10 @@ int r(int lower, int upper,  int count){
 int main() {
     setIO("in2.txt", "ans2.txt");
 
-    cout << "500" << '\n';
+    cout << "1\n200000 \n0" << '\n';
 
-    FOR(i, 0, 500) {
-        cout << "500 1" nl
-        FOR(i, 0, 500)
-            cout << (500 - i) << " ";
-        cnl
+    FOR(i, 0, 200000) {
+        put(411743);
     }
 
     // cout << "5000" << '\n';

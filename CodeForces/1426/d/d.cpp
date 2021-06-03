@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 06.01.2021 12:15:59
  * Potatoes FTW!
  **/ 
 
@@ -8,7 +8,7 @@
 
 using namespace std;
 
-typedef int64_t ll;
+typedef long long ll;
 
 using pii = pair<int, int>;
 using pll = pair<long long, long long>;
@@ -16,12 +16,11 @@ using pll = pair<long long, long long>;
 typedef vector<int> vi;
 typedef vector<ll> vll;
 typedef vector<bool> vb;
-#define pb push_back
+#define pb emplace_back
 #define f first
 #define s second
 
 #define nl '\n'
-#define CoMpIlAtIoN_ErRoR_oN_TeSt_CaSe_69420 int T = 1;
 
 #define all(c) (c).begin(), (c).end()
 #define sz(x) (int)(x).size()
@@ -36,25 +35,25 @@ typedef vector<bool> vb;
 template<typename T, typename U> using p = pair<T, U>;
 template<typename T> using vt = vector<T>;
 template<class T> using pqg = priority_queue<T,vector<T>,greater<T>>;
-const int MOD = 1'000'000'007;
-const int INF = 2'000'000'000;
-const int LL_INF = (int)(1e18);
+const int INF = (1e7+7), MOD = (1e7+7);
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
 namespace CP {
-    inline namespace IO {
+    inline namespace FileIO {
         void setIn(string s)  { (void)!freopen(s.c_str(),"r",stdin); }
         void setOut(string s) { (void)!freopen(s.c_str(),"w",stdout); }
-        void FastIO() {
+        void setDefault() {
             cin.tie(nullptr)->sync_with_stdio(0);
             std::cout << std::fixed << std::showpoint;
             std::cout << std::setprecision(14);
         }
         void setIO(string s = "") {
+            setDefault();
             cin.exceptions(cin.failbit); // throws exception when do smth illegal ex. try to read letter into int
             if (sz(s)) setIn(s+".in"), setOut(s+".out"); // for old USACO
         }
         void setIO(string s, string t) {
+            setDefault();
             setIn(s);
             setOut(t);
         }
@@ -78,18 +77,16 @@ namespace CP {
     }
 }
 inline namespace Output {
-    void ff() {  fflush(stdout); }
-    bool debug = 0;
-    const string RESET = "\033[0m", GREEN="\033[32m", BLACK="\033[30m", RED="\033[31m", YELLOW="\033[33m";    
-    #define dbg1(arg) {if(debug){cerr << GREEN << " [" << #arg << ": " << arg << "] " << RESET << '\n';}}
-    #define dbg2(arg, arg2) {if(debug){cerr << GREEN << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << "] " << RESET << '\n';}}
-    #define dbg3(arg, arg2, arg3) {if(debug){cerr << GREEN << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << ", " << #arg3 << ": " << arg3 << "] " << RESET << '\n';}}
-    #define dbg4(arg, arg2, arg3, arg4) {if(debug){cerr << GREEN << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << ", " << #arg3 << ": " << arg3 << ", " << #arg4 << ": " << arg4 << "] " << RESET << '\n';}}
-    #define dbg5(arg, arg2, arg3, arg4, arg5) {if(debug){cerr << GREEN << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << ", " << #arg3 << ": " << arg3 << ", " << #arg4 << ": " << arg4 << ", " << #arg5 << ": " << arg5 << "] " << RESET << '\n';}}
+    void ff() { fflush(stdout); }
+    #define dbg1(arg) cerr << " [" << #arg << ": " << arg << "] " << '\n';
+    #define dbg2(arg, arg2) cerr << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << "] " << '\n';
+    #define dbg3(arg, arg2, arg3) cerr << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << ", " << #arg3 << ": " << arg3 << "] " << '\n';
+    #define dbg4(arg, arg2, arg3, arg4) cerr << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << ", " << #arg3 << ": " << arg3 << ", " << #arg4 << ": " << arg4 << "] " << '\n';
+    #define dbg5(arg, arg2, arg3, arg4, arg5) cerr << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << ", " << #arg3 << ": " << arg3 << ", " << #arg4 << ": " << arg4 << ", " << #arg5 << ": " << arg5 << "] " << '\n';
     #define GET_MACRO(_1,_2,_3,_4,_5,NAME,...) NAME
     #define dbg(...) GET_MACRO(__VA_ARGS__, dbg5, dbg4, dbg3, dbg2, dbg1)(__VA_ARGS__)
     void lower(std::string& s){transform(s.begin(), s.end(), s.begin(), ::tolower);}
-    template<typename T, typename U> ostream& operator<<(ostream& is, pair<T, U> &v){is << "(" << v.first << " " << v.second << ")"; return is;}
+    template<typename T, typename U> ostream& operator<<(ostream& is, pair<T, U> &v){is << "{" << v.first << " " << v.second << "}"; return is;}
     template<class T> void outv(vector<T> v) {
     for(T& i : v) cout << i << " "; cout << '\n'; }
     template<class T> void outarr(T a[], int N) {
@@ -110,27 +107,50 @@ template<class T> bool cmax(T& a, const T& b) {
 	return a < b ? a = b, 1 : 0; }
 
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
+/*
+Find minimum number of elements to insert into array to make sure there are no subsegments
+with sum of 0. 
+In order for the subsegment to have a sum of 0. The prefix sum of l-1(left index of subsegment) 
+is equal to the prefix sum of r(Since everything between them cancel out). Therefore, we just go through
+each index, and keep a prefix sum, and if the sum is already in the set of previous sums, we have
+to add to the answer. We need to always add 0 to the set in case every elment
+cancels themselves out. 
 
+*/
 void solve() {
+    int N; cin >> N;
+    vi a(N);
+    FOR(i, 0, N) cin >> a[i];
+    int ans = 0;
+    set<ll> s; s.insert(0);
+    ll cur = 0;
+    FOR(i, 0, N) {
+        cur += a[i];
+        if(s.find(cur) != s.end()) {
+            cur = a[i];
+            s.clear();
+            ++ans;
+            s.insert(0);
+        }
+        s.insert(cur);
+    }
 
+    put(ans);
 }
 
 int main () {
-    CP::IO::setIO();
-    CP::IO::FastIO();
+    CP::FileIO::setIO();
 
     #if LOCAL
-        //CP::IO::setIn("in1.txt");
+        //CP::FileIO::setIn("in1.txt");
         CP::ExecTime::use_clock();
-        debug = true;
     #endif
 
-    CoMpIlAtIoN_ErRoR_oN_TeSt_CaSe_69420
-    cin >> T;
+    int T = 1; 
+    //cin >> T;
 
     for(int tt = 1; tt <= T; ++tt){
         //cout << "Case #" << tt << ": ";
-        if (debug) { cout << YELLOW << "\n[Test #" << (tt) << "]\n" << RESET; }
         solve();
     }
 

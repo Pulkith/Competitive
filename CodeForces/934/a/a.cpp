@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 06.03.2021 11:03:36
  * Potatoes FTW!
  **/ 
 
@@ -38,7 +38,7 @@ template<typename T> using vt = vector<T>;
 template<class T> using pqg = priority_queue<T,vector<T>,greater<T>>;
 const int MOD = 1'000'000'007;
 const int INF = 2'000'000'000;
-const int LL_INF = (int)(1e18);
+const int LL_INF = (1e18);
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
 namespace CP {
@@ -112,7 +112,22 @@ template<class T> bool cmax(T& a, const T& b) {
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
 void solve() {
-
+    int N, M;
+    cin >> N >> M;
+    vi a(N), b(M);
+    FOR(i, 0, N) cin >> a[i];
+    FOR(i, 0, M) cin >> b[i];
+    ll ans = LL_INF;
+    FOR(i, 0, N) {
+        ll cur = -LL_INF;
+        FOR(j, 0, N) {
+            if(i == j) continue;
+            FOR(k, 0, M)
+                cmax(cur, a[j] * 1LL * b[k]);
+        }
+        cmin(ans, cur);
+    }
+    put(ans);
 }
 
 int main () {
@@ -126,7 +141,7 @@ int main () {
     #endif
 
     CoMpIlAtIoN_ErRoR_oN_TeSt_CaSe_69420
-    cin >> T;
+    //cin >> T;
 
     for(int tt = 1; tt <= T; ++tt){
         //cout << "Case #" << tt << ": ";

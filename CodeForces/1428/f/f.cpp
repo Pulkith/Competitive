@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 06.01.2021 16:23:01
  * Potatoes FTW!
  **/ 
 
@@ -8,7 +8,7 @@
 
 using namespace std;
 
-typedef int64_t ll;
+typedef long long ll;
 
 using pii = pair<int, int>;
 using pll = pair<long long, long long>;
@@ -16,7 +16,7 @@ using pll = pair<long long, long long>;
 typedef vector<int> vi;
 typedef vector<ll> vll;
 typedef vector<bool> vb;
-#define pb push_back
+#define pb emplace_back
 #define f first
 #define s second
 
@@ -36,9 +36,7 @@ typedef vector<bool> vb;
 template<typename T, typename U> using p = pair<T, U>;
 template<typename T> using vt = vector<T>;
 template<class T> using pqg = priority_queue<T,vector<T>,greater<T>>;
-const int MOD = 1'000'000'007;
-const int INF = 2'000'000'000;
-const int LL_INF = (int)(1e18);
+const int INF = (1e7+7), MOD = (1e7+7);
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
 namespace CP {
@@ -78,18 +76,21 @@ namespace CP {
     }
 }
 inline namespace Output {
-    void ff() {  fflush(stdout); }
-    bool debug = 0;
-    const string RESET = "\033[0m", GREEN="\033[32m", BLACK="\033[30m", RED="\033[31m", YELLOW="\033[33m";    
-    #define dbg1(arg) {if(debug){cerr << GREEN << " [" << #arg << ": " << arg << "] " << RESET << '\n';}}
-    #define dbg2(arg, arg2) {if(debug){cerr << GREEN << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << "] " << RESET << '\n';}}
-    #define dbg3(arg, arg2, arg3) {if(debug){cerr << GREEN << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << ", " << #arg3 << ": " << arg3 << "] " << RESET << '\n';}}
-    #define dbg4(arg, arg2, arg3, arg4) {if(debug){cerr << GREEN << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << ", " << #arg3 << ": " << arg3 << ", " << #arg4 << ": " << arg4 << "] " << RESET << '\n';}}
-    #define dbg5(arg, arg2, arg3, arg4, arg5) {if(debug){cerr << GREEN << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << ", " << #arg3 << ": " << arg3 << ", " << #arg4 << ": " << arg4 << ", " << #arg5 << ": " << arg5 << "] " << RESET << '\n';}}
+    void ff() { 
+        fflush(stdout); 
+        #if LOCAL 
+            fflush(stderr);
+        #endif
+    }
+    #define dbg1(arg) cerr << " [" << #arg << ": " << arg << "] " << '\n';
+    #define dbg2(arg, arg2) cerr << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << "] " << '\n';
+    #define dbg3(arg, arg2, arg3) cerr << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << ", " << #arg3 << ": " << arg3 << "] " << '\n';
+    #define dbg4(arg, arg2, arg3, arg4) cerr << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << ", " << #arg3 << ": " << arg3 << ", " << #arg4 << ": " << arg4 << "] " << '\n';
+    #define dbg5(arg, arg2, arg3, arg4, arg5) cerr << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << ", " << #arg3 << ": " << arg3 << ", " << #arg4 << ": " << arg4 << ", " << #arg5 << ": " << arg5 << "] " << '\n';
     #define GET_MACRO(_1,_2,_3,_4,_5,NAME,...) NAME
     #define dbg(...) GET_MACRO(__VA_ARGS__, dbg5, dbg4, dbg3, dbg2, dbg1)(__VA_ARGS__)
     void lower(std::string& s){transform(s.begin(), s.end(), s.begin(), ::tolower);}
-    template<typename T, typename U> ostream& operator<<(ostream& is, pair<T, U> &v){is << "(" << v.first << " " << v.second << ")"; return is;}
+    template<typename T, typename U> ostream& operator<<(ostream& is, pair<T, U> &v){is << "{" << v.first << " " << v.second << "}"; return is;}
     template<class T> void outv(vector<T> v) {
     for(T& i : v) cout << i << " "; cout << '\n'; }
     template<class T> void outarr(T a[], int N) {
@@ -112,7 +113,7 @@ template<class T> bool cmax(T& a, const T& b) {
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
 void solve() {
-
+ 
 }
 
 int main () {
@@ -122,7 +123,6 @@ int main () {
     #if LOCAL
         //CP::IO::setIn("in1.txt");
         CP::ExecTime::use_clock();
-        debug = true;
     #endif
 
     CoMpIlAtIoN_ErRoR_oN_TeSt_CaSe_69420
@@ -130,7 +130,6 @@ int main () {
 
     for(int tt = 1; tt <= T; ++tt){
         //cout << "Case #" << tt << ": ";
-        if (debug) { cout << YELLOW << "\n[Test #" << (tt) << "]\n" << RESET; }
         solve();
     }
 

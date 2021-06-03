@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 06.02.2021 22:18:37
  * Potatoes FTW!
  **/ 
 
@@ -38,7 +38,6 @@ template<typename T> using vt = vector<T>;
 template<class T> using pqg = priority_queue<T,vector<T>,greater<T>>;
 const int MOD = 1'000'000'007;
 const int INF = 2'000'000'000;
-const int LL_INF = (int)(1e18);
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
 namespace CP {
@@ -111,7 +110,34 @@ template<class T> bool cmax(T& a, const T& b) {
 
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
+bool isPrime(ll num) {
+    for(int i = 2; i * i <= num; ++i)
+        if(num%i == 0) return 0;
+    return 1;
+}
+
+ll findPrime(ll num) {
+    while(!isPrime(num)) --num;
+    return num;
+}
+ll findPrime2(ll num) {
+    while(!isPrime(num)) ++num;
+    return num;
+}
+
+
 void solve() {
+    ll Z;
+    cin >> Z;
+    ll x = Z;
+    Z = sqrt(Z);
+    ll lower = findPrime(Z);
+    ll lowest = findPrime(lower-1);
+    ll high = findPrime2(Z+1);
+    if(lower * high <= x)
+        put(lower * high);
+    else 
+        put(lower * lowest);
 
 }
 
@@ -129,8 +155,8 @@ int main () {
     cin >> T;
 
     for(int tt = 1; tt <= T; ++tt){
-        //cout << "Case #" << tt << ": ";
-        if (debug) { cout << YELLOW << "\n[Test #" << (tt) << "]\n" << RESET; }
+        cout << "Case #" << tt << ": ";
+        //if (debug) { cout << YELLOW << "\n[Test #" << (tt) << "]\n" << RESET; }
         solve();
     }
 

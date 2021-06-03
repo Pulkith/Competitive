@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 06.02.2021 16:40:59
  * Potatoes FTW!
  **/ 
 
@@ -16,7 +16,7 @@ using pll = pair<long long, long long>;
 typedef vector<int> vi;
 typedef vector<ll> vll;
 typedef vector<bool> vb;
-#define pb push_back
+#define pb emplace_back
 #define f first
 #define s second
 
@@ -38,7 +38,6 @@ template<typename T> using vt = vector<T>;
 template<class T> using pqg = priority_queue<T,vector<T>,greater<T>>;
 const int MOD = 1'000'000'007;
 const int INF = 2'000'000'000;
-const int LL_INF = (int)(1e18);
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
 namespace CP {
@@ -112,7 +111,10 @@ template<class T> bool cmax(T& a, const T& b) {
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
 void solve() {
-
+    vi a(4);
+    FOR(i, 0, 4) cin >> a[i];
+    sort(all(a));
+    cout << (a[0] * a[2]) << nl;
 }
 
 int main () {

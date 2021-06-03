@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 06.02.2021 15:22:48
  * Potatoes FTW!
  **/ 
 
@@ -16,7 +16,7 @@ using pll = pair<long long, long long>;
 typedef vector<int> vi;
 typedef vector<ll> vll;
 typedef vector<bool> vb;
-#define pb push_back
+#define pb emplace_back
 #define f first
 #define s second
 
@@ -38,7 +38,6 @@ template<typename T> using vt = vector<T>;
 template<class T> using pqg = priority_queue<T,vector<T>,greater<T>>;
 const int MOD = 1'000'000'007;
 const int INF = 2'000'000'000;
-const int LL_INF = (int)(1e18);
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
 namespace CP {
@@ -111,7 +110,54 @@ template<class T> bool cmax(T& a, const T& b) {
 
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
+int a[200005];
+bool chk(int t, int time) {
+    for(int i = t-1; i >= 0; --i) {
+        dbg(t, time, i);
+        if(time-- - a[i] < 0) {
+            return 0;
+        }
+    } 
+    return 1;
+}
+/*
+
+Binary Search as long as a value holds
+int left = 0, right = N;
+while(left <= right) {
+    int mid = (left+right) / 2;
+    if(check-for-state(mid) == true) {
+        left = mid+1;
+    } else {
+        right = mid - 1;
+    }
+}
+
+answer = (left - 1);
+
+*/
 void solve() {
+    int N, M, A, B;
+    cin >> N >> M >> A >> B;
+    int maxx = (abs(B-A)) - 1;
+    FOR(i, 0, M)
+        cin >> a[i];
+    sort(a, a+M);
+
+    int wall = (A < B ? (A ) : (N - A + 1));
+    int l = 0, r = min(maxx, M);
+    while(l <= r) {
+        int mid = (l+r) / 2;
+        bool ok = chk(mid, wall+maxx - 1);
+        dbg(wall, maxx, mid, ok);
+        if(ok) {
+            l = mid+1;
+        } else {
+            r = mid-1;
+        }
+    }
+
+    put(l-1);
 
 }
 

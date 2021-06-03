@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 06.02.2021 12:17:53
  * Potatoes FTW!
  **/ 
 
@@ -16,7 +16,7 @@ using pll = pair<long long, long long>;
 typedef vector<int> vi;
 typedef vector<ll> vll;
 typedef vector<bool> vb;
-#define pb push_back
+#define pb emplace_back
 #define f first
 #define s second
 
@@ -38,7 +38,6 @@ template<typename T> using vt = vector<T>;
 template<class T> using pqg = priority_queue<T,vector<T>,greater<T>>;
 const int MOD = 1'000'000'007;
 const int INF = 2'000'000'000;
-const int LL_INF = (int)(1e18);
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
 namespace CP {
@@ -85,7 +84,7 @@ inline namespace Output {
     #define dbg2(arg, arg2) {if(debug){cerr << GREEN << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << "] " << RESET << '\n';}}
     #define dbg3(arg, arg2, arg3) {if(debug){cerr << GREEN << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << ", " << #arg3 << ": " << arg3 << "] " << RESET << '\n';}}
     #define dbg4(arg, arg2, arg3, arg4) {if(debug){cerr << GREEN << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << ", " << #arg3 << ": " << arg3 << ", " << #arg4 << ": " << arg4 << "] " << RESET << '\n';}}
-    #define dbg5(arg, arg2, arg3, arg4, arg5) {if(debug){cerr << GREEN << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << ", " << #arg3 << ": " << arg3 << ", " << #arg4 << ": " << arg4 << ", " << #arg5 << ": " << arg5 << "] " << RESET << '\n';}}
+    #define dbg5(arg, arg2, arg3, arg4, arg5) {if(debug){cerr << GREEEN << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << ", " << #arg3 << ": " << arg3 << ", " << #arg4 << ": " << arg4 << ", " << #arg5 << ": " << arg5 << "] " << RESET << '\n';}}
     #define GET_MACRO(_1,_2,_3,_4,_5,NAME,...) NAME
     #define dbg(...) GET_MACRO(__VA_ARGS__, dbg5, dbg4, dbg3, dbg2, dbg1)(__VA_ARGS__)
     void lower(std::string& s){transform(s.begin(), s.end(), s.begin(), ::tolower);}
@@ -110,9 +109,29 @@ template<class T> bool cmax(T& a, const T& b) {
 	return a < b ? a = b, 1 : 0; }
 
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
+ll brute_solve(ll coins) {
+    int you = 0, other = 0;
+    bool turn = 1;
+    while(coins > 0) {
+        if(coins&1) {
+            if(turn) ++you;
+            else ++other;
+
+            --coins;
+        } else {
+            if(turn) you += coins / 2;
+            else other += coins / 2;
+
+            coins /= 2;
+        }
+        turn = !turn;
+    }
+    return you;
+}
 
 void solve() {
-
+    ll N; cin >> N;
+    cout << brute_solve(N) << nl;
 }
 
 int main () {

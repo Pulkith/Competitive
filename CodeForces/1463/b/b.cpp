@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 06.02.2021 14:34:18
  * Potatoes FTW!
  **/ 
 
@@ -16,7 +16,7 @@ using pll = pair<long long, long long>;
 typedef vector<int> vi;
 typedef vector<ll> vll;
 typedef vector<bool> vb;
-#define pb push_back
+#define pb emplace_back
 #define f first
 #define s second
 
@@ -38,7 +38,6 @@ template<typename T> using vt = vector<T>;
 template<class T> using pqg = priority_queue<T,vector<T>,greater<T>>;
 const int MOD = 1'000'000'007;
 const int INF = 2'000'000'000;
-const int LL_INF = (int)(1e18);
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
 namespace CP {
@@ -85,7 +84,7 @@ inline namespace Output {
     #define dbg2(arg, arg2) {if(debug){cerr << GREEN << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << "] " << RESET << '\n';}}
     #define dbg3(arg, arg2, arg3) {if(debug){cerr << GREEN << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << ", " << #arg3 << ": " << arg3 << "] " << RESET << '\n';}}
     #define dbg4(arg, arg2, arg3, arg4) {if(debug){cerr << GREEN << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << ", " << #arg3 << ": " << arg3 << ", " << #arg4 << ": " << arg4 << "] " << RESET << '\n';}}
-    #define dbg5(arg, arg2, arg3, arg4, arg5) {if(debug){cerr << GREEN << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << ", " << #arg3 << ": " << arg3 << ", " << #arg4 << ": " << arg4 << ", " << #arg5 << ": " << arg5 << "] " << RESET << '\n';}}
+    #define dbg5(arg, arg2, arg3, arg4, arg5) {if(debug){cerr << GREEEN << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << ", " << #arg3 << ": " << arg3 << ", " << #arg4 << ": " << arg4 << ", " << #arg5 << ": " << arg5 << "] " << RESET << '\n';}}
     #define GET_MACRO(_1,_2,_3,_4,_5,NAME,...) NAME
     #define dbg(...) GET_MACRO(__VA_ARGS__, dbg5, dbg4, dbg3, dbg2, dbg1)(__VA_ARGS__)
     void lower(std::string& s){transform(s.begin(), s.end(), s.begin(), ::tolower);}
@@ -111,14 +110,34 @@ template<class T> bool cmax(T& a, const T& b) {
 
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
-void solve() {
+int lg(int x) {
+    int l = 1;
+    while(l*2 <= x)  l*=2;
+    return l;
+}
+
+void solve() {  
+    int N; cin >> N;
+    vi a(N);
+    FOR(i, 0, N)
+        cin >> a[i];
+    ll sum = 0;
+    for(int& e : a)
+        sum += e;
+    
+    vi ans(N);
+    FOR(i, 0, N) {
+        int x = lg(a[i]);
+        ans[i] = (abs(x - a[i]) < abs(x*2 - a[i])) ? x : x*2;
+        while(ans[i] > (1e9)) ans[i] /= 2;
+    }
+    outv(ans);
 
 }
 
 int main () {
     CP::IO::setIO();
     CP::IO::FastIO();
-
     #if LOCAL
         //CP::IO::setIn("in1.txt");
         CP::ExecTime::use_clock();
@@ -127,7 +146,6 @@ int main () {
 
     CoMpIlAtIoN_ErRoR_oN_TeSt_CaSe_69420
     cin >> T;
-
     for(int tt = 1; tt <= T; ++tt){
         //cout << "Case #" << tt << ": ";
         if (debug) { cout << YELLOW << "\n[Test #" << (tt) << "]\n" << RESET; }

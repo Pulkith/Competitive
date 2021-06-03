@@ -164,9 +164,29 @@ template<class T> bool chmax(T& a, const T& b) {
 |||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| 
 |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| 
 */
+/*
+Transform N/2 pairs of Numbers (a, b) to (-a, -b);
+We can perform 2 operations
+1. a_i = a_i + a_j
+2. a_j = a_j - a_i
 
+where i < j
+
+sol: any 2 numbers can become (-a, -b) by doing the seqeuence 1,2,1,2,1,2
+*/
 void solve() {
-
+    int N;
+    cin >> N;
+    vi a(N);
+    FOR(i, 0, N)
+        cin >> a[i];
+    put(N/2*6);
+    for(int i = 0; i < N; i+=2) {
+        FOR(j, 0, 3) {
+            put("1 " + ts(i+1) + " " + ts(i+2));
+            put("2 " + ts(i+1) + " " + ts(i+2));
+        }
+    }
 }
 
 int main () {

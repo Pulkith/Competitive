@@ -1,6 +1,6 @@
 /**
  * author: DespicableMonkey
- * created: 05.28.2021 18:03:11
+ * created: 05.31.2021 18:23:38
  * 
  * Potatoes FTW!
  **/ 
@@ -165,28 +165,23 @@ template<class T> bool chmax(T& a, const T& b) {
 |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| 
 */
 
-
 void solve() {
-    int N; cin >> N;
+    int N, Q;
+    cin >> N >> Q;
     vi a(N);
-    FOR(i, 0, N) cin >> a[i];
-    int ans = 0;
-    if(a[0] == 1) ++ ans;
-    FOR(i, 1, N) {
-        if(a[i] == 1) {
-            int j = i +1;
-            for(; j < N; ++j)
-                if(a[j] == 0) break;
-            int dif = (j - i);
-            ans += (dif / 3);
-            i = j - 1;
-        }
+    FOR(i, 0, N) 
+        cin >> a[i];
+    sortt(a);
+
+    while(Q--) {
+        int x, y;
+        cin >> x >> y;
+        cout << distance(lower_bound(a.begin(), a.end(), x), upper_bound(a.begin(), a.end(), y)) << endl;
     }
-    put(ans);
 }
 
 int main () {
-    setIO();
+    setIO("haybales");
 
     #if LOCAL
         //setIn("in1.txt");
@@ -194,7 +189,7 @@ int main () {
     #endif
 
     int T = 1; 
-    cin >> T;
+    //cin >> T;
 
     TC(T){
         //cout << "Case #" << tt << ": ";

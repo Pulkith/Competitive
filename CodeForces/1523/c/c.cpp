@@ -164,16 +164,34 @@ template<class T> bool chmax(T& a, const T& b) {
 |||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| 
 |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| 
 */
-
 void solve() {
+    int N; cin >> N;
+    vi a(N);
+    FOR(i, 0, N) {
+        cin >> a[i];
+    }
 
+    stack<vector<int>> st;
+    FOR(i, 0, N) {
+        if(a[i] == 1) {
+           vi x = (sz(st)) ? st.top() : vi();
+           x.pb(1);
+           st.push(x);
+        } else {
+            while(*(st.top().rbegin())+1 != a[i] ) st.pop();
+            st.top().back() = a[i];
+        }
+        for(int j = 0; j < st.top().size(); ++j) {
+            cout << st.top()[j] << (j != st.top().size()-1 ? "." : "\n");
+        }
+    }
 }
 
 int main () {
     setIO();
 
     #if LOCAL
-        //setIn("in1.txt");
+        setIn("in1.txt");
         use_clock();
     #endif
 

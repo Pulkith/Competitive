@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 06.03.2021 12:44:04
  * Potatoes FTW!
  **/ 
 
@@ -110,9 +110,53 @@ template<class T> bool cmax(T& a, const T& b) {
 	return a < b ? a = b, 1 : 0; }
 
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
-
 void solve() {
+    int N, K;
+    cin >> N >> K;
+    string a, b;
+    cin >> a >> b;
 
+    map<int, int> mp;
+    for(char c : a)
+        ++mp[c];
+    for(char c : b)
+        --mp[c];
+
+    priority_queue<pii, vt<pii>, greater<pii>> as;
+    priority_queue<pii, vt<pii>, greater<pii>> bs;
+    for(auto [x, y] : mp) {
+        if(y%K != 0) {
+            put("No");
+            return;
+        }
+        if(y > 0) {
+            as.push({x, y});
+        }
+        if(y < 0) {
+            bs.push({x, -y});
+        }
+    }
+
+    while(!empty(as) && !empty(bs)) {
+        if(as.top().f >= bs.top().f) {
+            put("No"); return;
+        }
+        if(as.top().s%K != 0 || bs.top().s%K != 0) {
+            put("No"); return;
+        }
+        int dif = min(as.top().s, bs.top().s);
+
+        auto atop = as.top(), btop = bs.top(); as.pop(); bs.pop();
+        atop.s -= dif; btop.s -= dif; 
+        if(atop.s > 0) as.push(atop);
+        if(btop.s > 0) bs.push(btop);
+    }
+    if(!empty(as) || !empty(bs)) {
+        put("No");
+        return;
+    }
+
+    put("Yes");
 }
 
 int main () {
@@ -137,3 +181,10 @@ int main () {
     CP::ExecTime::log_time(0);
     return 0;
 }
+/*
+
+
+bbba
+bb2
+
+*/

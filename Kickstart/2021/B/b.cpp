@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 06.02.2021 18:23:33
  * Potatoes FTW!
  **/ 
 
@@ -38,7 +38,6 @@ template<typename T> using vt = vector<T>;
 template<class T> using pqg = priority_queue<T,vector<T>,greater<T>>;
 const int MOD = 1'000'000'007;
 const int INF = 2'000'000'000;
-const int LL_INF = (int)(1e18);
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
 namespace CP {
@@ -112,9 +111,27 @@ template<class T> bool cmax(T& a, const T& b) {
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
 void solve() {
+    int N; cin >> N;
+    vi a(N), b(N-1);
+    FOR(i, 0, N) cin >> a[i];
+    FOR(i, 0, N-1) b[i] = a[i+1] - a[i];
 
+
+    vi left(N, 1), right(N, 1);
+    
+    FOR(i, 1, N-1)
+        if(b[i] == b[i-1])
+            left[i] = left[i-1] + 1;
+    for(int i = N-2; i >= 0; --i)
+        if(b[i] == b[i+1])
+            right[i] = right[i+1] + 1;
+
+    int maxx = *max_element(left.begin(), left.end());
+    FOR(i, 0, N) {
+        //look at galen_colins submission
+    }
+    cout << maxx << nl;
 }
-
 int main () {
     CP::IO::setIO();
     CP::IO::FastIO();
@@ -129,8 +146,8 @@ int main () {
     cin >> T;
 
     for(int tt = 1; tt <= T; ++tt){
-        //cout << "Case #" << tt << ": ";
-        if (debug) { cout << YELLOW << "\n[Test #" << (tt) << "]\n" << RESET; }
+        cout << "Case #" << tt << ": ";
+        //if (debug) { cout << YELLOW << "\n[Test #" << (tt) << "]\n" << RESET; }
         solve();
     }
 

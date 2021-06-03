@@ -52,6 +52,22 @@ ll binpow(ll x, ll n) {
 	return res;
 }
 
+/*
+
+X * Y is only a perfect Square if Mask(X) == Mask(Y)
+X can be prime factorized into a1^y1 * a2^y2...ak*yk
+Mask(X) = (a1*(y1 mod 2)) * (a2 * (y2 mod 2)) * (ak * (yk mod 2))
+
+Any Prime Number, p, can be described as the sum of 2 squares, x^2 + y^2
+
+Chicken McNugget Theorem
+For 2 coprime integers, m, n, any number that is greater than (m*n - m - n) can be written as the sum of mx + ny
+
+coprime = gcd(a, b) = 1;
+
+
+*/
+
 int main () {
     ios::sync_with_stdio(0);
     cin.tie(0);

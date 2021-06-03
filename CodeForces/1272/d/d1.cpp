@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 06.02.2021 17:57:23
  * Potatoes FTW!
  **/ 
 
@@ -38,7 +38,6 @@ template<typename T> using vt = vector<T>;
 template<class T> using pqg = priority_queue<T,vector<T>,greater<T>>;
 const int MOD = 1'000'000'007;
 const int INF = 2'000'000'000;
-const int LL_INF = (int)(1e18);
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
 namespace CP {
@@ -110,9 +109,38 @@ template<class T> bool cmax(T& a, const T& b) {
 	return a < b ? a = b, 1 : 0; }
 
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
+//Better Solution
+/*
+    To Find the length of the longest increasing sequence if we are able to remove 0 or 1 elements
 
+    Maintain 2 arrays, left, right.
+    right has the length of the increasing sequence starting at index i
+    left has the length of the increasing seqeunce ending at index i
+
+    then go through each element and if i-1 < i+1 the new possible answer is left[i-1] + right[i+1]
+*/
 void solve() {
+    int N; cin >> N;
+    vi a(N);
+    FOR(i, 0, N)
+        cin >> a[i];
 
+    vi left(N, 1), right(N, 1);
+
+    FOR(i, 1, N)
+        if(a[i] > a[i-1]) left[i] = left[i-1] + 1;
+    for(int i = N-2; i >= 0; --i)
+        if(a[i] < a[i+1]) right[i] = right[i+1] + 1;
+    int ans = *max_element(left.begin(), left.end());
+
+    // FOR(i, 0, N-2)
+    //     if(a[i] < a[i+2])
+    //         cmax(ans, left[i] + right[i+2]);
+    FOR(i, 1, N-1)
+        if(a[i-1] < a[i+1])
+            cmax(ans, left[i-1] + right[i+1]);
+
+    put(ans);
 }
 
 int main () {
@@ -126,7 +154,7 @@ int main () {
     #endif
 
     CoMpIlAtIoN_ErRoR_oN_TeSt_CaSe_69420
-    cin >> T;
+    //cin >> T;
 
     for(int tt = 1; tt <= T; ++tt){
         //cout << "Case #" << tt << ": ";

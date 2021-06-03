@@ -1,6 +1,11 @@
+/*
+ID: despicablemonkey
+TASK: gift1
+LANG: C++
+*/
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 06.03.2021 11:34:30
  * Potatoes FTW!
  **/ 
 
@@ -38,7 +43,6 @@ template<typename T> using vt = vector<T>;
 template<class T> using pqg = priority_queue<T,vector<T>,greater<T>>;
 const int MOD = 1'000'000'007;
 const int INF = 2'000'000'000;
-const int LL_INF = (int)(1e18);
 const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
 
 namespace CP {
@@ -112,21 +116,48 @@ template<class T> bool cmax(T& a, const T& b) {
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
 void solve() {
+    int N; cin >> N;
+    vt<string> names;
+    map<string, int> bal;
+    FOR(i, 0, N) {
+        string s; cin >> s;
+        names.pb(s);
+        bal[s] = 0;
+    }
+
+    FOR(i, 0, N) {
+        string who;
+        cin >> who;
+        int num, ppl;
+        cin >> num >> ppl;
+        if(ppl > 0) {
+            int each = num / ppl;
+            bal[who] -= (ppl * each);
+            FOR(j, 0, ppl) {
+                string n; cin >> n;
+                bal[n] += each;
+            }
+        }
+    }
+    FOR(i, 0, N)
+        put(names[i] + " " + ts(bal[names[i]]));
+
+
 
 }
 
 int main () {
-    CP::IO::setIO();
+    CP::IO::setIO("gift1");
     CP::IO::FastIO();
 
     #if LOCAL
-        //CP::IO::setIn("in1.txt");
+        CP::IO::setIn("in1.txt");
         CP::ExecTime::use_clock();
         debug = true;
     #endif
 
     CoMpIlAtIoN_ErRoR_oN_TeSt_CaSe_69420
-    cin >> T;
+    //cin >> T;
 
     for(int tt = 1; tt <= T; ++tt){
         //cout << "Case #" << tt << ": ";
