@@ -5,8 +5,7 @@
  * 
  * Potatoes FTW!
  * 
- **/ 
-
+ **/
 
 #include <iostream>
 #include <vector>
@@ -55,47 +54,91 @@ using pll = pair<ll, ll>;
 #define sortt(x) sort(all(x))
 #define rtn return
 
-#define FOR(i,a,b) for (int i = (a); i < (b); ++i)
-#define F0R(i,a) FOR(i,0,a)
-#define ROF(i,a,b) for (int i = (b)-1; i >= (a); --i)
-#define R0F(i,a) ROF(i,0,a)
-#define TC(i) for(int tt = (1); tt <= (i); ++tt)
-#define FORE(i, a, b) for(int i = (a); i<= (b); ++i)
+#define FOR(i, a, b) for (int i = (a); i < (b); ++i)
+#define F0R(i, a) FOR(i, 0, a)
+#define ROF(i, a, b) for (int i = (b)-1; i >= (a); --i)
+#define R0F(i, a) ROF(i, 0, a)
+#define TC(i) for (int tt = (1); tt <= (i); ++tt)
+#define FORE(i, a, b) for (int i = (a); i <= (b); ++i)
 
-#define rep(a) F0R(_,a)
-#define each(a,x) for (auto& a: x)
+#define rep(a) F0R(_, a)
+#define each(a, x) for (auto &a : x)
 
 #define lower(sl) transform(sl.begin(), sl.end(), sl.begin(), ::tolower)
 
 const int INF = 1000000007;
 const int MOD = 1000000007;
-const long long LLNF = (ll)10e17+7;
+const long long LLNF = (ll)10e17 + 7;
 
-const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
+const int dx[4] = {1, 0, -1, 0}, dy[4] = {0, 1, 0, -1};
 
-int main () {
+int a[200005];
+map<int, vector<pair<int, int>>> values;
+bool chk(pii a, pii b) {
+    return a.f == b.f || a.s == b.s || a.f == b.s || a.s == b.f;
+}
+/*
+    Check if in an array 4 unique indexes exist where ai + aj = ak + aw
+    
+    My (slow) solution
+    - For every pair of indicies push the pair into a map where their sum is the key
+    - Note: if there is 4 pair for a sum, there is ALWAYS a solution(which is the solve2 method)
+    - Otherwise there might be a solution(which is the solve1 method)
+*/
+bool solve() {
+    for (auto &[x, y] : values)
+    {
+        if (sz(y) > 1)
+        {
+            do{
+                if(!chk(y[0], y[1])) {
+                    cout << "YES\n" << y[0].f +1<< " " << y[0].s+1 << " " << y[1].f+1 << " " << y[1].s+1 << '\n';
+                    return true;
+                }
+            }while(next_permutation(y.begin(), y.end()));
+        }
+    }
+    return false;
+}
+
+bool solve2(int index) {
+    vector<pii> x = values[index];
+    set<int> indx;
+    for(auto &[a, b] : x)
+        indx.insert(a), indx.insert(b);
+    vector<int> y(indx.begin(), indx.end());
+    cerr << sz(y) << endl;
+    do{
+       if(a[y[0]] + a[y[1]] == a[y[2]] + a[y[3]]) {
+           cout << "Yes\n" << y[0]+1 << " " <<  y[1] +1 << " " << y[2]+1 << " " << y[3]+1 << '\n';
+           return 1;
+       }
+    }while(next_permutation(y.begin(), y.end()));
+    return false;
+}
+
+int main()
+{
     ios::sync_with_stdio(0);
     cin.tie(0);
 
-    int n;
-    cin >> n;
-    vi ar(n);
-    FOR(i, 0, n)
-        cin >> ar[i];
-    bool ok = true;
-
-    int o, p, q, r;
-    for(int i = 0; i<n&&ok;++i)
-        for(int j = 0;j<n&&ok; ++j)
-            for(int x=0;x<n&&ok; ++x)
-                for(int y=0; y<n&&ok; ++y)
-                    if(i!=j&&i!=x&&i!=y&&j!=x&&j!=y&&x!=y)
-                        if(ar[i]+ar[j] == ar[x]+ar[y])
-                            ok=false, o=i, p=j, q=x,r=y;
-
-    cout << (!ok?"YES":"NO") nl
-    if(!ok)
-        cout << o+1 << " "<< p+1 << " " << q+1 << " " << r+1 nl
+    int N;
+    cin >> N;
+    FOR(i, 0, N)
+    cin >> a[i];
+    bool ok = 0;
+    FOR(i, 0, N)
+    FOR(j, i + 1, N){
+        values[a[i] + a[j]].push_back({i, j});
+        if (sz(values[a[i] + a[j]]) >= 4)
+        {
+            solve2(a[i] + a[j]);
+            return 0;
+        }
+    }
+    
+    if(!solve())
+        cout << "NO" << endl;
 
     return 0;
 }

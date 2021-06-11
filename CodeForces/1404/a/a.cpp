@@ -1,235 +1,171 @@
 /**
  * author: DespicableMonkey
- * created: 05.27.2021 15:15:57
- * 
+ * created: 06.06.2021 01:14:09
  * Potatoes FTW!
  **/ 
 
-#include <iostream>
-#include <vector>
-#include <map>
-#include <set>
-#include <algorithm>
-#include <sstream>
-#include <cmath>
-#include <cstdio>
-#include <deque>
-#include <bitset>
-#include <iterator>
-#include <queue>
-#include <stack>
-#include <unordered_map>
-#include <unordered_set>
-#include <regex>
-#include <random>
-#include <initializer_list>
-#include <ios>
-#include <cstring>
-#include <numeric> 
-#include <cassert>
-#include <iomanip>
-#include <chrono>
+#include<bits/stdc++.h>
 
 using namespace std;
-using namespace std::chrono;
 
-#define ll long long
-#define ld long double
-#define ull unsigned long long
+typedef int64_t ll;
 
 using pii = pair<int, int>;
-using pll = pair<ll, ll>;
+using pll = pair<long long, long long>;
 
-#define vi vector<int>
-#define vll vector<ll>
-#define vb = vector<bool>
+typedef vector<int> vi;
+typedef vector<ll> vll;
+typedef vector<bool> vb;
 #define pb push_back
-
 #define f first
 #define s second
 
-#define nl << '\n';
-#define nn '\n'
-#define cnl cout nl
-
+#define nl '\n'
+#define CoMpIlAtIoN_ErRoR_oN_TeSt_CaSe_69420 int T = 1;
 
 #define all(c) (c).begin(), (c).end()
 #define sz(x) (int)(x).size()
 #define ts(x) to_string(x)
-#define rall(x) x.rbegin(), x.rend()
-#define sortt(x) sort(all(x))
-#define rtn return
 
 #define FOR(i,a,b) for (int i = (a); i < (b); ++i)
 #define FR(i,a) FOR(i,0,a)
 #define ROF(i,a,b) for (int i = a; i >= b; --i)
-#define RF(i,a) ROF(i,a,0)
-#define TC(i) for(int tt = (1); tt <= (i); ++tt)
 #define FORE(i, a, b) for(int i = (a); i<= (b); ++i)
-
-#define rep(a) F0R(_,a)
 #define each(a,x) for (auto& a: x)
 
-#define lower(sl) transform(sl.begin(), sl.end(), sl.begin(), ::tolower)
+template<typename T, typename U> using p = pair<T, U>;
+template<typename T> using vt = vector<T>;
+template<class T> using pqg = priority_queue<T,vector<T>,greater<T>>;
+[[maybe_unused]] const int MOD = 1'000'000'007;
+[[maybe_unused]] const int INF = 2'000'000'000; //0xc0, 0x3f. Pos, Neg Inf for memset. Comparison = 0x3f3f3f3f
+[[maybe_unused]] const int LL_INF = (int)(1e18);
+[[maybe_unused]] const int dx[4] = {1, 0, -1, 0}, dy[4] = {0, 1, 0, -1};
 
-const int INF = 1000000007;
-const int MOD = 1000000007;
-const long long LLNF = (ll)10e17+7;
-
-const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
-
-/* 64 mil =  ~1 second */
-inline namespace FileIO {
-	void setIn(string s)  { (void)!freopen(s.c_str(),"r",stdin); }
-	void setOut(string s) { (void)!freopen(s.c_str(),"w",stdout); }
-    void setDefault() {
-        	cin.tie(nullptr)->sync_with_stdio(0);
+namespace CP {
+    inline namespace IO {
+        void setIn(string s)  { (void)!freopen(s.c_str(),"r",stdin); }
+        void setOut(string s) { (void)!freopen(s.c_str(),"w",stdout); }
+        void FastIO() {
+            cin.tie(nullptr)->sync_with_stdio(0);
             std::cout << std::fixed << std::showpoint;
             std::cout << std::setprecision(14);
+        }
+        void setIO(string s = "") {
+            cin.exceptions(cin.failbit); // throws exception when do smth illegal ex. try to read letter into int
+            if (sz(s)) setIn(s+".in"), setOut(s+".out"); // for old USACO
+        }
+        void setIO(string s, string t) {
+            setIn(s);
+            setOut(t);
+        }
     }
-	void setIO(string s = "") {
-        setDefault();
-		cin.exceptions(cin.failbit); // throws exception when do smth illegal ex. try to read letter into int
-		if (sz(s)) setIn(s+".in"), setOut(s+".out"); // for old USACO
-	}
-    void setIO(string s, string t) {
-        setDefault();
-        setIn(s); 
-        setOut(t);
-    }
-}
-
-inline namespace ExecTime {
-    #define cur_t chrono::high_resolution_clock::now()
-    auto _start_time = cur_t;
-    bool use = 0;
-    void use_clock() { use = 1; }
-    void log_time(bool start = true) {
-        if(use) {
-            if(!start) {
-                auto _stop_time = cur_t;
-                auto duration = duration_cast<milliseconds>(_stop_time - _start_time);
-                cerr << '\n' << "[Time: " << to_string(duration.count()) << " ms] " << '\n' << '\n'; 
+    inline namespace ExecTime {
+        #define cur_t std::chrono::high_resolution_clock::now() /* 64 mil =  ~1 second */
+        auto _start_time = cur_t;
+        bool use = 0;
+        void use_clock() { use = 1; }
+        void log_time(bool start = true) {
+            if(use) {
+                if(!start) {
+                    auto _stop_time = cur_t;
+                    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(_stop_time - _start_time);
+                    cerr << '\n' << "[Time: " << to_string(duration.count()) << " ms] " << '\n' << '\n';
+                }
+                else
+                    _start_time = cur_t;
             }
-            else
-                _start_time = cur_t;
         }
     }
 }
+inline namespace Output {
+    void ff() {  fflush(stdout); }
+    bool debug = 0;
+    const string RESET = "\033[0m", GREEN="\033[32m", BLACK="\033[30m", RED="\033[31m", YELLOW="\033[33m";    
+    #define dbg1(arg) {if(debug){cerr << GREEN << " [" << #arg << ": " << arg << "] " << RESET << '\n';}}
+    #define dbg2(arg, arg2) {if(debug){cerr << GREEN << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << "] " << RESET << '\n';}}
+    #define dbg3(arg, arg2, arg3) {if(debug){cerr << GREEN << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << ", " << #arg3 << ": " << arg3 << "] " << RESET << '\n';}}
+    #define dbg4(arg, arg2, arg3, arg4) {if(debug){cerr << GREEN << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << ", " << #arg3 << ": " << arg3 << ", " << #arg4 << ": " << arg4 << "] " << RESET << '\n';}}
+    #define dbg5(arg, arg2, arg3, arg4, arg5) {if(debug){cerr << GREEN << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << ", " << #arg3 << ": " << arg3 << ", " << #arg4 << ": " << arg4 << ", " << #arg5 << ": " << arg5 << "] " << RESET << '\n';}}
+    #define GET_MACRO(_1,_2,_3,_4,_5,NAME,...) NAME
+    #define dbg(...) GET_MACRO(__VA_ARGS__, dbg5, dbg4, dbg3, dbg2, dbg1)(__VA_ARGS__)
+    void lower(std::string& s){transform(s.begin(), s.end(), s.begin(), ::tolower);}
+    template<typename T, typename U> ostream& operator<<(ostream& is, pair<T, U> &v){is << "(" << v.first << " " << v.second << ")"; return is;}
+    template<class T> void outv(vector<T> v) {
+    for(T& i : v) cout << i << " "; cout << '\n'; }
+    template<class T> void outarr(T a[], int N) {
+        for(int i = 0; i < N; ++i) cout << a[i] << " "; cout << '\n'; }
+    template<class T> void put(T s) {
+        cout << s << '\n'; }
+}
 
-template<class T> using pqg = priority_queue<T,vector<T>,greater<T>>;
-
-template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
-template<typename T, typename U> ostream& operator<<(ostream& is, pair<T, U> &v){is << v.first << " " << v.second; return is;}
-template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i << " "; return is;}
-
-void ff() { fflush(stdout); }
-#define dbg1(arg) cerr << " [" << #arg << ": " << arg << "] " << '\n';
-#define dbg2(arg, arg2) cerr << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << "] " << '\n';
-#define dbg3(arg, arg2, arg3) cerr << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << ", " << #arg3 << ": " << arg3 << "] " << '\n';
-#define dbg4(arg, arg2, arg3, arg4) cerr << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << ", " << #arg3 << ": " << arg3 << ", " << #arg4 << ": " << arg4 << "] " << '\n';
-#define dbg5(arg, arg2, arg3, arg4, arg5) cerr << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << ", " << #arg3 << ": " << arg3 << "] " << ", " << #arg4 << ": " << arg4 << ", " << #arg5 << ": " << arg5 << '\n';
-#define GET_MACRO(_1,_2,_3,_4,_5,NAME,...) NAME
-#define dbg(...) GET_MACRO(__VA_ARGS__, dbg5, dbg4, dbg3, dbg2, dbg1)(__VA_ARGS__)
-
-struct pred { bool operator()(const std::pair<int, int> &l, const std::pair<int, int> &r) { return l.s < r.s; } };
+struct pred { bool operator()(const std::pair<int, int> &l, const std::pair<int, int> &r) { 
+    return l.s < r.s; } };
 
 ll cdiv(ll a, ll b) { return a/b+((a^b)>0&&a%b); } // divide a by b rounded up
 ll fdiv(ll a, ll b) { return a/b-((a^b)<0&&a%b); } // divide a by b rounded down
 
-#define setbits(X)  __builtin_popcountll(X) //number of "on" bits in num
-
-#define mem0(X) memset((X), 0, sizeof((X)))
-#define mem1(X) memset((X), -1, sizeof((X)))
-
-template<class T> bool ckmin(T& a, const T& b) {
-	return b < a ? a = b, 1 : 0; } // set a = min(a,b)
-template<class T> bool ckmax(T& a, const T& b) {
+template<class T> bool cmin(T& a, const T& b) {
+	return b < a ? a = b, 1 : 0; }
+template<class T> bool cmax(T& a, const T& b) {
 	return a < b ? a = b, 1 : 0; }
 
-template<class T> void outv(vector<T> v) {
-    for(T& i : v) cout << i << " "; cout << '\n'; }
-template<class T> void outarr(T a[], int N) {
-    for(int i = 0; i < N; ++i) cout << a[i] << " "; cout << '\n'; }
-template<class T> void put(T s) {
-    cout << s << '\n'; }
-/*
-|||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| 
-|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| 
-|||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| 
-*/
+/*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
-bool solve(string s, char f, int K) {
-    cnl
-    int zc = 0, oc = 0;
-    queue<char> q; 
-    FR(i, K) {
-        if(s[i] == '0') ++ zc;
-        else if(s[i] == '1') ++oc;
-        else {
-            if(oc < zc || (oc == zc && f == '1')) {
-                ++oc;
-                s[i] = '1';
-            } else {
-                ++zc;
-                s[i] = '0';
-            }
-        }
-        q.push(s[i]);
-        dbg(s[i]);
-    }
-
-    if(oc != zc) {
-        return false;
-    }
-
-    for(int i = K; i < sz(s) ; ++i) {
-        char tp = q.front(); q.pop();
-        if(tp == '0') --zc;
-        else --oc;
-        if(s[i] == '0') ++zc;
-        else if(s[i] == '1') ++oc;
-        else {
-            if(abs(zc - oc) >= 2 || zc == oc) return false;
-            if(oc < zc || (oc == zc && f == '1')) {
-                s[i] = '1'; ++oc;
-            } else {
-                s[i] = '0'; ++zc;
-            }
-        }
-        dbg(s[i]);
-        if(oc != zc) {
-            return false;
-        }
-        q.push(s[i]);
-    }
-    return true;
-
-}
 void solve() {
     int N, K;
     string s;
     cin >> N >> K >> s;
 
-    cout << ((solve(s, '0', K) || solve(s, '1', K)) ? "YES" : "NO") nl
+    FOR(i, 0, K) {
+        if(s[i] == '1' || s[i] == '0') 
+            for(int j = i + K; j < N; j += K){
+                if(s[j] != s[i] && s[j] != '?') { put("NO"); return; }
+            }
+        else {
+            set<char> cur;
+            for(int j = i +K; j < N; j += K)
+                if(s[j] != '?')
+                    cur.insert(s[j]);
+
+            if(sz(cur) > 1) {
+                put("NO"); return;
+            }
+            if(sz(cur) == 1) {
+                for(int j = i; j < N; j += K)
+                    s[j] = *cur.begin();
+            }
+        }
+
+    }
+
+    int one = 0, zero = 0;
+    FOR(i, 0, K) {
+        if(s[i] == '1') ++one;
+        else if(s[i] == '0') ++ zero;
+    }
+
+    put((one <= K / 2 && zero <= K / 2 ? "YES" : "NO"));
 }
+
 int main () {
-    setIO();
+    CP::IO::setIO();
+    CP::IO::FastIO();
 
     #if LOCAL
-        //setIn("in1.txt");
-        use_clock();
+        //CP::IO::setIn("in1.txt");
+        CP::ExecTime::use_clock();
+        debug = true;
     #endif
 
-    int T = 1; 
+    CoMpIlAtIoN_ErRoR_oN_TeSt_CaSe_69420
     cin >> T;
 
-    TC(T){
+    for(int tt = 1; tt <= T; ++tt){
         //cout << "Case #" << tt << ": ";
+        if (debug) { cout << YELLOW << "\n[Test #" << (tt) << "]\n" << RESET; }
         solve();
     }
 
-    log_time(0);
-
+    CP::ExecTime::log_time(0);
     return 0;
 }

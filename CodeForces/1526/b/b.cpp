@@ -164,32 +164,25 @@ template<class T> bool chmax(T& a, const T& b) {
 |||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| 
 |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| 
 */
-void solve() {
 
-    int move[9] = {1111111111, 111111111, 11111111, 1111111, 111111, 11111, 1111, 111, 11};
-    vi options;
-    ll N; cin >> N;
-    for(int i = 0; i < 9; ++i)
-        if(move[i] <= N)
-            options.pb(move[i]);
-    int sx = sz(options);
-    for(int i = 0; i < (1<<sx); ++i) {
-        int n = N;
-        for(int j = 0; j < sx; ++j){
-            if((i&(1<<j)) != 0){
-                n %= options[j];
-            }
-            int move = (1<<j);
-            cout << i << " " << j << " " << options[j] << " " << n << " " << ((i&move) != 0) nl
-            if(n == 0){
-                put("YES"); rtn;
-                //rtn 1;
-            }
+//stuipid chicknugged theorem or whatever
+void solve() {
+    int N; cin >> N;
+
+    if(N <= 111*11 - 111 - 11) {
+        FOR(i, 0, 10) {
+            FOR(j, 0, (1100 - 111 * i)/11+1 )
+                if(i * 111 + j * 11 == N) {
+                    put("YES");
+                    return;
+                }
         }
-        cnl
+    } else {
+        put("YES");
+        return;
     }
-    put("NO"); rtn;
- //   rtn 0;
+    put("NO");
+    return;
 }
 int main () {
     setIO();
@@ -203,16 +196,6 @@ int main () {
 
 
     TC(T){
-        //cout << "Case #" << tt << ": ";
-        // FOR(i, 0, 1)
-        //     FOR(j, 0, 1) 
-        //         FOR(k, 0, 10)
-        //             FOR(l, 0, 10)
-        //                 FOR(m, 0, 100){
-        //                     int num = (111111*i+11111*j+1111*k+111*l+11*m);
-        //                     if(num == 9730)
-        //                         dbg(i, j, k, l, m);
-        //                 }
         solve();
     }
 
