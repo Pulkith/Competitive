@@ -11,7 +11,6 @@
 
 using namespace std;
 using namespace CP;
-using namespace Solve;
 
 typedef int64_t ll;
 
@@ -45,7 +44,7 @@ int read() {int element; cin >> element; return element;}
 [[maybe_unused]] const int INF = 2'000'000'000; //0xc0, 0x3f. Pos, Neg Inf for memset. Comparison = 0x3f3f3f3f
 [[maybe_unused]] const int dx[4] = {1, 0, -1, 0}, dy[4] = {0, 1, 0, -1};
 
-inline namespace CP {
+namespace CP {
     inline namespace IO {
         void setIn(string s)  { (void)!freopen(s.c_str(),"r",stdin); }
         void setOut(string s) { (void)!freopen(s.c_str(),"w",stdout); }
@@ -83,9 +82,32 @@ inline namespace CP {
 }
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 namespace Solve {
+    set<ll> powers;
+    void pre() {
+        ll last = 1LL;
+        powers.insert(last);
+        for(int i = 1; i < 39; ++i) {
+            last *= 3;
+            powers.insert(last);
+        }
+    }
 
     void test_case([[maybe_unused]] int test_case = 0) {
-        
+        ll N; cin >> N;
+        ll ans = N;
+        set<ll> cur = powers;
+
+        ll sum = 0;
+        while(ans > *cur.begin()) {
+            auto lower = cur.lower_bound(ans);
+            if(*lower != ans) --lower;
+            ans -= *lower;
+            sum += *lower; 
+            dbg(*lower);
+            cur.erase(lower);
+        }
+        dbg(ans);
+        put(sum == 0 ? N : N + *cur.lower_bound(ans));
 
     }
 }
@@ -98,17 +120,17 @@ int main () {
         CP::ExecTime::use_clock();
         debug = true;
     #endif
+    #if LOCAL
+        CP::ExecTime::log_time(0);
+    #endif
     CoMpIlAtIoN_ErRoR_oN_TeSt_CaSe_69420
     cin >> T;
+    Solve::pre();
     for(int tt = 1; tt <= T; ++tt){
         //cout << "Case #" << tt << ": ";
         if (debug) { cout << YELLOW << "\n[Test #" << (tt) << "]\n" << RESET; }
         Solve::test_case(tt);
     }
-
-    #if LOCAL
-        CP::ExecTime::log_time(0);
-    #endif
 
     return 0;
 }

@@ -102,6 +102,8 @@ of independence
 
 Numbers with exactly 4 divisors: p*q, for some prime p, and some prime q, and p^3, for some prie p
 
+Trarjans - Find SCCs in O(N)
+
 */
 
 int main () {

@@ -10,9 +10,6 @@
 #endif
 
 using namespace std;
-using namespace CP;
-using namespace Solve;
-
 typedef int64_t ll;
 
 #define pb push_back
@@ -81,25 +78,71 @@ inline namespace CP {
             cout << s << '\n'; }
     }
 }
+
+struct pred { 
+    bool operator()(const std::vector<int> &l, const std::vector<int> &r) { 
+        return r[1] < l[1];
+    } 
+};
+
+using namespace CP;
+
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
+int N, K;
+int prefix_segs[200005];
+vt<vt<int>> segs[200005];
+int subtract[200005];
+vt<int> ans;
+multiset<vt<int>, pred> cur_segs;
 namespace Solve {
 
     void test_case([[maybe_unused]] int test_case = 0) {
         
+        cin >> N >> K;
+        FOR(i, 0, N) {
+            re(x); re(y);
+            segs[x].pb({x, y, i+1});
+            //count number of segments over every point
+            ++prefix_segs[x];
+            --prefix_segs[y+1];
+        }
+        int cur_sub = 0;
+        partial_sum(prefix_segs, prefix_segs + (200002), prefix_segs);
+        FOR(i, 1, 200001) {
+            cur_sub += subtract[i];
+            for(auto seg : segs[i])
+                cur_segs.insert(seg);
+            while(sz(cur_segs) && (*cur_segs.rbegin())[1] < i) 
+                cur_segs.erase(--cur_segs.end());
+            while(prefix_segs[i] - cur_sub > K) {
+                assert(!empty(cur_segs));
+                auto seg = *cur_segs.begin();
+                ++cur_sub;
+                --subtract[seg[1]+1];
+                ans.pb(seg[2]);
+                cur_segs.erase(cur_segs.begin());
+                
+            }
+        }
+
+        put(sz(ans));
+        if(sz(ans)) outv(ans);
 
     }
 }
+
+using namespace Solve;
 int main () {
     CP::IO::SetIO();
     CP::IO::FastIO();
 
     #if LOCAL
-        //CP::IO::setIn("in1.txt");
+        CP::IO::setIn("in2.txt");
         CP::ExecTime::use_clock();
         debug = true;
     #endif
     CoMpIlAtIoN_ErRoR_oN_TeSt_CaSe_69420
-    cin >> T;
+    //cin >> T;
     for(int tt = 1; tt <= T; ++tt){
         //cout << "Case #" << tt << ": ";
         if (debug) { cout << YELLOW << "\n[Test #" << (tt) << "]\n" << RESET; }
