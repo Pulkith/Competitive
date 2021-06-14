@@ -6,3 +6,5 @@
 *.cph
 in*.txt
 ans*.txt
+*.catalyst
+

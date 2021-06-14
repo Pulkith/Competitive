@@ -84,7 +84,7 @@ inline namespace CP {
 void test_case([[maybe_unused]] int test_case = 0) {
     
 
-}
+}p
 
 int main () {
     CP::IO::SetIO();
@@ -96,7 +96,7 @@ int main () {
         debug = true;
     #endif
     CoMpIlAtIoN_ErRoR_oN_TeSt_CaSe_69420
-    cin >> T;
+    //cin >> T;
     for(int tt = 1; tt <= T; ++tt){
         //cout << "Case #" << tt << ": ";
         if (debug) { cout << YELLOW << "\n[Test #" << (tt) << "]\n" << RESET; }

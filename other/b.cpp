@@ -10,6 +10,8 @@
 #endif
 
 using namespace std;
+using namespace CP;
+using namespace Solve;
 
 typedef int64_t ll;
 
@@ -80,12 +82,13 @@ inline namespace CP {
     }
 }
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
+namespace Solve {
 
-void test_case([[maybe_unused]] int test_case = 0) {
-    
+    void test_case([[maybe_unused]] int test_case = 0) {
+        
 
+    }
 }
-
 int main () {
     CP::IO::SetIO();
     CP::IO::FastIO();
@@ -100,7 +103,7 @@ int main () {
     for(int tt = 1; tt <= T; ++tt){
         //cout << "Case #" << tt << ": ";
         if (debug) { cout << YELLOW << "\n[Test #" << (tt) << "]\n" << RESET; }
-        test_case(tt);
+        Solve::test_case(tt);
     }
 
     #if LOCAL

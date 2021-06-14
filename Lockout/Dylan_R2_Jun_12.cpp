@@ -8,8 +8,8 @@
 #if LOCAL
     #include <DespicableMonkey/Execution_Time.h>
 #endif
-
 using namespace std;
+
 
 typedef int64_t ll;
 
@@ -80,10 +80,20 @@ inline namespace CP {
     }
 }
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
+inline namespace Solve {
 
-void test_case([[maybe_unused]] int test_case = 0) {
-    
+    void test_case([[maybe_unused]] int test_case = 0) {
+		string s; cin >> s;
 
+		int rock = count(s.begin(), s.end(), 'R');
+		int paper = count(s.begin(), s.end(), 'P');
+		int sis = count(s.begin(), s.end(), 'S');
+
+		int mx = max({rock, paper, sis});
+
+		char c = (mx == rock ? 'P' : mx == paper ? 'S' : 'R');
+		put(string(sz(s), c));
+	}
 }
 
 int main () {
@@ -100,7 +110,7 @@ int main () {
     for(int tt = 1; tt <= T; ++tt){
         //cout << "Case #" << tt << ": ";
         if (debug) { cout << YELLOW << "\n[Test #" << (tt) << "]\n" << RESET; }
-        test_case(tt);
+        Solve::test_case(tt);
     }
 
     #if LOCAL
