@@ -47,7 +47,6 @@ function cpr {
         fi
 
 }
-
 #alias method
 function compr {
     cpr $1
@@ -126,23 +125,23 @@ function gen {
             return
     fi
     file="$1";
-    
+
     #Remove/change extension
     if [[ "${1}" == *.* ]]
     then
         res="${1%%.*}"
         file="${res}"
     fi
-    
+
     ext="cpp"
-    
+
     #Ensure file does not already exist
     if [[ -e $file.$ext || -L $file.$ext ]]
     then
         output_error "File Already Exists"
         return
     fi
-    
+
     #Text Markup
     GREEN='\033[1;32m'
     NC='\033[0m' # No Color
@@ -151,10 +150,38 @@ function gen {
 
     #template location, copy template to new file
     cat ~/Desktop/Competitive/template.cpp >> $file.$ext
-    #open new file
     subl $file.$ext
     printf "${bold}DM-Compilation: ${normal}${bold}${GREEN}Successfully Generated File: ${normal}${NC}${file}.${ext}\n"
 
+
+}
+
+#parse a question with CF-Tool and open in sublime
+#currently problem and contest must be seperated
+#and full contests cannot be parsed
+# $1 = contest ID $2 = problem letter
+function parse {
+    if [ -z "$1" ]
+        then
+            output_error "Contest ID Expected"
+            return
+    fi
+    if [ -z "$2" ]
+        then
+            output_error "Contest Problem Expected"
+            return
+    fi
+
+    problem=$(echo "$2" | tr '[:upper:]' '[:lower:]')
+    cdcf
+    cf parse $1 $problem
+    subl $1/$problem/$problem.cpp
+
+    GREEN='\033[1;32m'
+    NC='\033[0m' # No Color
+    bold=$(tput bold)
+    normal=$(tput sgr0)
+    printf "${bold}DM-Compilation: ${normal}${bold}${GREEN}Successfully Generated Contest $1 Problem $2${normal}\n"
 
 }
 
