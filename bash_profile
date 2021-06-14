@@ -176,6 +176,7 @@ function parse {
     cdcf
     cf parse $1 $problem
     subl $1/$problem/$problem.cpp
+    cd $1/$problem
 
     GREEN='\033[1;32m'
     NC='\033[0m' # No Color
