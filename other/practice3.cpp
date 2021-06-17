@@ -83,8 +83,16 @@ inline namespace CP {
 
 void test_case([[maybe_unused]] int test_case = 0) {
     
+    int cnt = 0;
+    FOR(i, 0, 4) {
+        FOR(j, 0, 4) {
+            FOR(k, 0, 4)
+                ++cnt;
+        }
+    }
 
-}p
+    put(cnt);
+}
 
 int main () {
     CP::IO::SetIO();

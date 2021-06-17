@@ -10,6 +10,41 @@ function cdcf {
     cd ~/Desktop/Competitive/CodeForces/
 }
 
+function replace_text {
+
+    if [ -z "$1" ]
+        then
+            output_error "Internal Error: Could Not Replace Placeholders"
+            return
+    fi
+
+    month_replace='\$%M%\$'
+    day_replace='\$%D%\$'
+    year_replace='\$%Y%\$'
+    author_replace='\$%U%\$'
+    hour_replace='\$%h%\$'
+    minute_replace='\$%m%\$'
+    second_replace='\$%s%\$'
+
+    month_data="$(date '+%m')"
+    day_data="$(date '+%d')"
+    year_data="$(date '+%Y')"
+    author_data="DespicableMonkey"
+    hour_data="$(date '+%H')"
+    minute_data="$(date '+%M')"
+    second_data="$(date '+%S')"
+
+    echo $1
+
+    sed -i '' -e "s/$month_replace/$month_data/g" $1
+    sed -i '' -e "s/$day_replace/$day_data/g" $1
+    sed -i '' -e "s/$year_replace/$year_data/g" $1
+    sed -i '' -e "s/$author_replace/$author_data/g" $1
+    sed -i '' -e "s/$hour_replace/$hour_data/g" $1
+    sed -i '' -e "s/$minute_replace/$minute_data/g" $1
+    sed -i '' -e "s/$second_replace/$second_data/g" $1
+}
+
 #Helper methods for output
 function expected_cpp_file {
     RED='\033[1;31m'
@@ -31,20 +66,90 @@ function execution_success {
     NC='\033[0m' # No Color
     bold=$(tput bold)
     normal=$(tput sgr0)
-    printf "${bold}DM-Compilation: ${normal}${bold}${GREEN}Execution Successful${normal}${NC}\n"
+    printf "${bold}DM-Compilation: ${normal}${bold}${GREEN}Execution Sucessfully Completed${normal}${NC}\n"
+}
+
+function compiling {
+    GREEN='\033[1;32m'
+    NC='\033[0m' # No Color
+    bold=$(tput bold)
+    normal=$(tput sgr0)
+    if [[ "$2" == "DEBUG" ]]
+    then
+        printf "${bold}[DEBUG] DM-Compilation: ${normal}Compiling $1...$\n\n"
+    else
+        printf "${bold}DM-Compilation: ${normal}Compiling $1...\n\n"
+    fi
+}
+function output_error {
+    RED='\033[1;31m'
+    NC='\033[0m' # No Color
+    bold=$(tput bold)
+    normal=$(tput sgr0)
+    printf "${bold}DM-Compilation: ${normal}${bold}${RED}Error: ${normal}${NC}${1}\n"
 }
 
 #compile with options and run while debug
+
+function get_extended_file {
+    file="$1"
+    if [[ "${1}" == *.* ]]
+    then
+        res="${1%%.*}"
+        file="${res}"
+    fi
+    echo "${file}.cpp"
+}
+function compile_run_file {
+    if [ -z "$1" ]
+            then
+                output_error "Internal Error: Could Not Find File"
+                return
+    fi
+
+    if [ -z "$2" ]
+            then
+                output_error "Internal Error: Could Not Determine Compilation Arguments"
+                return
+    fi
+
+    file=$(get_extended_file "${1}")
+
+    if [ ! -f $file ]; then
+        expected_cpp_file
+        return
+    fi
+
+
+    if [[ "$2" == "compile_and_debug" ]]
+    then
+        compiling "$file" "DEBUG"
+        g++ -DLOCAL=1 -O2 -Wall -Wshadow -Wuninitialized -Wfloat-equal -Wshift-overflow -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=undefined -std=c++17 -o a.out $file && ./a.out && rm a.out
+        execution_success
+    elif [[ "$2" == "compile_and_run" ]]
+    then
+        compiling "$file" "NORMAL"
+        g++ -std=c++17 -o a.out $file && ./a.out && rm a.out
+        execution_success
+    elif [[ "$2" == "compile" ]]
+    then
+        compiling "$file" "DEBUG"
+        time g++ -DLOCAL=1 -O2 -Wall -Wshadow -Wuninitialized -Wfloat-equal -Wshift-overflow -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=undefined -std=c++17 $file
+        compilation_successs
+    else
+        output_error "Internal Error: Could Not Determine Compilation Configuration"
+        return
+    fi
+
+}
 function cpr {
-        if [[ "$1" == *.cpp ]]
-        then
-            compilation_successs
-            printf "\n"
-            g++ -DLOCAL=1 -O2 -Wall -Wshadow -Wuninitialized -Wfloat-equal -Wshift-overflow -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=undefined -std=c++17 -o a.out $1 && ./a.out && rm a.out
-            execution_success
-        else
-            expected_cpp_file
+        if [ -z "$1" ]
+            then
+                expected_cpp_file
+                return
         fi
+
+        compile_run_file $1 "compile_and_debug"
 
 }
 #alias method
@@ -54,31 +159,24 @@ function compr {
 
 #speed compile without options & run
 function cprs {
-        RED='\033[0;31m'
-        NC='\033[0m' # No Color
-        if [[ "$1" == *.cpp ]]
-        then
-            compilation_successs
-            printf "\n"
-            g++ -std=c++17 -o a.out $1 && ./a.out && rm a.out
-            execution_success
-        else
-            expected_cpp_file
+        if [ -z "$1" ]
+            then
+                expected_cpp_file
+                return
         fi
+
+        compile_run_file $1 "compile_and_run"
 }
 
 #compile with options
 function comp {
-        RED='\033[0;31m'
-        GREEN='\033[0;32m'
-        NC='\033[0m' # No Color
-        if [[ "$1" == *.cpp ]]
-        then
-            time g++ -DLOCAL=1 -O2 -Wall -Wshadow -Wuninitialized -Wfloat-equal -Wshift-overflow -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=undefined -std=c++17 $1
-            compilation_successs
-        else
-            expected_cpp_file
-        fi 
+        if [ -z "$1" ]
+            then
+                expected_cpp_file
+                return
+        fi
+
+        compile_run_file $1 "compile"
 }
 #gen input/output files
 function genio {
@@ -108,13 +206,6 @@ function genio {
     normal=$(tput sgr0)
     printf "${bold}DM-Compilation: ${normal}${bold}${GREEN}Successfully Generated IO Files: ${normal}${NC}${name1} & ${name2}\n"
 
-}
-function output_error {
-    RED='\033[1;31m'
-    NC='\033[0m' # No Color
-    bold=$(tput bold)
-    normal=$(tput sgr0)
-    printf "${bold}DM-Compilation: ${normal}${bold}${RED}Error: ${normal}${NC}${1}\n"
 }
 
 #gen file from template with name $1
@@ -150,6 +241,7 @@ function gen {
 
     #template location, copy template to new file
     cat ~/Desktop/Competitive/template.cpp >> $file.$ext
+    replace_text $file.$ext
     subl $file.$ext
     printf "${bold}DM-Compilation: ${normal}${bold}${GREEN}Successfully Generated File: ${normal}${NC}${file}.${ext}\n"
 
