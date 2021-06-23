@@ -1,10 +1,11 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 06.22.2021 13:07:44
  * Potatoes FTW!
  **/ 
 
-#include "bits/stdc++.h"
+#include<bits/stdc++.h>
+#include <numeric>
 #if LOCAL
     #include <DespicableMonkey/Execution_Time.h>
     #include <DespicableMonkey/Debug.h>
@@ -47,7 +48,7 @@ inline namespace CP {
         #endif
         template<class T> void outv(vector<T> v, int add = 0, bool standard = 1) {for(T& i : v) (standard?cout:cerr) << (i+add) << " "; cout << '\n'; }
         template<class T> void put(T output) { cout << output << '\n'; }
-        #define putr(__output) return void(putr(__output))
+        #define putr(__output) return put(__output), void();
     }
     class IO { public:
         void setIn(string s)  { (void)!freopen(s.c_str(),"r",stdin); }
@@ -65,12 +66,18 @@ inline namespace CP {
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
 const int MX = (2e5+5); //Check the limits idiot
-int N;
-int a[MX];
+int N, Q;
+ll a[MX];
 
 
 void test_case() {
-    
+    cin >> N >> Q;
+    FORE(i, 1, N) cin >> a[i];
+    partial_sum(a, a+N+1, a);
+    while(Q--) {
+        int l, r; cin >> l >> r;
+        cout << a[r] - a[l-1] << '\n';
+    }
     
 }
 
@@ -78,7 +85,7 @@ int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
+//    cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

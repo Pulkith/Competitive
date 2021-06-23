@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 06.23.2021 15:27:22
  * Potatoes FTW!
  **/ 
 
@@ -67,10 +67,53 @@ inline namespace CP {
 const int MX = (2e5+5); //Check the limits idiot
 int N;
 int a[MX];
-
+int locked[26]{};
 
 void test_case() {
-    
+    string s; cin >> s;
+    map<int, int> freq;
+    for(char c : s)
+        ++freq[c - 'a'], locked[c - 'a'] = -1;
+
+
+    FOR(i, 0, sz(s) - 1) {
+        if(i < 0) continue;
+        int index = s[i] - 'a';
+        auto& loc_ = locked[index];
+        auto& cnt = freq[index];
+        if(locked[s[i+1] - 'a'] != -1 && i + 1 != locked[s[i+1] - 'a']) {
+            --freq[s[i+1] - 'a'];
+            s.erase(s.begin() + i + 1);
+            i -= 2;
+        }
+        else if(s[i] < s[i+1] && cnt > 1) {
+            --cnt;
+            loc_ = -1;
+            s.erase(s.begin() + i);
+            i -= 2;
+        }
+        else if(s[i] == s[i+1]) {
+            --cnt;
+            loc_ = i;
+            s.erase(s.begin() + i);
+            i -= 2;
+        } else {
+            loc_ = i;
+            continue;
+        }
+
+
+
+    }
+
+    int use[26]{false};
+    string ans = "";
+
+    for(char c : s)
+        if(!use[c - 'a'])
+            ans += c, use[c- 'a'] = 1;
+
+    put(ans);
     
 }
 

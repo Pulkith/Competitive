@@ -1,10 +1,10 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 06.22.2021 13:23:26
  * Potatoes FTW!
  **/ 
 
-#include "bits/stdc++.h"
+#include<bits/stdc++.h>
 #if LOCAL
     #include <DespicableMonkey/Execution_Time.h>
     #include <DespicableMonkey/Debug.h>
@@ -47,7 +47,7 @@ inline namespace CP {
         #endif
         template<class T> void outv(vector<T> v, int add = 0, bool standard = 1) {for(T& i : v) (standard?cout:cerr) << (i+add) << " "; cout << '\n'; }
         template<class T> void put(T output) { cout << output << '\n'; }
-        #define putr(__output) return void(putr(__output))
+        #define putr(__output) return put(__output), void();
     }
     class IO { public:
         void setIn(string s)  { (void)!freopen(s.c_str(),"r",stdin); }
@@ -64,13 +64,42 @@ inline namespace CP {
 }
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
-const int MX = (2e5+5); //Check the limits idiot
-int N;
-int a[MX];
+template <class T, int ...Ns> struct BIT {
+    T val = 0; void upd(T v) { val += v; }
+    T query() { return val; }
+};
+template <class T, int N, int... Ns> struct BIT<T, N, Ns...> {
+    BIT<T,Ns...> bit[N+1];
+    template<typename... Args> void upd(int pos, Args... args) { assert(pos > 0);
+        for (; pos<=N; pos+=pos&-pos) bit[pos].upd(args...); }
+    template<typename... Args> T sum(int r, Args... args) {
+        T res=0; for (;r;r-=r&-r) res += bit[r].query(args...);
+        return res; }
+    template<typename... Args> T query(int l, int r, Args...
+        args) { return sum(r,args...)-sum(l-1,args...); }
+};
 
 
 void test_case() {
-    
+    int N, Q;
+    cin >> N >> Q;
+    BIT<ll, 200005> st;
+
+    vt<int> a(N+1);
+
+    FORE(i, 1, N) {
+        cin >> a[i];
+        st.upd(i, a[i]);
+    }
+
+    while(Q--) {
+        int operation, value1, value2; cin >> operation >> value1 >> value2;
+        if(operation == 1)
+            st.upd(value1 , value2 - a[value1]), a[value1] = value2;
+        else
+            put(st.query(value1, value2));
+        
+    }
     
 }
 
@@ -78,7 +107,7 @@ int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
+    //cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

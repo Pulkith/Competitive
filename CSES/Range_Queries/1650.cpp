@@ -1,10 +1,10 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 06.22.2021 13:39:00
  * Potatoes FTW!
  **/ 
 
-#include "bits/stdc++.h"
+#include<bits/stdc++.h>
 #if LOCAL
     #include <DespicableMonkey/Execution_Time.h>
     #include <DespicableMonkey/Debug.h>
@@ -47,7 +47,7 @@ inline namespace CP {
         #endif
         template<class T> void outv(vector<T> v, int add = 0, bool standard = 1) {for(T& i : v) (standard?cout:cerr) << (i+add) << " "; cout << '\n'; }
         template<class T> void put(T output) { cout << output << '\n'; }
-        #define putr(__output) return void(putr(__output))
+        #define putr(__output) return put(__output), void();
     }
     class IO { public:
         void setIn(string s)  { (void)!freopen(s.c_str(),"r",stdin); }
@@ -64,21 +64,46 @@ inline namespace CP {
 }
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
-const int MX = (2e5+5); //Check the limits idiot
-int N;
-int a[MX];
+template<class T> struct Seg { // comb(ID,b) = b
+    const T ID = (1e9); T comb(T a, T b) { return a^b; }
+    int n; vector<T> seg;
+    void init(int _n) { n = _n; seg.assign(2*n,ID); }
+    void pull(int p) { seg[p] = comb(seg[2*p],seg[2*p+1]); }
+    void upd(int p, T val) { // set val at position p
+        seg[p += n] = val; for (p /= 2; p; p /= 2) pull(p); }
+    T query(int l, int r) { // min on interval [l, r]
+        T ra = ID, rb = ID;
+        for (l += n, r += n+1; l < r; l /= 2, r /= 2) {
+            if (l&1) ra = comb(ra,seg[l++]);
+            if (r&1) rb = comb(seg[--r],rb);
+        }
+        return comb(ra,rb);
+    }
+};
 
 
 void test_case() {
+    int N, Q;
+    cin >> N >> Q;
+    Seg<int> st;
+    st.init(N+1);
     
-    
+    FORE(i, 1, N) {
+        int x; cin >> x;
+        st.upd(i, x);
+    }
+
+    while(Q--) {
+        int l, r; cin >> l >> r;
+        put(st.query(l, r));
+    }
 }
 
 int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
+    //cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

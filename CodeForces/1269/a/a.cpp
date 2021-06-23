@@ -1,10 +1,10 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 06.22.2021 16:04:37
  * Potatoes FTW!
  **/ 
 
-#include "bits/stdc++.h"
+#include<bits/stdc++.h>
 #if LOCAL
     #include <DespicableMonkey/Execution_Time.h>
     #include <DespicableMonkey/Debug.h>
@@ -47,7 +47,7 @@ inline namespace CP {
         #endif
         template<class T> void outv(vector<T> v, int add = 0, bool standard = 1) {for(T& i : v) (standard?cout:cerr) << (i+add) << " "; cout << '\n'; }
         template<class T> void put(T output) { cout << output << '\n'; }
-        #define putr(__output) return void(putr(__output))
+        #define putr(__output) return put(__output), void()
     }
     class IO { public:
         void setIn(string s)  { (void)!freopen(s.c_str(),"r",stdin); }
@@ -66,19 +66,33 @@ inline namespace CP {
 
 const int MX = (2e5+5); //Check the limits idiot
 int N;
-int a[MX];
 
-
+bool isPrime(int x) {
+    if(x == 1) return 1;
+    for(int i = 2; i * i <= x; ++i)
+        if(x % i == 0) return 0;
+    return 1;
+}
 void test_case() {
     
-    
+
+
+    cin >> N;
+
+
+    int a = 4;
+    ll b = N + 4;
+
+    while(isPrime(a) || isPrime(b)) ++a, ++b;
+    cout << b <<' '<< a << '\n';
+
 }
 
 int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
+    //cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

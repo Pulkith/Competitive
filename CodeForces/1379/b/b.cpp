@@ -1,14 +1,13 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 06.22.2021 00:05:39
  * Potatoes FTW!
  **/ 
 
-#include "bits/stdc++.h"
+#include<bits/stdc++.h>
 #if LOCAL
     #include <DespicableMonkey/Execution_Time.h>
     #include <DespicableMonkey/Debug.h>
-    #define debug_active 1
 #endif
 
 using namespace std;
@@ -36,23 +35,10 @@ const int MOD = 1'000'000'007, INF = 2 * MOD; //0xc0, 0x3f. Pos, Neg Inf for mem
 const int dx[4] = {1, 0, -1, 0}, dy[4] = {0, 1, 0, -1}; //DRUL
 
 inline namespace CP {
-     inline namespace Output {
-        string operator+(string str, int num){return str + ts(num);}
-        string operator+(int num, string str) { return ts(num) + str; }
-        //string to_string(const char* s) { return string(s);}
-        #if !defined LOCAL
-            #define dbg(...) ;
-            #define print_test_case(...) ;
-            #define debug_active 0
-        #endif
-        template<class T> void outv(vector<T> v, int add = 0, bool standard = 1) {for(T& i : v) (standard?cout:cerr) << (i+add) << " "; cout << '\n'; }
-        template<class T> void put(T output) { cout << output << '\n'; }
-        #define putr(__output) return void(putr(__output))
-    }
     class IO { public:
         void setIn(string s)  { (void)!freopen(s.c_str(),"r",stdin); }
         void setOut(string s) { (void)!freopen(s.c_str(),"w",stdout); }
-        void Input(int __use_input = 0) {if(!!__use_input && debug_active){setIn("in"+to_string(__use_input)+".txt");}}
+        void Input(int __use_input = 0) {if(!!__use_input){setIn("in"+to_string(__use_input)+".txt");}}
         IO FastIO() { cin.tie(nullptr)->sync_with_stdio(0); return *this; }
         IO* SetIO(string __s = "", string __t = "") {
             cin.exceptions(cin.failbit); // throws exception when do smth illegal ex. try to read letter into int
@@ -61,17 +47,71 @@ inline namespace CP {
             return this;
         }
     };
+    inline namespace Output {
+        string operator+(string str, int num){return str + ts(num);}
+        string operator+(int num, string str) { return ts(num) + str; }
+        string to_string(const char* s) { return string(s);}
+        #if !defined LOCAL
+            #define dbg(...) ;
+            #define print_test_case(...) ;
+        #endif
+        template<class T> void outv(vector<T> v, int add = 0, bool standard = 1) {for(T& i : v) (standard?cout:cerr) << (i+add) << " "; cout << '\n'; }
+        template<class T> void put(T output) { cout << output << '\n'; }
+        #define putr(__output) return put(__output), void();
+    }
 }
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
 const int MX = (2e5+5); //Check the limits idiot
-int N;
-int a[MX];
+ll L, R, M;
 
 
 void test_case() {
-    
-    
+    cin >> L >> R >> M;
+
+    ll l = L, r = R;
+    vt<ll> ans(3);
+    auto solve = [&](ll x, ll n) -> int {
+        auto cur = x * n;
+        if(cur == M) {
+            ans = {x, L, L};
+            return 0;
+        }
+        if(cur < M) {
+            if(cur + R - L >= M) {
+                ans = {x, M - cur + L, L};
+                return 0;
+            }
+        }
+        if(cur > M) {
+            if(cur - R + L <= M) {
+                ans = {x, R -(cur - M), R};
+                return 0;
+            }
+        }
+        return cur > M ? 1 : -1;
+
+    };
+    auto test = [&](ll x) -> int {
+        ll n = M / x;
+        if(n == 0) ++n;
+        bool ok = solve(x, n);
+        if(!ok) return 0;
+        bool try2 = solve(x, n+1);
+        if(!try2) return 0;
+        return ok;
+    };
+
+    FORE(i, L, R) {
+        if(!test(i)){
+            outv(ans);
+            return;
+        }
+    }
+    // cout << "NO" << '\n';
+
+    assert(0);
+
 }
 
 int main () {

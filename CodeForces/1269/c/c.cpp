@@ -1,10 +1,10 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 06.22.2021 16:24:51
  * Potatoes FTW!
  **/ 
 
-#include "bits/stdc++.h"
+#include<bits/stdc++.h>
 #if LOCAL
     #include <DespicableMonkey/Execution_Time.h>
     #include <DespicableMonkey/Debug.h>
@@ -47,7 +47,7 @@ inline namespace CP {
         #endif
         template<class T> void outv(vector<T> v, int add = 0, bool standard = 1) {for(T& i : v) (standard?cout:cerr) << (i+add) << " "; cout << '\n'; }
         template<class T> void put(T output) { cout << output << '\n'; }
-        #define putr(__output) return void(putr(__output))
+        #define putr(__output) return put(__output), void();
     }
     class IO { public:
         void setIn(string s)  { (void)!freopen(s.c_str(),"r",stdin); }
@@ -65,20 +65,69 @@ inline namespace CP {
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
 const int MX = (2e5+5); //Check the limits idiot
-int N;
-int a[MX];
+string s;
+ll K, N;
 
-
-void test_case() {
-    
-    
+bool good(string str) {
+    for(int i = 0; i < K; ++i)
+        for(int j = i + K; j < sz(str); j += K)
+            if(str[j] != str[i])
+                return 0;
+    return 1;
 }
 
+string brute() {
+    string cur = s;
+    while(!good(cur)) {
+        ll k = stoll(cur);
+        ++k;
+        cur = ts(k);
+    }
+    return cur;
+}
+
+void test_case() {
+    cin >> N >> K >> s;
+    //string ans2 = brute();
+    bool ok = 0;
+    for(int i = 0; i < K && !ok; ++i)
+        for(int j = i + K; j < sz(s) && !ok; j += K)
+            if(s[j] < s[i]) s[j] = s[i];
+            else if(s[j] > s[i]) {
+                ++s[K-1];
+                if(s[K-1] > '9') {
+                    int x = K-2;
+                    while(x >= 0 && s[x] == '9') --x;
+                    assert(x >= 0);
+                    ++s[x];
+                    for(int k = x+1; k < sz(s); ++k)
+                        s[k] = '0';
+                }
+                ok = 1;
+            }
+
+
+    for(int i = 0; i < K; ++i)
+        for(int j = i + K; j < sz(s); j += K)
+            if(s[i] != s[j])
+                s[j] = s[i];
+
+    //assert(s == ans2);
+    put(N);
+    putr(s);
+    
+}
+/*
+for all i in K
+if s[i+Kx] < s[i]: increase everything to s[i]
+if s[i+Kx] > s[i], increase s[K-1] by 1, and set everything equal to their corresponding s[i]
+
+*/
 int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
+    //cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

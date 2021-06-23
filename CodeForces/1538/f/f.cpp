@@ -108,8 +108,35 @@ struct pred { bool operator()(const std::pair<int, int> &l, const std::pair<int,
     return l.s < r.s; } };
 
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
+void solve(int l, int r) {
+    int num = l;
+    int cnt = 0;
+    while(l != r) {
+        string before = ts(l);
+        string after = ts(++l);
+
+        if(sz(after) > sz(before))
+            cnt += sz(after);
+        else
+            FOR(i, 0, sz(after))
+                cnt += (after[i] != before[i]);
+    }   
+    cout << num << " -> " << r << " = " << cnt << '\n';
+}
+
+ll f(int num) {
+    ll ans = sz(ts(num)) - 1;
+    while(num > 0) {
+        ans += (num - 1);
+        num /= 10;
+    }
+    return ans;
+}
+
 void solve() {
-    
+    int L, R;
+    cin >> L >> R;
+    cout << f(R) - f(L) << '\n';
 }
 
 int main () {
