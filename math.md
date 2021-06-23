@@ -7,7 +7,7 @@
 
 ## Graphs
 - **Euler's Formula for Planar Graphs**:	
-> V - E + F = 1 + C <br>
+> ![](https://latex.codecogs.com/gif.latex?V&space;-&space;E&space;&plus;&space;F&space;=&space;1&space;&plus;&space;C) <br>
 where *V*, is the number of vertices, *E* is the number of edges,  *F* is the name of faces, and *C* is the <br>number of connected components
 
 
