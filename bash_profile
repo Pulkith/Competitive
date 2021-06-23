@@ -34,8 +34,6 @@ function replace_text {
     minute_data="$(date '+%M')"
     second_data="$(date '+%S')"
 
-    echo $1
-
     sed -i '' -e "s/$month_replace/$month_data/g" $1
     sed -i '' -e "s/$day_replace/$day_data/g" $1
     sed -i '' -e "s/$year_replace/$year_data/g" $1
@@ -124,7 +122,7 @@ function compile_run_file {
     if [[ "$2" == "compile_and_debug" ]]
     then
         compiling "$file" "DEBUG"
-        g++ -DLOCAL=1 -O2 -Wall -Wshadow -Wuninitialized -Wfloat-equal -Wshift-overflow -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=undefined -std=c++17 -o a.out $file && ./a.out && rm a.out
+        g++ -DLOCAL=1 -O2 -Wall -Wshadow -Wuninitialized -Wfloat-equal -Wno-unused-variable -Wshift-overflow -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=undefined -std=c++17 -o a.out $file && ./a.out && rm a.out
         execution_success
     elif [[ "$2" == "compile_and_run" ]]
     then
@@ -134,7 +132,7 @@ function compile_run_file {
     elif [[ "$2" == "compile" ]]
     then
         compiling "$file" "DEBUG"
-        time g++ -DLOCAL=1 -O2 -Wall -Wshadow -Wuninitialized -Wfloat-equal -Wshift-overflow -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=undefined -std=c++17 $file
+        time g++ -DLOCAL=1 -O2 -Wall -Wshadow -Wuninitialized -Wfloat-equal -Wno-unused-variable -Wshift-overflow -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=undefined -std=c++17 $file
         compilation_successs
     else
         output_error "Internal Error: Could Not Determine Compilation Configuration"
