@@ -5,7 +5,7 @@
 
 	**Solution**: Since every letter must become something greater, you can create directed edges from every letter to every letter it must become. Then the cost is just the number of Weakly Connected Components
 
-##Spanning Trees
+## Spanning Trees
 
 - **You have a bunch of grids. For each grid you can either**
 	1. **parse grid 1 entirely for cost N x M**
