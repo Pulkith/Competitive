@@ -6,7 +6,7 @@
 ![](https://latex.codecogs.com/gif.latex?N^2&space;=&space;\sum_{i=1}^{N}&space;|A_i&space;-&space;B_i|)
 
 ## Misc
-- **If you need to maximize the product of an array, but most decrease 1 or more elements, it is always optimal to reduce the largest elements** 
+- **If you need to maximize the product of an array, but must decrease 1 or more elements, it is always optimal to reduce the largest elements** 
 
 ## Graphs
 - **Euler's Formula for Planar Graphs**:	
