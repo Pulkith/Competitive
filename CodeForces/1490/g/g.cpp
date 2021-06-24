@@ -1,10 +1,12 @@
 /**
  * author: DespicableMonkey
- * created: 06.23.2021 19:31:26
+ * created: 06.23.2021 23:07:03
  * Potatoes FTW!
  **/ 
 
+#include <algorithm>
 #include<bits/stdc++.h>
+#include <ios>
 #if LOCAL
     #include <DespicableMonkey/Execution_Time.h>
     #include <DespicableMonkey/Debug.h>
@@ -65,41 +67,64 @@ inline namespace CP {
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
 const int MX = (2e5+5); //Check the limits idiot
-int N;
+int N, Q;
+int a[MX];
 
-/*
-    Each of N computers has a height h, and a width w. Each computer can be rotated to have height w, and width h.
-    Count the number of pairs where each computer can be rotated(or not) to have the same height
-
-*/
-void test_case() {
-    cin >> N;
-    vt<pr<int, int>> computers(N);
-
-    FOR(i, 0, N)
-        cin >> computers[i].f >> computers[i].s;
-    FOR(i, 0, N)
-        if(computers[i].f > computers[i].s)
-            swap(computers[i].f, computers[i].s);
-    ll ans = 0;
-
-    map<int, int> freq;
-    map<pr<int, int>, int> freq_pairs;
-
-    for(auto [x, y] : computers) {
-        if(x == y)
-            ans += freq[x];
-        else
-            ans += freq[x] + freq[y] - freq_pairs[{x, y}];
-
-        ++freq[x];
-        if(x != y)
-            ++freq[y];
-        ++freq_pairs[{x, y}];
+template<class T> struct Seg { // comb(ID,b) = b
+    const T ID = (1e18); T comb(T x, T y) { return min(x,y); }
+    int n; vector<T> seg;
+    void init(int _n) { n = _n; seg.assign(2*n,ID); }
+    void pull(int p) { seg[p] = comb(seg[2*p],seg[2*p+1]); }
+    void upd(int p, T val) { // set val at position p
+        seg[p += n] = val; for (p /= 2; p; p /= 2) pull(p); }
+    T query(int l, int r) { // min on interval [l, r]
+        T ra = ID, rb = ID;
+        for (l += n, r += n+1; l < r; l /= 2, r /= 2) {
+            if (l&1) ra = comb(ra,seg[l++]);
+            if (r&1) rb = comb(seg[--r],rb);
+        }
+        return comb(ra,rb);
     }
-    
+};
 
-    put(ans);
+void test_case() {
+    cin >> N >> Q;
+    FOR(i, 0, N) cin >> a[i];
+    vt<ll> values(N);
+    ll sum = 0;
+    FOR(i, 0, N) values[i] = sum += a[i];
+    ll maxx = *max_element(all(values));
+
+    vt<pr<ll, ll>> sorted_values(N);
+    FOR(i, 0, N) sorted_values[i] = {values[i], i};
+    sort(all(sorted_values));
+
+    Seg<ll> st;
+    st.init(N+1);
+
+    FORE(i, 1, N)
+        st.upd(i, sorted_values[i-1].s);
+
+    bool nonincreasing = (values[N-1] <=0);
+
+    while(Q--) {
+        ll query; cin >> query;
+        if(query > maxx && nonincreasing) {
+            cout << -1 << " \n"[!Q];
+            continue;
+        }
+
+        ll cycles_need = (query <= maxx) ? 0 : (query - maxx) / sum;
+        if(cycles_need * sum + maxx < query) ++cycles_need;
+        assert(cycles_need * sum + maxx >= query);
+
+        ll need_min = (query - cycles_need * sum);
+        pr<ll, ll> find = {need_min, -1};
+        auto partition_index = lower_bound(sorted_values.begin(), sorted_values.end(), find);
+        ll minn_index = st.query(partition_index - sorted_values.begin() + 1, N);
+        cout << minn_index + cycles_need * N << " \n"[!Q];
+
+    }
     
 }
 
@@ -107,7 +132,7 @@ int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
-    //cin >> Test_Cases;
+    cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

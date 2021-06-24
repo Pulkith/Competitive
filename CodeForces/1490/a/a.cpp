@@ -1,6 +1,6 @@
 /**
  * author: DespicableMonkey
- * created: 06.23.2021 19:31:26
+ * created: 06.24.2021 01:15:12
  * Potatoes FTW!
  **/ 
 
@@ -66,38 +66,23 @@ inline namespace CP {
 
 const int MX = (2e5+5); //Check the limits idiot
 int N;
+int a[MX];
 
-/*
-    Each of N computers has a height h, and a width w. Each computer can be rotated to have height w, and width h.
-    Count the number of pairs where each computer can be rotated(or not) to have the same height
 
-*/
 void test_case() {
-    cin >> N;
-    vt<pr<int, int>> computers(N);
+    cin >> N; FOR(i, 0, N) cin >> a[i];
+    int ans = 0;
+    int last = a[0];
 
-    FOR(i, 0, N)
-        cin >> computers[i].f >> computers[i].s;
-    FOR(i, 0, N)
-        if(computers[i].f > computers[i].s)
-            swap(computers[i].f, computers[i].s);
-    ll ans = 0;
-
-    map<int, int> freq;
-    map<pr<int, int>, int> freq_pairs;
-
-    for(auto [x, y] : computers) {
-        if(x == y)
-            ans += freq[x];
-        else
-            ans += freq[x] + freq[y] - freq_pairs[{x, y}];
-
-        ++freq[x];
-        if(x != y)
-            ++freq[y];
-        ++freq_pairs[{x, y}];
+    FOR(i, 0, N) {
+        while(min(last, a[i]) * 2 < max(last, a[i])) {
+            if(last <  a[i]) last *= 2;
+            else last = (last%2?last/2+1 : last / 2);
+            ++ans;
+        }
+        last = a[i];
     }
-    
+
 
     put(ans);
     
@@ -107,7 +92,7 @@ int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
-    //cin >> Test_Cases;
+    cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

@@ -112,7 +112,20 @@ template<class T> bool cmax(T& a, const T& b) {
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
 void solve() {
+    int N; cin >> N;
+    vt<int> a(N), b(N);
+    FOR(i, 0, N) cin >> a[i] >> b[i];
 
+    ll ans = 0;
+
+
+    FOR(i, 0, N) {
+        FOR(j, i+1, N) {
+            ans += (a[i] == a[j] || a[i] == b[j] || b[i] == a[j] || b[i] == b[j]);
+        }
+    }
+
+    put(ans);
 }
 
 int main () {
@@ -126,7 +139,7 @@ int main () {
     #endif
 
     CoMpIlAtIoN_ErRoR_oN_TeSt_CaSe_69420
-    cin >> T;
+    //cin >> T;
 
     for(int tt = 1; tt <= T; ++tt){
         //cout << "Case #" << tt << ": ";

@@ -5,6 +5,9 @@
 > Split a permutation of 2N into arbitrary subsets of size N labeled *A*, and *B*. <br> If you sort *A* in increasing order, and *B* in increasing order then <br>
 ![](https://latex.codecogs.com/gif.latex?N^2&space;=&space;\sum_{i=1}^{N}&space;|A_i&space;-&space;B_i|)
 
+## Misc
+- **If you need to maximize the product of an array, but most decrease 1 or more elements, it is always optimal to reduce the largest elements** 
+
 ## Graphs
 - **Euler's Formula for Planar Graphs**:	
 > ![](https://latex.codecogs.com/gif.latex?V&space;-&space;E&space;&plus;&space;F&space;=&space;1&space;&plus;&space;C) <br>
