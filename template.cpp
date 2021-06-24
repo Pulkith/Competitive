@@ -4,7 +4,7 @@
  * Potatoes FTW!
  **/ 
 
-#include "bits/stdc++.h"
+#include<bits/stdc++.h>
 #if LOCAL
     #include <DespicableMonkey/Execution_Time.h>
     #include <DespicableMonkey/Debug.h>
@@ -25,7 +25,7 @@ using namespace std;
 #define FOR(i,a,b) for (int i = (a); i < (b); ++i)
 #define FORE(i, a, b) for(int i = (a); i<= (b); ++i)
 
-using ll = int64_t;
+#define ll long long// using ll = int64_t;
 template<typename T, typename U> using pr = pair<T, U>;
 template<typename T> using vt = vector<T>;
 template<class T, class U> T cdiv(T a, U b) { return a/b+((a^b)>0&&a%b); } // divide a by b rounded up
