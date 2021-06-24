@@ -16,6 +16,9 @@ Given a set of *N* integers, *s*, the absolute sum of all distances to one point
 
 ## Misc
 - **If you need to maximize the product of an array, but must decrease 1 or more elements, it is always optimal to reduce the largest elements** 
+- **Given a Permutation of *N*, find the largest subsequence product that is 1 when modded with *N*.**
+    > All numbers must be coprime with *N*, or its product will not be coprime with *N*, and product%*N* != 1(gcd(N, product) != 1). If you multiply all numbers that are coprime<br>
+       with *N*, and the product%*N* is 1, you are good. Otherwise, you must remove the element that is product%*N*, and the product will be 1 modulo *N*
 
 ## Graphs
 - **Euler's Formula for Planar Graphs**:	
