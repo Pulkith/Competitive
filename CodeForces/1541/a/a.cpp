@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 06.25.2021 13:08:42
  * Potatoes FTW!
  **/ 
 
@@ -59,11 +59,18 @@ inline namespace CP {
 
 const int MX = (2e5+5); //Check the limits idiot
 int N;
-int a[MX];
 
 
 void test_case() {
-    
+    cin >> N;
+    if(N&1) {
+        for(int i = 0; i < N - 3; i += 2)
+            cout << i+2 << " " << i+1 << " ";
+        cout << N << " " << N-2 << ' ' << N-1 << '\n';
+    } else {
+        for(int i = 0; i < N; i += 2)
+            cout << i+2 << " " << i+1 << " \n"[i == N - 2];
+    }
     
 }
 

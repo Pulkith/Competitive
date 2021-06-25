@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 06.25.2021 13:08:42
  * Potatoes FTW!
  **/ 
 
@@ -59,12 +59,26 @@ inline namespace CP {
 
 const int MX = (2e5+5); //Check the limits idiot
 int N;
-int a[MX];
+pr<int, int> a[MX];
 
 
 void test_case() {
-    
-    
+    cin >> N;
+    FOR(i, 0, N) {
+        cin >> a[i].f;
+        a[i].s = i+1;
+    }
+    ll ans = 0;
+
+    sort(a, a+N);
+
+    FOR(i, 0, N) {
+        FOR(j, i+1, N) {
+            if(a[i].f * 1LL * a[j].f > 2 * N) break;
+            if(a[i].s + a[j].s == a[i].f * a[j].f) ++ans;
+        }
+    }
+    put(ans);
 }
 
 int main () {

@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 06.25.2021 01:32:27
  * Potatoes FTW!
  **/ 
 
@@ -57,21 +57,44 @@ inline namespace CP {
 }
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
-const int MX = (2e5+5); //Check the limits idiot
-int N;
-int a[MX];
-
+const int MX = (1e5+5); //Check the limits idiot
+int N, W;
+int weight[105];
+int value[105];
+ll dp[105][MX];
 
 void test_case() {
+    cin >> N >> W;
+    FORE(i, 1, N) cin >> weight[i] >> value[i];
+    //2D Knapsack
+    FORE(i, 1, N) {
+        FORE(j, 0, W) {
+            cmax(dp[i][j], dp[i-1][j]);
+            if(j - weight[i] >= 0)
+                cmax(dp[i][j], dp[i-1][j - weight[i]] + value[i]);
+        }
+    }
+    //1D Knapsack -> THIS IS INCORRECT
+    /*
+    ll dp[105][MX];
+    memset(dp, 0, sizeof(dp));
+    FORE(i, 1, N)
+        for(int j = W; j >= 0; --j)
+            if(weight[i] <= W)
+                cmax(dp[j], dp[j - weight[i]] + value[i]);
+    ll ans = dp[W];
+
+
+    */
     
-    
+    put(dp[N][W]);
 }
 
 int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
+    //cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 06.24.2021 15:50:17
  * Potatoes FTW!
  **/ 
 
@@ -25,14 +25,21 @@ using namespace std;
 #define FOR(i,a,b) for (int i = (a); i < (b); ++i)
 #define FORE(i, a, b) for(int i = (a); i<= (b); ++i)
 
-#define ll long long
+#define ll long long// using ll = int64_t;
 template<typename T, typename U> using pr = pair<T, U>;
 template<typename T> using vt = vector<T>;
+template<class T, class U> T cdiv(T a, U b) { return a/b+((a^b)>0&&a%b); } // divide a by b rounded up
 template<class T> bool cmin(T& a, const T& b) { return b < a ? a = b, 1 : 0; }
 template<class T> bool cmax(T& a, const T& b) { return a < b ? a = b, 1 : 0; }
 
+const int MOD = 1'000'000'007, INF = 2 * MOD; //0xc0, 0x3f. Pos, Neg Inf for memset. Comparison = 0x3f3f3f3f
+const int dx[4] = {1, 0, -1, 0}, dy[4] = {0, 1, 0, -1}; //DRUL
+
 inline namespace CP {
      inline namespace Output {
+        string operator+(string str, int num){return str + ts(num);}
+        string operator+(int num, string str) { return ts(num) + str; }
+        //string to_string(const char* s) { return string(s);}
         #if !defined LOCAL
             #define dbg(...) ;
             #define print_test_case(...) ;
@@ -77,6 +84,7 @@ int main () {
         print_test_case(tt);
         test_case();
     }
+
 
     return 0;
 }
