@@ -50,14 +50,14 @@ function expected_cpp_file {
     NC='\033[0m' # No Color
     bold=$(tput bold)
     normal=$(tput sgr0)
-    printf "${bold}DM-Compilation: ${normal}${bold}${RED}Error: ${normal}${NC}Expected c++ File\n"
+    printf "${bold}[DM-Compilation]: ${normal}${bold}${RED}Error: ${normal}${NC}Expected c++ File\n"
 }
 function compilation_successs {
     GREEN='\033[1;32m'
     NC='\033[0m' # No Color
     bold=$(tput bold)
     normal=$(tput sgr0)
-    printf "${bold}DM-Compilation: ${normal}${bold}${GREEN}Compilation Successful${normal}${NC}\n"
+    printf "${bold}[DM-Compilation]: ${normal}${bold}${GREEN}Compilation Successful${normal}${NC}\n"
 }
 
 function execution_success {
@@ -65,7 +65,7 @@ function execution_success {
     NC='\033[0m' # No Color
     bold=$(tput bold)
     normal=$(tput sgr0)
-    printf "${bold}DM-Compilation: ${normal}${bold}${GREEN}Execution Sucessfully Completed${normal}${NC}\n"
+    printf "${bold}[DM-Compilation]: ${normal}${bold}${GREEN}Execution Sucessfully Completed${normal}${NC}\n"
 }
 
 function compiling {
@@ -75,9 +75,9 @@ function compiling {
     normal=$(tput sgr0)
     if [[ "$2" == "DEBUG" ]]
     then
-        printf "${bold}[DEBUG] DM-Compilation: ${normal}Compiling $1...\n"
+        printf "${bold}[DEBUG] [DM-Compilation]: ${normal}Compiling $1...\n"
     else
-        printf "${bold}DM-Compilation: ${normal}Compiling $1...\n"
+        printf "${bold}[DM-Compilation]: ${normal}Compiling $1...\n"
     fi
 
     if [[ "$3" == "SPACE" ]]
@@ -90,7 +90,7 @@ function output_error {
     NC='\033[0m' # No Color
     bold=$(tput bold)
     normal=$(tput sgr0)
-    printf "${bold}DM-Compilation: ${normal}${bold}${RED}Error: ${normal}${NC}${1}\n"
+    printf "${bold}[DM-Compilation]: ${normal}${bold}${RED}Error: ${normal}${NC}${1}\n"
 }
 
 #compile with options and run while debug
@@ -234,7 +234,7 @@ function genio {
     NC='\033[0m' # No Color
     bold=$(tput bold)
     normal=$(tput sgr0)
-    printf "${bold}DM-Compilation: ${normal}${bold}${GREEN}Successfully Generated IO Files: ${normal}${NC}${name1} & ${name2}\n"
+    printf "${bold}[DM-Compilation]: ${normal}${bold}${GREEN}Successfully Generated IO Files: ${normal}${NC}${name1} & ${name2}\n"
 
 }
 
@@ -273,7 +273,7 @@ function gen {
     cat ~/Desktop/Competitive/template.cpp >> $file.$ext
     replace_text $file.$ext
     subl $file.$ext
-    printf "${bold}DM-Compilation: ${normal}${bold}${GREEN}Successfully Generated File: ${normal}${NC}${file}.${ext}\n"
+    printf "${bold}[DM-Compilation]: ${normal}${bold}${GREEN}Successfully Generated File: ${normal}${NC}${file}.${ext}\n"
 
 
 }
@@ -288,35 +288,107 @@ function parse {
             output_error "Contest ID Expected"
             return
     fi
+
+    problem_tmp=""
+
     if [ -z "$2" ]
         then
-            output_error "Contest Problem Expected"
-            return
+            problem_tmp="all"
+    else
+        problem_tmp=$2
     fi
 
-    problem=$(echo "$2" | tr '[:upper:]' '[:lower:]')
-    cdcf
-
-    cf parse $1 $problem
-
-    contestlen=${#1}
-    type="Contest";
-
-    if [[ contestlen -gt 5 ]]
-        then
-            cd Gym
-            type="Gym"
+    problem=$(echo "$problem_tmp" | tr '[:upper:]' '[:lower:]')
+    if [[ $problem == "all" ]]
+    then
+        python3 /Users/despicablemonkey/Desktop/DM-Compilation/ensure-validity.py $1
+    else
+        python3 /Users/despicablemonkey/Desktop/DM-Compilation/ensure-validity.py $1 $problem
     fi
 
-    subl $1/$problem/$problem.cpp
-    cd $1/$problem
+    result=$?
 
-    GREEN='\033[1;32m'
-    NC='\033[0m' # No Color
-    bold=$(tput bold)
-    normal=$(tput sgr0)
+    if [[ $result -eq 100 ]]; then
+        parse_helper $1 $problem
+    elif [[ $result -lt 100 ]]; then
+        file="/Users/despicablemonkey/Desktop/DM-Compilation/problems.txt"
+        while read problemID; do
+            parse_helper $1 $problemID
+        done <$file
+    fi
 
-    printf "${bold}DM-Compilation: ${normal}${bold}${GREEN}Successfully Generated ${type} $1 Problem $2${normal}\n"
+
+}
+
+function parse_helper {
+   if [ -z "$1" ]
+       then
+           output_error "Internal Error: Contest ID not Found"
+           return
+   fi
+   if [ -z "$2" ]
+       then
+           output_error "Internal Error: Contest Problem not Found"
+           return
+   fi 
+
+   cur_prob=$2;
+
+   cdcf
+
+   contestlen=${#1}
+   type="Contest";
+
+   if [[ contestlen -gt 5 ]]
+       then
+           cd Gym
+           type="Gym"
+   fi
+
+   if [ ! -d $1 ]; then
+       mkdir $1
+   fi
+   cd $1
+
+   if [ ! -d $cur_prob ]; then
+       mkdir $cur_prob;
+   fi
+   cd $cur_prob
+
+
+   filename="";
+
+   if [[ -e $cur_prob.cpp || -L $cur_prob.cpp ]] ; then
+       counter=1
+        # while [[ -e $cur_prob$counter.cpp || -L $cur_prob$counter.cpp ]] ; do
+        #     let counter++
+        # done
+        # touch $cur_prob$counter.cpp
+        # filename=$cur_prob$counter
+        # cat ~/Desktop/Competitive/template.cpp >> $filename.cpp
+        # replace_text $filename.cpp
+        touch $cur_prob.cpp
+        filename=$cur_prob
+   else
+        touch $cur_prob.cpp
+        filename=$cur_prob
+        cat ~/Desktop/Competitive/template.cpp >> $filename.cpp
+        replace_text $filename.cpp
+   fi
+   
+   subl $filename.cpp
+
+   GREEN='\033[1;32m'
+   NC='\033[0m' # No Color
+   bold=$(tput bold)
+   normal=$(tput sgr0)
+
+   #parse samples
+   python3 /Users/despicablemonkey/Desktop/DM-Compilation/parse.py $1 $cur_prob
+
+   # printf "${bold}DM-Compilation: ${normal}${bold}${GREEN}Successfully Generated ${type} $1 Problem $2${normal}\n"
+
+
 
 }
 
