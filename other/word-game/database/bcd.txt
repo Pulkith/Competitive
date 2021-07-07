@@ -1,0 +1,6 @@
+bcd
+bcdic
+ebcd
+ebcdic
+noebcd
+Completed: bcd [5 words found]

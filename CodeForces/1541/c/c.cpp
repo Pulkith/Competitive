@@ -5,6 +5,7 @@
  **/ 
 
 #include<bits/stdc++.h>
+#include <numeric>
 #if LOCAL
     #include <DespicableMonkey/Execution_Time.h>
     #include <DespicableMonkey/Debug.h>
@@ -63,7 +64,14 @@ int a[MX];
 
 
 void test_case() {
-    
+    cin >> N;
+    FOR(i, 0, N) cin >> a[i];
+    sort(a, a+N);
+    ll ans = accumulate(a, a+N, 0LL);
+    ll cur = ans;
+    for(int i = N-1; i >= 0; --i) {
+
+    }
     
 }
 

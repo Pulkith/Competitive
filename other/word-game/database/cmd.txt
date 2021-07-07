@@ -1,0 +1,9 @@
+cmd
+cmdf
+cmdg
+cmdr
+cmdr.
+cmds
+ftncmd
+mtscmd
+Completed: cmd [8 words found]

@@ -40,7 +40,7 @@ inline namespace CP {
         #endif
         template<class T> void outv(vector<T> v, int add = 0, bool standard = 1) {for(T& i : v) (standard?cout:cerr) << (i+add) << " "; cout << '\n'; }
         template<class T> void put(T output) { cout << output << '\n'; }
-        #define putr(__output) return void(putr(__output))
+        #define putr(__output) return void(put(__output))
     }
     class IO { public:
         void setIn(string s)  { (void)!freopen(s.c_str(),"r",stdin); }
@@ -61,34 +61,25 @@ const int MX = (1e5+5); //Check the limits idiot
 int N, W;
 int weight[105];
 int value[105];
-ll dp[105][MX];
+ll dp[10005];
 
 void test_case() {
     cin >> N >> W;
     FORE(i, 1, N) cin >> weight[i] >> value[i];
-    //2D Knapsack
-    FORE(i, 1, N) {
-        FORE(j, 0, W) {
-            cmax(dp[i][j], dp[i-1][j]);
-            if(j - weight[i] >= 0)
-                cmax(dp[i][j], dp[i-1][j - weight[i]] + value[i]);
-        }
-    }
-    //1D Knapsack -> THIS IS INCORRECT
-    /*
-    ll dp[105][MX];
-    memset(dp, 0, sizeof(dp));
+    memset(dp, -1, sizeof(dp));
+    dp[0] = 0;
     FORE(i, 1, N)
-        for(int j = W; j >= 0; --j)
-            if(weight[i] <= W)
-                cmax(dp[j], dp[j - weight[i]] + value[i]);
-    ll ans = dp[W];
+        for(int j = 10002; j >= 0; --j)
+            if(j - value[i] >= 0 && dp[j - value[i]] > -1)
+                if(dp[j - value[i]] + weight[i] <= W)
+                    cmax(dp[j], dp[j - value[i]] + weight[i]);
+    for(int i = 10002; i >= 0; --i)
+        if(dp[i] > -1)
+            putr(i);
+    assert(0);
 
-
-    */
-    
-    put(dp[N][W]);
 }
+
 
 int main () {
     CP::IO().SetIO()->FastIO().Input(0);

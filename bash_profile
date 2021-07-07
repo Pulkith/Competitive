@@ -1,3 +1,4 @@
+# Git Copy -XLocal=0
 PS1='\w$ '
 
 #also use CF-Tool, Jarvis, and Bitwise CLIs
@@ -74,9 +75,14 @@ function compiling {
     normal=$(tput sgr0)
     if [[ "$2" == "DEBUG" ]]
     then
-        printf "${bold}[DEBUG] DM-Compilation: ${normal}Compiling $1...$\n\n"
+        printf "${bold}[DEBUG] DM-Compilation: ${normal}Compiling $1...\n"
     else
-        printf "${bold}DM-Compilation: ${normal}Compiling $1...\n\n"
+        printf "${bold}DM-Compilation: ${normal}Compiling $1...\n"
+    fi
+
+    if [[ "$3" == "SPACE" ]]
+    then
+        printf "\n"
     fi
 }
 function output_error {
@@ -121,18 +127,23 @@ function compile_run_file {
 
     if [[ "$2" == "compile_and_debug" ]]
     then
-        compiling "$file" "DEBUG"
-        g++ -DLOCAL=1 -O2 -Wall -Wshadow -Wuninitialized -Wfloat-equal -Wno-unused-variable -Wshift-overflow -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=undefined -std=c++17 -o a.out $file && ./a.out && rm a.out
+        compiling "$file" "DEBUG" "SPACE"
+        g++ -DLOCAL=1 -O2 -Wall -Wshadow -Wuninitialized -Wfloat-equal -Wno-unused-variable -Wshift-overflow -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=undefined -std=c++17 -o a $file && ./a
         execution_success
     elif [[ "$2" == "compile_and_run" ]]
     then
-        compiling "$file" "NORMAL"
+        compiling "$file" "NORMAL" "SPACE"
         g++ -std=c++17 -o a.out $file && ./a.out && rm a.out
         execution_success
     elif [[ "$2" == "compile" ]]
     then
-        compiling "$file" "DEBUG"
+        compiling "$file" "DEBUG" "NO-SPACE"
         time g++ -DLOCAL=1 -O2 -Wall -Wshadow -Wuninitialized -Wfloat-equal -Wno-unused-variable -Wshift-overflow -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=undefined -std=c++17 $file
+        compilation_successs
+    elif [[ "$2" == "compile_output" ]]
+    then
+        compiling "$file" "DEBUG" "NO-SPACE"
+        g++ -DLOCAL=1 -O2 -Wall -Wshadow -Wuninitialized -Wfloat-equal -Wno-unused-variable -Wshift-overflow -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=undefined -std=c++17 -o a $file
         compilation_successs
     else
         output_error "Internal Error: Could Not Determine Compilation Configuration"
@@ -176,6 +187,27 @@ function comp {
 
         compile_run_file $1 "compile"
 }
+
+function cpro {
+    if [ -z "$1" ]
+        then
+            expected_cpp_file
+            return
+    fi
+
+    compile_run_file $1 "compile_output"
+}
+
+function compo {
+    if [ -z "$1" ]
+        then
+            expected_cpp_file
+            return
+    fi
+
+   cpro $1
+}
+
 #gen input/output files
 function genio {
     name="in"
@@ -264,7 +296,18 @@ function parse {
 
     problem=$(echo "$2" | tr '[:upper:]' '[:lower:]')
     cdcf
+
     cf parse $1 $problem
+
+    contestlen=${#1}
+    type="Contest";
+
+    if [[ contestlen -gt 5 ]]
+        then
+            cd Gym
+            type="Gym"
+    fi
+
     subl $1/$problem/$problem.cpp
     cd $1/$problem
 
@@ -272,7 +315,8 @@ function parse {
     NC='\033[0m' # No Color
     bold=$(tput bold)
     normal=$(tput sgr0)
-    printf "${bold}DM-Compilation: ${normal}${bold}${GREEN}Successfully Generated Contest $1 Problem $2${normal}\n"
+
+    printf "${bold}DM-Compilation: ${normal}${bold}${GREEN}Successfully Generated ${type} $1 Problem $2${normal}\n"
 
 }
 

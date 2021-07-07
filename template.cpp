@@ -40,7 +40,7 @@ inline namespace CP {
         #endif
         template<class T> void outv(vector<T> v, int add = 0, bool standard = 1) {for(T& i : v) (standard?cout:cerr) << (i+add) << " "; cout << '\n'; }
         template<class T> void put(T output) { cout << output << '\n'; }
-        #define putr(__output) return void(putr(__output))
+        #define putr(__output) return void(put(__output))
     }
     class IO { public:
         void setIn(string s)  { (void)!freopen(s.c_str(),"r",stdin); }
@@ -57,7 +57,7 @@ inline namespace CP {
 }
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
-const int MX = (2e5+5); //Check the limits idiot
+const int MX = (2e5+43); //Check the limits idiot
 int N;
 int a[MX];
 

@@ -1,109 +1,100 @@
 /**
- * 
  * author: DespicableMonkey
- * created: 05.01.2021 00:24:45
- * 
+ * created: 07.03.2021 21:34:41
  * Potatoes FTW!
- * 
  **/ 
 
-
-#include <iostream>
-#include <vector>
-#include <map>
-#include <set>
-#include <algorithm>
-#include <sstream>
-#include <cmath>
-#include <cstdio>
-#include <deque>
-#include <bitset>
-#include <iterator>
-#include <queue>
-#include <stack>
-#include <unordered_map>
-#include <unordered_set>
-#include <regex>
-#include <random>
-#include <initializer_list>
-#include <ios>
-#include <cstring>
+#include<bits/stdc++.h>
+#if LOCAL
+    #include <DespicableMonkey/Execution_Time.h>
+    #include <DespicableMonkey/Debug.h>
+    #define debug_active 1
+#endif
 
 using namespace std;
 
-#define ll long long
-#define ld long double
-#define ull unsigned long long
-
-using pii = pair<int, int>;
-using pll = pair<ll, ll>;
-
-#define vi vector<int>
-#define vll vector<ll>
-#define vb = vector<bool>
 #define pb push_back
-
 #define f first
 #define s second
-
-#define nl << "\n";
-#define cnl cout nl
+#define my_brain_hurts int Test_Cases = 1;
 
 #define all(c) (c).begin(), (c).end()
 #define sz(x) (int)(x).size()
 #define ts(x) to_string(x)
-#define rall(x) x.rbegin(), x.rend()
-#define sortt(x) sort(all(x))
-#define rtn return
 
 #define FOR(i,a,b) for (int i = (a); i < (b); ++i)
-#define F0R(i,a) FOR(i,0,a)
-#define ROF(i,a,b) for (int i = (b)-1; i >= (a); --i)
-#define R0F(i,a) ROF(i,0,a)
-#define TC(i) for(int tt = (1); tt <= (i); ++tt)
 #define FORE(i, a, b) for(int i = (a); i<= (b); ++i)
 
-#define rep(a) F0R(_,a)
-#define each(a,x) for (auto& a: x)
+#define ll long long
+template<typename T, typename U> using pr = pair<T, U>;
+template<typename T> using vt = vector<T>;
+template<class T> bool cmin(T& a, const T& b) { return b < a ? a = b, 1 : 0; }
+template<class T> bool cmax(T& a, const T& b) { return a < b ? a = b, 1 : 0; }
 
-#define lower(sl) transform(sl.begin(), sl.end(), sl.begin(), ::tolower)
+inline namespace CP {
+     inline namespace Output {
+        #if !defined LOCAL
+            #define dbg(...) ;
+            #define print_test_case(...) ;
+            #define debug_active 0
+        #endif
+        template<class T> void outv(vector<T> v, int add = 0, bool standard = 1) {for(T& i : v) (standard?cout:cerr) << (i+add) << " "; cout << '\n'; }
+        template<class T> void put(T output) { cout << output << '\n'; }
+        #define putr(__output) return void(put(__output))
+    }
+    class IO { public:
+        void setIn(string s)  { (void)!freopen(s.c_str(),"r",stdin); }
+        void setOut(string s) { (void)!freopen(s.c_str(),"w",stdout); }
+        void Input(int __use_input = 0) {if(!!__use_input && debug_active){setIn("in"+to_string(__use_input)+".txt");}}
+        IO FastIO() { cin.tie(nullptr)->sync_with_stdio(0); return *this; }
+        IO* SetIO(string __s = "", string __t = "") {
+            cin.exceptions(cin.failbit); // throws exception when do smth illegal ex. try to read letter into int
+            if(sz(__t)) setIn(__s), setOut(__t);
+            else if (sz(__s)) setIn(__s+".in"), setOut(__s+".out"); // for old USACO
+            return this;
+        }
+    };
+}
+/*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
-const int INF = 1000000007;
-const int MOD = 1000000007;
-const long long LLNF = (ll)10e17+7;
+const int MX = (3e5+5); //Check the limits idiot
+int N;
+bool legal[MX];
 
-const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
+
+void test_case() {
+    cin >> N;
+    string a, b;
+    cin >> a >> b;
+    a += "0"; b += "0";
+    memset(legal, 0, sizeof legal);
+
+    int bal = 0;
+    FOR(i, 0, N) {
+        bal += (a[i] == '0' ? -1 : 1);
+        if(bal == 0) legal[i] = 1;
+    }
+
+    bool ok =1;
+    FOR(i, 0, N)
+        if((a[i] == b[i]) != (a[i+1] == b[i+1]))
+            ok &= legal[i];
+    put(ok ? "YES" : "NO");
+    
+
+
+    
+}
 
 int main () {
-    ios::sync_with_stdio(0);
-    cin.tie(0);
+    CP::IO().SetIO()->FastIO().Input(0);
 
-    int T; cin >> T;
-    TC(T){
-    
-        int len;
-        string a, b;
-        cin >> len >> a >> b;
-        bool ok = true;
-        vector<bool> legal(len);
-        int cur = 0;
-        FORE(i, 1, len) {
-            if(a[i-1] == '1') ++ cur;
-            legal[i-1] = (cur == i/2 && i%2==0 && cur > 0) ? 1 : 0;
-        }
+    my_brain_hurts
+    cin >> Test_Cases;
 
-       for(int i = 0; i < len&&ok; ++i) {
-            int j = i;
-            if(a[j] == b[j]) continue;
-            for(; j < len; ++j)
-                if(a[j] == b[j])
-                    break;
-            i += (j-i) - 1;
-            if(!legal[i])
-                ok = false;
-        }
-
-        cout << (ok?"YES":"NO") nl
+    for(int tt = 1; tt <= Test_Cases; ++tt){
+        print_test_case(tt);
+        test_case();
     }
 
     return 0;
