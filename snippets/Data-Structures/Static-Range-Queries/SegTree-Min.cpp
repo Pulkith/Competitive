@@ -23,3 +23,5 @@ template<class T> struct Seg { // comb(ID,b) = b
         return comb(ra,rb);
     }
 };
+
+partial_sum(a, a+N, a);

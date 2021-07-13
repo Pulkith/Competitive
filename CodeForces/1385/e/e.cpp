@@ -1,10 +1,11 @@
 /**
  * author: DespicableMonkey
- * created: 07.11.2021 23:19:00
+ * created: 07.06.2021 23:28:32
  * Potatoes FTW!
  **/ 
 
 #include<bits/stdc++.h>
+#include <cassert>
 #if LOCAL
     #include <DespicableMonkey/Execution_Time.h>
     #include <DespicableMonkey/Debug.h>
@@ -58,51 +59,74 @@ inline namespace CP {
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
 const int MX = (2e5+43); //Check the limits idiot
-ll N;
-int a[MX];
 
+    vt<int> in_degree;
+    vt<int> adj[200005];
+    vt<int> top_sort;
+    bool init(int N) {
+      top_sort.clear();top_sort.resize(N+5);
+      in_degree.clear();in_degree.resize(N+5);
+      for(int u = 1; u <= N; ++u) {
+          for(auto v : adj[u])
+              ++in_degree[v];
+      }
+
+      queue<int> q;
+      for(int i = 1 ; i <= N; ++i)
+          if(in_degree[i] == 0)
+              q.push(i);
+
+      int cnt = 0;
+      while(!q.empty()) {
+          int u = q.front();
+          q.pop();
+          top_sort.pb(u);
+
+          for(auto v : adj[u])
+              if(--in_degree[v] == 0)
+                  q.push(v);
+          ++cnt;
+      }
+
+      return (cnt == N);
+    }
 
 void test_case() {
-    string s; cin >> s;
-    vt<pr<char, int>> segs;
-    N = sz(s);
-    FOR(i, 0, N) {
-        int in = i;
-        if(s[i] == '?') {
-            while(i < N && s[i] == '?') ++i;
-            segs.pb({'?', i-- - in});
-        } else {
-            while(i+1 < N && s[i+1] != s[i] && s[i+1] != '?') ++i;
-            segs.pb({s[in], i - in + 1});
+    int N, M;
+    cin >> N >> M;
+    FORE(i, 1, N) adj[i].clear();
+    vt<pr<int, int>> undir;
+    FOR(i, 0, M) {
+        int x, y, t;
+        cin >> t >> x >> y;
+        if(t == 1) {
+            adj[x].pb(y);
         }
+        else undir.pb({x, y});
+    }
+    if(!init(N)) putr("NO");
+    put("YES");
+    map<int, int> ind;
+    FOR(i,0,sz(top_sort)) ind[top_sort[i]] = i;
+
+    for(auto e : undir) {
+        int u = ind[e.f];
+        int v = ind[e.s];
+
+        if(u < v)
+            cout << e.f << ' ' << e.s << '\n';
+        else
+            cout << e.s << ' ' << e.f << '\n';
     }
 
+    FORE(i,1,N)
+        for(auto v : adj[i])
+            cout << i << ' ' << v << '\n';
 
-    ll ans = 0,  cur = 0;
-    if(sz(segs) == 1) putr((N * (N+1))/2);
 
-    auto opp = [&](char c) -> char { return (c == '1' ? '0' : '1'); };
 
-    FOR(i, 0, sz(segs)) {
-        int add = 0;
-        if(i != 0 && segs[i-1].f == '?') {
-            add = segs[i-1].s;
-        }
-        cur += segs[i].s;
-        if(i != sz(segs) - 1 && segs[i].f == '?') cur += segs[++i].s;
-        int start = (segs[i].s & 1 ? opp(segs[i].f) : segs[i].f); ++i;
-        while(i < sz(segs)) {
-            if(segs[i].f != start && segs[i].f != '?') break;
-            cur += segs[i].s;
-            start = (segs[i].s & 1 ? opp(start) : start); ++i;
-        }   
-        ans += ((cur * (cur+1)) / 2 - cur);
-        ans += (cur * add);
-        cur = 0;
-        --i;
-    }
 
-    cout << (ans + N) << '\n';
+
     
 }
 

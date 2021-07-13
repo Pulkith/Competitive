@@ -1,10 +1,13 @@
 /**
  * author: DespicableMonkey
- * created: 07.11.2021 23:19:00
+ * created: 07.10.2021 10:35:06
  * Potatoes FTW!
  **/ 
 
 #include<bits/stdc++.h>
+#include <cstdio>
+#include <functional>
+#include <queue>
 #if LOCAL
     #include <DespicableMonkey/Execution_Time.h>
     #include <DespicableMonkey/Debug.h>
@@ -57,53 +60,61 @@ inline namespace CP {
 }
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
-const int MX = (2e5+43); //Check the limits idiot
-ll N;
-int a[MX];
+const int MX = (3e5+43); //Check the limits idiot
 
 
 void test_case() {
-    string s; cin >> s;
-    vt<pr<char, int>> segs;
-    N = sz(s);
+    ll N, K;
+    cin >> N >> K;
+    vt<pr<ll, ll>> hold(K);
+    vt<ll> a(K), t(K);
+    FOR(i, 0, K){
+        cin >> hold[i].f; --hold[i].f;
+    }
+    FOR(i, 0, K) cin >> hold[i].s;
+    sort(all(hold));
+
+    FOR(i, 0, K) a[i] = hold[i].f;
+    FOR(i, 0, K) t[i] = hold[i].s;
+
+
+    ll bef = (2e9);
+    bool before = 0;
+    ll index = 0;
+
+    multiset<ll> pq;
+    FOR(i, 0, N) 
+        if(i == a[index])
+            pq.insert(t[index] + a[index]), ++index;
+
+    index = 0;
+    ll bef_add = 0;
     FOR(i, 0, N) {
-        int in = i;
-        if(s[i] == '?') {
-            while(i < N && s[i] == '?') ++i;
-            segs.pb({'?', i-- - in});
-        } else {
-            while(i+1 < N && s[i+1] != s[i] && s[i+1] != '?') ++i;
-            segs.pb({s[in], i - in + 1});
+        if(index < K && a[index] == i) {
+            before = 1;
+            if((t[index]) < bef + bef_add) {
+                bef_add = 0;
+                bef = t[index];
+            }
+            pq.erase(pq.lower_bound(t[index] + a[index]));
+            ++index;
+        } 
+
+        if(sz(pq)) {
+            cout << min(bef + bef_add, *pq.begin() - i) << ' ';
         }
+        else {
+            assert(before);
+            cout << bef + bef_add << ' ';
+
+        }
+
+        ++bef_add;
     }
 
-
-    ll ans = 0,  cur = 0;
-    if(sz(segs) == 1) putr((N * (N+1))/2);
-
-    auto opp = [&](char c) -> char { return (c == '1' ? '0' : '1'); };
-
-    FOR(i, 0, sz(segs)) {
-        int add = 0;
-        if(i != 0 && segs[i-1].f == '?') {
-            add = segs[i-1].s;
-        }
-        cur += segs[i].s;
-        if(i != sz(segs) - 1 && segs[i].f == '?') cur += segs[++i].s;
-        int start = (segs[i].s & 1 ? opp(segs[i].f) : segs[i].f); ++i;
-        while(i < sz(segs)) {
-            if(segs[i].f != start && segs[i].f != '?') break;
-            cur += segs[i].s;
-            start = (segs[i].s & 1 ? opp(start) : start); ++i;
-        }   
-        ans += ((cur * (cur+1)) / 2 - cur);
-        ans += (cur * add);
-        cur = 0;
-        --i;
-    }
-
-    cout << (ans + N) << '\n';
+    cout << '\n';
     
+
 }
 
 int main () {

@@ -1,6 +1,6 @@
 /**
  * author: DespicableMonkey
- * created: 07.11.2021 23:19:00
+ * created: 07.11.2021 13:48:21
  * Potatoes FTW!
  **/ 
 
@@ -57,52 +57,45 @@ inline namespace CP {
 }
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
-const int MX = (2e5+43); //Check the limits idiot
-ll N;
-int a[MX];
+const int MX = (1e2+43); //Check the limits idiot
+int N;
+int a[MX], b[MX];
 
 
 void test_case() {
-    string s; cin >> s;
-    vt<pr<char, int>> segs;
-    N = sz(s);
+    cin >> N;
+    FOR(i, 0, N) cin >> a[i];
+    queue<pr<int, int>> under;
+    queue<pr<int, int>> over;
+    int sum = 0;
     FOR(i, 0, N) {
-        int in = i;
-        if(s[i] == '?') {
-            while(i < N && s[i] == '?') ++i;
-            segs.pb({'?', i-- - in});
-        } else {
-            while(i+1 < N && s[i+1] != s[i] && s[i+1] != '?') ++i;
-            segs.pb({s[in], i - in + 1});
-        }
+        cin >> b[i];
+        sum += (a[i] - b[i]);
+        if(a[i] < b[i]) under.push({b[i] - a[i], i+1});
+        else if(a[i] > b[i]) over.push({a[i] - b[i], i+1});
+    }
+
+    if(sum != 0) putr("-1");
+    vt<string> ops;
+
+    while(!empty(under) && !empty(over)) {
+        auto tpo = over.front(); over.pop();
+        auto bot = under.front(); under.pop();
+
+        int mv = min(tpo.f, bot.f);
+        FOR(i, 0, mv)
+            ops.pb(ts(tpo.s) + " " + ts(bot.s));
+        tpo.f -= mv;
+        bot.f -= mv;
+
+        if(tpo.f > 0) over.push(tpo);
+        if(bot.f > 0) under.push(bot);
     }
 
 
-    ll ans = 0,  cur = 0;
-    if(sz(segs) == 1) putr((N * (N+1))/2);
-
-    auto opp = [&](char c) -> char { return (c == '1' ? '0' : '1'); };
-
-    FOR(i, 0, sz(segs)) {
-        int add = 0;
-        if(i != 0 && segs[i-1].f == '?') {
-            add = segs[i-1].s;
-        }
-        cur += segs[i].s;
-        if(i != sz(segs) - 1 && segs[i].f == '?') cur += segs[++i].s;
-        int start = (segs[i].s & 1 ? opp(segs[i].f) : segs[i].f); ++i;
-        while(i < sz(segs)) {
-            if(segs[i].f != start && segs[i].f != '?') break;
-            cur += segs[i].s;
-            start = (segs[i].s & 1 ? opp(start) : start); ++i;
-        }   
-        ans += ((cur * (cur+1)) / 2 - cur);
-        ans += (cur * add);
-        cur = 0;
-        --i;
-    }
-
-    cout << (ans + N) << '\n';
+    put(sz(ops));
+    FOR(i, 0, sz(ops))
+        cout << ops[i] << " \n";
     
 }
 

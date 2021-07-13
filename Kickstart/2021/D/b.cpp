@@ -1,6 +1,6 @@
 /**
  * author: DespicableMonkey
- * created: 07.11.2021 23:19:00
+ * created: 07.10.2021 23:54:05
  * Potatoes FTW!
  **/ 
 
@@ -57,52 +57,54 @@ inline namespace CP {
 }
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
-const int MX = (2e5+43); //Check the limits idiot
-ll N;
-int a[MX];
+const int MX = (1e5+43); //Check the limits idiot
 
+int N, C;
+
+struct pred { bool operator()(const pair<int, int> &l, const pair<int, int> &r) { 
+    return l.second < r.second; } };
 
 void test_case() {
-    string s; cin >> s;
-    vt<pr<char, int>> segs;
-    N = sz(s);
+    vector<pr<int, int>> segs;
+    cin >> N >> C;
+    ll ans = 0;
     FOR(i, 0, N) {
-        int in = i;
-        if(s[i] == '?') {
-            while(i < N && s[i] == '?') ++i;
-            segs.pb({'?', i-- - in});
-        } else {
-            while(i+1 < N && s[i+1] != s[i] && s[i+1] != '?') ++i;
-            segs.pb({s[in], i - in + 1});
-        }
+        int x, y;
+        cin >> x >> y;
+        if(y > x + 1) segs.pb({x, y});
+        ++ans;
     }
 
+    FOR(i, 0, min(C, 10000)) {
+        int maxx = -1, index = -1;
 
-    ll ans = 0,  cur = 0;
-    if(sz(segs) == 1) putr((N * (N+1))/2);
-
-    auto opp = [&](char c) -> char { return (c == '1' ? '0' : '1'); };
-
-    FOR(i, 0, sz(segs)) {
-        int add = 0;
-        if(i != 0 && segs[i-1].f == '?') {
-            add = segs[i-1].s;
+        vt<int> mp(10005);
+        for(auto seg : segs){
+            if(seg.f < 0) continue;;
+            ++mp[seg.f + 1]; --mp[seg.s];
         }
-        cur += segs[i].s;
-        if(i != sz(segs) - 1 && segs[i].f == '?') cur += segs[++i].s;
-        int start = (segs[i].s & 1 ? opp(segs[i].f) : segs[i].f); ++i;
-        while(i < sz(segs)) {
-            if(segs[i].f != start && segs[i].f != '?') break;
-            cur += segs[i].s;
-            start = (segs[i].s & 1 ? opp(start) : start); ++i;
-        }   
-        ans += ((cur * (cur+1)) / 2 - cur);
-        ans += (cur * add);
-        cur = 0;
-        --i;
+        for(int j = 1; j < 10000 + 2; ++j) {
+            mp[j] += mp[j-1];
+            if(mp[j] > maxx) {
+                maxx = mp[j];
+                index = j;
+            }
+        }
+
+        ans += maxx;
+        int X = index;
+        int S = sz(segs);
+        FOR(j, 0, S) {
+            if(segs[j].f < X && segs[j].s > X) {
+                if(segs[j].f + 1 < X) segs.pb({segs[j].f, X});
+                if(X+1 < segs[j].s) segs.pb({X, segs[j].s});
+                segs[j].f = -1, segs[j].s = -1;
+            }
+        }
+
     }
 
-    cout << (ans + N) << '\n';
+    put(ans);
     
 }
 
@@ -114,6 +116,7 @@ int main () {
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);
+        cout << "Case #" << tt << ": ";
         test_case();
     }
 

@@ -1,6 +1,6 @@
 /**
  * author: DespicableMonkey
- * created: 07.11.2021 23:19:00
+ * created: 07.12.2021 23:22:17
  * Potatoes FTW!
  **/ 
 
@@ -58,51 +58,23 @@ inline namespace CP {
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
 const int MX = (2e5+43); //Check the limits idiot
-ll N;
-int a[MX];
+int N, X;
+int a[MX], b[MX];
 
 
 void test_case() {
-    string s; cin >> s;
-    vt<pr<char, int>> segs;
-    N = sz(s);
-    FOR(i, 0, N) {
-        int in = i;
-        if(s[i] == '?') {
-            while(i < N && s[i] == '?') ++i;
-            segs.pb({'?', i-- - in});
-        } else {
-            while(i+1 < N && s[i+1] != s[i] && s[i+1] != '?') ++i;
-            segs.pb({s[in], i - in + 1});
-        }
-    }
+    cin >> N >> X;
+    FOR(i, 0, N) cin >> a[i];
+    FOR(i, 0, N) cin >> b[i];
+    
+    sort(a, a+N);
+    sort(b, b+N);
+    reverse(a, a+N);
 
+    FOR(i, 0, N)
+        if(a[i] + b[i] > X) putr("NO");
 
-    ll ans = 0,  cur = 0;
-    if(sz(segs) == 1) putr((N * (N+1))/2);
-
-    auto opp = [&](char c) -> char { return (c == '1' ? '0' : '1'); };
-
-    FOR(i, 0, sz(segs)) {
-        int add = 0;
-        if(i != 0 && segs[i-1].f == '?') {
-            add = segs[i-1].s;
-        }
-        cur += segs[i].s;
-        if(i != sz(segs) - 1 && segs[i].f == '?') cur += segs[++i].s;
-        int start = (segs[i].s & 1 ? opp(segs[i].f) : segs[i].f); ++i;
-        while(i < sz(segs)) {
-            if(segs[i].f != start && segs[i].f != '?') break;
-            cur += segs[i].s;
-            start = (segs[i].s & 1 ? opp(start) : start); ++i;
-        }   
-        ans += ((cur * (cur+1)) / 2 - cur);
-        ans += (cur * add);
-        cur = 0;
-        --i;
-    }
-
-    cout << (ans + N) << '\n';
+    put("YES");
     
 }
 

@@ -1,6 +1,6 @@
 /**
  * author: DespicableMonkey
- * created: 07.11.2021 23:19:00
+ * created: 07.07.2021 10:35:19
  * Potatoes FTW!
  **/ 
 
@@ -58,56 +58,54 @@ inline namespace CP {
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
 const int MX = (2e5+43); //Check the limits idiot
-ll N;
+int N;
 int a[MX];
 
+unsigned int bin_to_dec(std::string const &n) {
+    unsigned int result = 0;
+    for (auto it = n.begin(); it != n.end(); ++it) {
+        result <<= 1;
+        if (*it == '1') result |= 1;
+    }
+    return result;
+}
 
 void test_case() {
-    string s; cin >> s;
-    vt<pr<char, int>> segs;
-    N = sz(s);
-    FOR(i, 0, N) {
-        int in = i;
-        if(s[i] == '?') {
-            while(i < N && s[i] == '?') ++i;
-            segs.pb({'?', i-- - in});
-        } else {
-            while(i+1 < N && s[i+1] != s[i] && s[i+1] != '?') ++i;
-            segs.pb({s[in], i - in + 1});
+    int K;
+    cin >> N >> K;
+
+    // string bin = bitset<20>(N).to_string();
+    // while(sz(bin) && bin.front() == '0') bin.erase(bin.begin());
+    // if(!sz(bin)) putr("0");
+
+
+        // int low = N / 2;
+        // for(int i = 0; i <= N-1; ++i) {
+        //     cout << i << '\n';
+        //     fflush(stdout);
+        //     int res; cin >> res;
+        //     if(res == 1) return;
+        // }
+
+        int l = 0, r = N-1;
+        FOR(i, 0, N) {
+            if((i&1)) cout << l++ << '\n';
+            else cout << r-- << '\n';
+            fflush(stdout);
+            int res; cin >> res;
+            if(res == 1) return;
         }
-    }
 
+        // for(int i = low - 1; i >= 0; --i) {
+        //     cout << i << '\n';
+        //     fflush(stdout);
+        //     int res; cin >> res;
+        //     if(res == 1) return;
+        // }
 
-    ll ans = 0,  cur = 0;
-    if(sz(segs) == 1) putr((N * (N+1))/2);
-
-    auto opp = [&](char c) -> char { return (c == '1' ? '0' : '1'); };
-
-    FOR(i, 0, sz(segs)) {
-        int add = 0;
-        if(i != 0 && segs[i-1].f == '?') {
-            add = segs[i-1].s;
-        }
-        cur += segs[i].s;
-        if(i != sz(segs) - 1 && segs[i].f == '?') cur += segs[++i].s;
-        int start = (segs[i].s & 1 ? opp(segs[i].f) : segs[i].f); ++i;
-        while(i < sz(segs)) {
-            if(segs[i].f != start && segs[i].f != '?') break;
-            cur += segs[i].s;
-            start = (segs[i].s & 1 ? opp(start) : start); ++i;
-        }   
-        ans += ((cur * (cur+1)) / 2 - cur);
-        ans += (cur * add);
-        cur = 0;
-        --i;
-    }
-
-    cout << (ans + N) << '\n';
-    
 }
 
 int main () {
-    CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
     cin >> Test_Cases;
