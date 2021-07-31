@@ -1,0 +1,104 @@
+/**
+ * author: DespicableMonkey
+ * created: 07.24.2021 20:17:46
+ * Potatoes FTW!
+ **/ 
+
+#include<bits/stdc++.h>
+#if LOCAL
+    #include <DespicableMonkey/Execution_Time.h>
+    #include <DespicableMonkey/Debug.h>
+    #define debug_active 1
+#endif
+
+using namespace std;
+
+#define pb push_back
+#define f first
+#define s second
+#define my_brain_hurts int Test_Cases = 1;
+
+#define all(c) (c).begin(), (c).end()
+#define sz(x) (int)(x).size()
+#define ts(x) to_string(x)
+
+#define FOR(i,a,b) for (int i = (a); i < (b); ++i)
+#define FORE(i, a, b) for(int i = (a); i<= (b); ++i)
+
+#define ll long long
+template<typename T, typename U> using pr = pair<T, U>;
+template<typename T> using vt = vector<T>;
+template<class T> bool cmin(T& a, const T& b) { return b < a ? a = b, 1 : 0; }
+template<class T> bool cmax(T& a, const T& b) { return a < b ? a = b, 1 : 0; }
+
+inline namespace CP {
+     inline namespace Output {
+        #if !defined LOCAL
+            #define dbg(...) ;
+            #define print_test_case(...) ;
+            #define debug_active 0
+        #endif
+        template<class T> void outv(vector<T> v, int add = 0, bool standard = 1) {for(T& i : v) (standard?cout:cerr) << (i+add) << " "; cout << '\n'; }
+        template<class T> void put(T output) { cout << output << '\n'; }
+        #define putr(__output) return void(put(__output))
+    }
+    class IO { public:
+        void setIn(string s)  { (void)!freopen(s.c_str(),"r",stdin); }
+        void setOut(string s) { (void)!freopen(s.c_str(),"w",stdout); }
+        void Input(int __use_input = 0) {if(!!__use_input && debug_active){setIn("in"+to_string(__use_input)+".txt");}}
+        IO FastIO() { cin.tie(nullptr)->sync_with_stdio(0); return *this; }
+        IO* SetIO(string __s = "", string __t = "") {
+            cin.exceptions(cin.failbit); // throws exception when do smth illegal ex. try to read letter into int
+            if(sz(__t)) setIn(__s), setOut(__t);
+            else if (sz(__s)) setIn(__s+".in"), setOut(__s+".out"); // for old USACO
+            return this;
+        }
+    };
+}
+/*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
+
+const int MX = (2e5+43); //Check the limits idiot
+int N;
+string a[3];
+
+
+void test_case() {
+    FOR(i, 0, 3) cin >> a[i];
+
+    int xs = 0, os = 0;
+    FOR(i, 0, 3) xs += count(all(a[i]), 'X'), os += count(all(a[i]), '0');
+    if(os > xs || xs - 1 > os) putr("illegal");
+    bool owin = 0, xwin = 0;
+    FOR(i, 0, 3) 
+        if(a[i][0] == a[i][1] && a[i][1] == a[i][2] && a[i][0] != '.')
+            (a[i][0] == 'X' ? xwin : owin) = 1;
+    FOR(i, 0, 3)
+        if(a[0][i] == a[1][i] && a[1][i] == a[2][i] && a[0][i] != '.')
+            (a[0][i] == 'X' ? xwin : owin) = 1;
+    if(a[0][0] == a[1][1] && a[1][1] == a[2][2] && a[0][0] != '.')
+        (a[0][0] == 'X' ? xwin : owin) = 1;
+    if(a[0][2] == a[1][1] && a[1][1] == a[2][0] && a[0][2] != '.')
+        (a[0][2] == 'X' ? xwin : owin) = 1;
+
+    if(owin && xwin) putr("illegal");
+    if(owin && xs > os) putr("illegal");
+    if(xwin && xs != os+1) putr("illegal");
+    if(owin) putr("the second player won");
+    if(xwin) putr("the first player won");
+    if(os == 4 && xs == 5) putr("draw");
+    if(os == xs) putr("first");
+    putr("second");
+}   
+
+int main () {
+    CP::IO().SetIO()->FastIO().Input(0);
+
+    my_brain_hurts
+
+    for(int tt = 1; tt <= Test_Cases; ++tt){
+        print_test_case(tt);
+        test_case();
+    }
+
+    return 0;
+}

@@ -21,6 +21,7 @@ using namespace std;
 #define all(c) (c).begin(), (c).end()
 #define sz(x) (int)(x).size()
 #define ts(x) to_string(x)
+#define has(container, element) container.find(element) != container.end()
 
 #define FOR(i,a,b) for (int i = (a); i < (b); ++i)
 #define FORE(i, a, b) for(int i = (a); i<= (b); ++i)
@@ -49,8 +50,8 @@ inline namespace CP {
         IO FastIO() { cin.tie(nullptr)->sync_with_stdio(0); return *this; }
         IO* SetIO(string __s = "", string __t = "") {
             cin.exceptions(cin.failbit); // throws exception when do smth illegal ex. try to read letter into int
-            if(sz(__t)) setIn(__s), setOut(__t);
-            else if (sz(__s)) setIn(__s+".in"), setOut(__s+".out"); // for old USACO
+            if(sz(__t) && !debug_active) setIn(__s), setOut(__t);
+            else if (sz(__s) && !debug_active) setIn(__s+".in"), setOut(__s+".out"); // for old USACO
             return this;
         }
     };

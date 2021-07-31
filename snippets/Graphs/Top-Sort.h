@@ -1,7 +1,7 @@
 vt<int> in_degree;
 vt<int> adj[MX];
 vt<int> top_sort;
-bool init(int n) {
+bool init_sort(int n) {
   top_sort.clear();top_sort.resize(n+5);
   in_degree.clear();in_degree.resize(n+5);
   for(int u = 1; u <= n; ++u) {

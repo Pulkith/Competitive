@@ -5,6 +5,8 @@
  **/ 
 
 #include<bits/stdc++.h>
+#include <functional>
+#include <queue>
 #if LOCAL
     #include <DespicableMonkey/Execution_Time.h>
     #include <DespicableMonkey/Debug.h>
@@ -59,40 +61,40 @@ inline namespace CP {
 
 const int MX = (2e5+5); //Check the limits idiot
 int N, K;
-map<int, int> pts;
-
-pr<int, pr<int, int>> solve(ll k, pr<int, int> block) {
-    int cur = 0, maxx = 0; pr<int, int> ans = {-1, -1};
-    priority_queue<pr<int, int>, vt<pr<int, int>>, greater<pr<int, int>>> pq;
-    for(auto &[x, y] : pts) {
-        while(sz(pq) && pq.top().f < (x - k)) cur -= pq.top().s, pq.pop();
-        if(x >= block.f && x <= block.s) continue;
-        cur += y;
-        if(cur > maxx) {
-            maxx = cur;
-            ans = {sz(pq) ? pq.top().f : x, x};
-        }
-        pq.push({x, y});
-    }
-    return {maxx, ans};
-}
-
 
 void test_case() {
     cin >> N >> K;
-    pts = map<int, int>();
+    map<int, int> pts;
     FOR(i, 0, N) {
-        int x;
-        cin >> x;
+        int x; cin >> x;
         ++pts[x];
     }
-    FOR(i, 0, N){int y; cin >> y;}
-    int ans = solve(K * 2LL, {-1, -1}).f;
+    int y; FOR(i, 0, N) cin >> y;
+    vt<int> segs;
+    int ans = 0, cur = 0;
+    priority_queue<int, vt<int>, greater<int>> before_pq, after_pq, pt;
+    multiset<int> after; int before = 0;
+    map<int, int> vals;
+    for(auto it = pts.begin(); it != pts.end(); ++it) {
+        auto ele = (*it);
+        while(sz(pt) && pt.top() < ele.f - K) cur -= pts[pt.top()], pt.pop();
+        segs.pb(ele.f); pt.push(ele.f);
+        vals[ele.f] = cur += ele.s;
+        after.insert(cur);
+        after_pq.push(ele.f);
+    }
+    for(int i = 0; i < sz(segs); ++i) {
+        while(sz(before_pq) && before_pq.top() < segs[i] - K) cmax(before, vals[before_pq.top()]), before_pq.pop();
+        while(sz(after_pq) && after_pq.top() <= segs[i] + K) {
+            after.erase(after.lower_bound(vals[after_pq.top()]));
+            after_pq.pop();
+        }
+        int after_max = 0; if(sz(after)) after_max = *after.rbegin();
+        cmax(ans, vals[segs[i]] + max(after_max, before));
+        before_pq.push(segs[i]);
+    }
 
-    auto sec_method_1 = solve(K, {-1, -1});
-    auto sec_method_2 = solve(K, sec_method_1.s);
-
-    put(max(ans, sec_method_1.f + sec_method_2.f));
+    put(ans);
 
 }
 

@@ -1,210 +1,94 @@
 /**
- * 
  * author: DespicableMonkey
- * created: 05.20.2021 09:35:02
- * 
+ * created: 07.17.2021 18:23:24
  * Potatoes FTW!
- * 
  **/ 
 
-#include <iostream>
-#include <vector>
-#include <map>
-#include <set>
-#include <algorithm>
-#include <sstream>
-#include <cmath>
-#include <cstdio>
-#include <deque>
-#include <bitset>
-#include <iterator>
-#include <queue>
-#include <stack>
-#include <unordered_map>
-#include <unordered_set>
-#include <regex>
-#include <random>
-#include <initializer_list>
-#include <ios>
-#include <cstring>
-#include <numeric> 
-#include <cassert>
-#include <iomanip>
-#include <chrono>
+#include<bits/stdc++.h>
+#if LOCAL
+    #include <DespicableMonkey/Execution_Time.h>
+    #include <DespicableMonkey/Debug.h>
+    #define debug_active 1
+#endif
 
 using namespace std;
-using namespace std::chrono;
 
-#define ll long long
-#define ld long double
-#define ull unsigned long long
-
-using pii = pair<int, int>;
-using pll = pair<ll, ll>;
-
-#define vi vector<int>
-#define vll vector<ll>
-#define vb = vector<bool>
 #define pb push_back
-
 #define f first
 #define s second
-
-#define nl << '\n';
-#define nn '\n'
-#define cnl cout nl
-
+#define my_brain_hurts int Test_Cases = 1;
 
 #define all(c) (c).begin(), (c).end()
 #define sz(x) (int)(x).size()
 #define ts(x) to_string(x)
-#define rall(x) x.rbegin(), x.rend()
-#define sortt(x) sort(all(x))
-#define rtn return
 
 #define FOR(i,a,b) for (int i = (a); i < (b); ++i)
-#define FR(i,a) FOR(i,0,a)
-#define ROF(i,a,b) for (int i = a; i >= b; --i)
-#define RF(i,a) ROF(i,a,0)
-#define TC(i) for(int tt = (1); tt <= (i); ++tt)
 #define FORE(i, a, b) for(int i = (a); i<= (b); ++i)
 
-#define rep(a) F0R(_,a)
-#define each(a,x) for (auto& a: x)
+#define ll long long
+template<typename T, typename U> using pr = pair<T, U>;
+template<typename T> using vt = vector<T>;
+template<class T> bool cmin(T& a, const T& b) { return b < a ? a = b, 1 : 0; }
+template<class T> bool cmax(T& a, const T& b) { return a < b ? a = b, 1 : 0; }
 
-#define lower(sl) transform(sl.begin(), sl.end(), sl.begin(), ::tolower)
-
-const int INF = 1000000007;
-const int MOD = 1000000007;
-const long long LLNF = (ll)10e17+7;
-
-const int dx[4] = {1,0,-1,0}, dy[4] = {0,1,0,-1};
-
-inline namespace FileIO {
-	void setIn(string s)  { (void)!freopen(s.c_str(),"r",stdin); }
-	void setOut(string s) { (void)!freopen(s.c_str(),"w",stdout); }
-    void setDefault() {
-        	cin.tie(nullptr)->sync_with_stdio(0);
-            std::cout << std::fixed << std::showpoint;
-            std::cout << std::setprecision(14);
+inline namespace CP {
+     inline namespace Output {
+        #if !defined LOCAL
+            #define dbg(...) ;
+            #define print_test_case(...) ;
+            #define debug_active 0
+        #endif
+        template<class T> void outv(vector<T> v, int add = 0, bool standard = 1) {for(T& i : v) (standard?cout:cerr) << (i+add) << " "; cout << '\n'; }
+        template<class T> void put(T output) { cout << output << '\n'; }
+        #define putr(__output) return void(put(__output))
     }
-	void setIO(string s = "") {
-        setDefault();
-		cin.exceptions(cin.failbit); // throws exception when do smth illegal ex. try to read letter into int
-		if (sz(s)) setIn(s+".in"), setOut(s+".out"); // for old USACO
-	}
-    void setIO(string s, string t) {
-        setDefault();
-        setIn(s); 
-        setOut(t);
-    }
+    class IO { public:
+        void setIn(string s)  { (void)!freopen(s.c_str(),"r",stdin); }
+        void setOut(string s) { (void)!freopen(s.c_str(),"w",stdout); }
+        void Input(int __use_input = 0) {if(!!__use_input && debug_active){setIn("in"+to_string(__use_input)+".txt");}}
+        IO FastIO() { cin.tie(nullptr)->sync_with_stdio(0); return *this; }
+        IO* SetIO(string __s = "", string __t = "") {
+            cin.exceptions(cin.failbit); // throws exception when do smth illegal ex. try to read letter into int
+            if(sz(__t)) setIn(__s), setOut(__t);
+            else if (sz(__s)) setIn(__s+".in"), setOut(__s+".out"); // for old USACO
+            return this;
+        }
+    };
 }
+/*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
-/* 64 mil =  ~1 second */
-inline namespace ExecTime {
-    #define cur_t chrono::high_resolution_clock::now()
-    auto _start_time = cur_t;
-    bool use = 0;
-    void use_clock() { use = 1; }
-    void log_time(bool start = true) {
-        if(use) {
-            if(!start) {
-                auto _stop_time = cur_t;
-                auto duration = duration_cast<milliseconds>(_stop_time - _start_time);
-                cerr << '\n' << "[Time: " << to_string(duration.count()) << " ms] " << '\n' << '\n'; 
-            }
-            else
-                _start_time = cur_t;
+const int MX = (2e5+43); //Check the limits idiot
+int N;
+int a[MX];
+
+
+void test_case() {
+    cin >> N;
+    map<int, vt<int>> nums;
+
+    FOR(i, 0, N) {
+        int x; cin >> x;
+        nums[x].pb(i);
+    }
+
+    for(auto &[x, y] : nums) {
+        if(sz(y) > 1) {
+            
         }
     }
-}
-inline namespace Output {
-    void ff() { fflush(stdout); }
-    #define dbg1(arg) cerr << " [" << #arg << ": " << arg << "] " << '\n';
-    #define dbg2(arg, arg2) cerr << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << "] " << '\n';
-    #define dbg3(arg, arg2, arg3) cerr << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << ", " << #arg3 << ": " << arg3 << "] " << '\n';
-    #define dbg4(arg, arg2, arg3, arg4) cerr << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << ", " << #arg3 << ": " << arg3 << ", " << #arg4 << ": " << arg4 << "] " << '\n';
-    #define dbg5(arg, arg2, arg3, arg4, arg5) cerr << " [" << #arg << ": " << arg << ", " << #arg2 << ": " << arg2 << ", " << #arg3 << ": " << arg3 << ", " << #arg4 << ": " << arg4 << ", " << #arg5 << ": " << arg5 << "] " << '\n';
-    #define GET_MACRO(_1,_2,_3,_4,_5,NAME,...) NAME
-    #define dbg(...) GET_MACRO(__VA_ARGS__, dbg5, dbg4, dbg3, dbg2, dbg1)(__VA_ARGS__)
-
-    template<typename T, typename U> ostream& operator<<(ostream& is, pair<T, U> &v){is << "{" << v.first << " " << v.second << "}"; return is;}
-    template<typename T> ostream& operator<<(ostream& is, vector<T> &v){for (auto& i : v) is << i << " "; return is;}
-    template<typename T, typename U> void dbgcon(vector<T> v, U desc = "") {
-        cerr << desc << '\n';
-        for(T& i : v) cerr << i << " ";
-        cerr << '\n';
-    }
-    template<class T> void outv(vector<T> v) {
-    for(T& i : v) cout << i << " "; cout << '\n'; }
-    template<class T> void outarr(T a[], int N) {
-        for(int i = 0; i < N; ++i) cout << a[i] << " "; cout << '\n'; }
-    template<class T> void put(T s) {
-        cout << s << '\n'; }
-}
-
-template<class T> using pqg = priority_queue<T,vector<T>,greater<T>>;
-
-template<typename T> istream& operator>>(istream& is,  vector<T> &v){for (auto& i : v) is >> i; return is;}
-
-struct pred { bool operator()(const std::pair<int, int> &l, const std::pair<int, int> &r) { return l.s < r.s; } };
-
-ll cdiv(ll a, ll b) { return a/b+((a^b)>0&&a%b); } // divide a by b rounded up
-ll fdiv(ll a, ll b) { return a/b-((a^b)<0&&a%b); } // divide a by b rounded down
-
-#define cntbits(X)  __builtin_popcountll(X) //number of "on" bits in num
-
-#define mem0(X) memset((X), 0, sizeof((X)))
-#define mem1(X) memset((X), -1, sizeof((X)))
-
-template<class T> bool chmin(T& a, const T& b) {
-	return b < a ? a = b, 1 : 0; } // set a = min(a,b)
-template<class T> bool chmax(T& a, const T& b) {
-	return a < b ? a = b, 1 : 0; }
-/*
-|||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| 
-|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| 
-|||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| |||||||||||||||||| 
-*/
-void solve() {
-    int N; cin >> N;
-    vi a(N);
-    FOR(i, 0, N) cin >> a[i];
-    ll ans = 0;
-    FOR(c, 0, N) {
-        FOR(j, 0, 2) {
-            ll tot = 0;
-            map<int, int> cur;
-            if(j != 1)
-            cur[a[c]] += (j == 0);
-            for(int left = (j == 0 ? c-1 : c), right = c+1; left >= 0 && right < N; --left, ++right) {
-                tot += cur[a[left]]++;
-                tot += cur[a[right]]++;
-                ans += tot;
-            }
-        }
-    }
-
-    put(ans);
+    
 }
 
 int main () {
-    setIO();
+    CP::IO().SetIO()->FastIO().Input(0);
 
-    #if LOCAL
-        //setIn("in1.txt");
-        use_clock();
-    #endif
+    my_brain_hurts
+    cin >> Test_Cases;
 
-    int T = 1; 
-    cin >> T;
-
-    TC(T){
-        //cout << "Case #" << tt << ": ";
-        solve();
+    for(int tt = 1; tt <= Test_Cases; ++tt){
+        print_test_case(tt);
+        test_case();
     }
-
-    log_time(0);
 
     return 0;
 }

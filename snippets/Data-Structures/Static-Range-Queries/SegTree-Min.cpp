@@ -1,14 +1,6 @@
-/**
- * author: DespicableMonkey
- * created: 06.22.2021 13:38:22
- * Potatoes FTW!
- **/ 
-
-#include<bits/stdc++.h>
-using namespace std;
 
 template<class T> struct Seg { // comb(ID,b) = b
-    const T ID = (1e18); T comb(T a, T b) { return min(a,b); }
+    const T ID = (1e18); T comb(T l, T r) { return min(l, r); }
     int n; vector<T> seg;
     void init(int _n) { n = _n; seg.assign(2*n,ID); }
     void pull(int p) { seg[p] = comb(seg[2*p],seg[2*p+1]); }
@@ -23,5 +15,3 @@ template<class T> struct Seg { // comb(ID,b) = b
         return comb(ra,rb);
     }
 };
-
-partial_sum(a, a+N, a);
