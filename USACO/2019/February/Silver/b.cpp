@@ -67,30 +67,32 @@ void test_case() {
     FOR(i, 0, N) {
         pr<int, int> start, end;
         cin >> start.f >> start.s >> end.f >> end.s;
+        //cuz theyre points(not cells)
         ++grid[start.f][start.s];
-        --grid[end.f][end.s];
+        --grid[start.f][end.s];
+        --grid[end.f][start.s];
+        ++grid[end.f][end.s];
     }
 
-    FORE(i, 1, 1000) 
-        FORE(j, 1, 1000)
-            grid[i][j] = grid[i-1][j] + grid[i][j-1] - grid[i-1][j-1] + grid[i][j];
+    int cnt = 0;
 
-    int sum = 0;
-    FORE(i, 1, 1000)
-        sum += count(grid[i], grid[i] + 1000, K);
-
-    FORE(i, 1, 10){
-        FORE(j, 1, 10)
-            cout << grid[i][j];
-        cout << '\n';
+    FOR(i, 0, 1005) {
+        FOR(j, 0, 1005) {
+            if(i > 0) grid[i][j] += grid[i-1][j];
+            if(j > 0) grid[i][j] += grid[i][j-1];
+            if(i > 0 && j > 0) grid[i][j] -= grid[i-1][j-1];
+            cnt += (grid[i][j] == K);
+        }
     }
 
-    put(sum);
+    put(cnt);
+
+    
     
 }
 
 int main () {
-    CP::IO().SetIO()->FastIO().Input(0);
+    CP::IO().SetIO("paintbarn")->FastIO().Input(0);
 
     my_brain_hurts
     //cin >> Test_Cases;

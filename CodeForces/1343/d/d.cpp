@@ -64,22 +64,30 @@ int a[MX];
 
 void test_case() {
     cin >> N >> K;
-    FOR(i, 0, N) cin >> a[i];
-    map<int, int> poss_sum, max_num;
-    FOR(i, 0, N / 2) poss_sum[a[i] + a[N - 1 - i]]++;
-    FOR(i, 0, N / 2) max_num[max(a[i], a[N - 1 - i])]++;
-
-    ll ans = N;
-    ll num_under = 0;
-    for(auto sum : poss_sum) {
-        ll cur = (N - sum.s * 2) / 2;
-        while(max_num.size() && (*max_num.begin()).f < sum.f) {
-            num_under += (*max_num.begin()).s;
-            max_num.erase(max_num.begin());
+    map<int, int> freq;
+    vt<int> prefix(3 * K);
+    FOR(i, 0, N) {
+        cin >> a[i];
+        if(i >= N / 2) {
+            int cur = a[i];
+            int opp = a[N/2 - (i+1 - N/2)];
+            ++freq[cur+opp];
+            int lo = cur + 1, hi = cur + K;
+            cmin(lo, opp+1); cmax(hi, opp+K);
+            ++prefix[lo];
+            --prefix[hi+1];
         }
-        cur += (N - sz(max_num)) / 2;
-        cmin(ans, cur);
+    }   
+
+    FOR(i, 1, sz(prefix)) prefix[i] += prefix[i-1];
+    int ans = 5 * K;
+    FORE(X, 2, 2 * K) {
+        int zero = freq[X];
+        int one = prefix[X] - zero;
+        int two = N / 2 - one - zero;
+        cmin(ans, one + two * 2);
     }
+
     put(ans);
     
 }

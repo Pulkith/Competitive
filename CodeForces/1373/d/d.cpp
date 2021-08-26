@@ -71,23 +71,26 @@ void test_case() {
     cin >> N;
     ll ans = 0;
     FOR(i, 0, N) cin >> a[i], ans += (i&1?0:a[i]);
-
-    ll mx = 0;
+    dbg(ans);
+    ll mx = 0, mx2 = 0;
 
     ll cur = 0;
     for(int i = 0; i < N - 1; i += 2){
         cur = cur - a[i] + a[i+1];
 
-        if(cur <= 0) {
-            cur = 0;
-        } else {
-            cmax(mx, cur);
-        }
-
+        if(cur <= 0) cur = 0;
+        else cmax(mx, cur);
 
     }
+    mx2 = mx;
+    cur = mx = 0;
+    for(int i = 1; i < N-1; i += 2) {
+        cur = cur - a[i+1] + a[i];
+        if(cur <= 0) cur = 0;
+        else cmax(mx, cur);
+    }
 
-    put(ans + mx);
+    put(ans + max(mx, mx2));
 
 }
 

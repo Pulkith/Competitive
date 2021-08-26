@@ -1,23 +1,9 @@
-/*
-ID: despicablemonkey
-TASK: test
-LANG: C++
-*/
-
-#include <iostream>
-#include <fstream>
-#include <string>
+#include <bits/stdc++.h>
 
 using namespace std;
 
-int main() {
-    ofstream fout("test.out");
-    ifstream fin("test.in");
-
-    int a, b;
-    fin >> a >> b;
-    fout << (a+b) << endl;
-
-
+int main()
+{
+    cout << "works" << '\n';
     return 0;
 }
