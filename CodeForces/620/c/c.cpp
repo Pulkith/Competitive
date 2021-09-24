@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.04.2021 17:40:54
  * Potatoes FTW!
  **/ 
 
@@ -58,13 +58,33 @@ inline namespace CP {
 }
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
-const int MX = (2e5+43); //Check the limits idiot
+const int MX = (3e5+43); //Check the limits idiot
 int N;
 int a[MX];
 
 
 void test_case() {
-    
+    cin >> N;
+    FOR(i, 0, N) cin >> a[i];
+    vt<pr<int, int>> ans;
+
+    set<int> cur;
+    int start = 0;
+    FOR(i, 0, N) {
+        if(has(cur, a[i])) {
+            ans.pb({start+1, i+1});
+            start = i+1;
+            cur.clear();
+        } else cur.insert(a[i]);
+
+        if(i == N-1 && sz(cur) && sz(ans)) ans.back().s = N;
+    }
+
+
+    if(sz(ans) == 0) putr(-1);
+    else put(sz(ans));
+    for(auto e : ans)
+        cout << e.f << " " << e.s << '\n';
     
 }
 
@@ -72,7 +92,6 @@ int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

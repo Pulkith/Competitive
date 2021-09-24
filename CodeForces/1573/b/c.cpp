@@ -1,10 +1,12 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.18.2021 14:31:27
  * Potatoes FTW!
  **/ 
 
 #include<bits/stdc++.h>
+#include <cstdio>
+#include <queue>
 #if LOCAL
     #include <DespicableMonkey/Execution_Time.h>
     #include <DespicableMonkey/Debug.h>
@@ -58,13 +60,52 @@ inline namespace CP {
 }
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
+struct B {
+    int need = 0;
+    set<B> children;
+    int page = 0;
+};
+
 const int MX = (2e5+43); //Check the limits idiot
 int N;
-int a[MX];
+B a[MX];
 
+struct pred { bool operator()(const B &l, const B &r) { 
+    if(l.need == r.need) return l.page < r.page;
+    return l.need < r.need;
+ } };
 
 void test_case() {
-    
+    cin >> N;
+
+    FOR(i, 0, N) {
+        a[i] = B();
+    }
+
+    FOR(i, 0, N) {
+        int n; cin >> n;
+        FOR(j, 0, n) {
+            int x; cin >> x;
+            a[i].children.insert(a[x-1]);
+        }
+    }
+
+    set<B, pred> graph;
+    int last = N+1, ans = 0;
+    while(sz(graph)) {
+        auto k = *graph.begin();
+        if(k.need > 0) putr("-1");
+        if(k.page > last) ++ans;
+
+        for(auto& c : k.children) {
+            c.children.equal_range(k);
+        }
+        last = k.page;
+        graph.erase(graph.begin());
+    }
+
+
+    put(ans);
     
 }
 

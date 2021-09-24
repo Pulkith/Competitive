@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 08.28.2021 00:59:13
  * Potatoes FTW!
  **/ 
 
@@ -21,7 +21,7 @@ using namespace std;
 #define all(c) (c).begin(), (c).end()
 #define sz(x) (int)(x).size()
 #define ts(x) to_string(x)
-#define has(container, element) ((bool)(container.find(element) != container.end()))
+#define has(container, element) container.find(element) != container.end()
 
 #define FOR(i,a,b) for (int i = (a); i < (b); ++i)
 #define FORE(i, a, b) for(int i = (a); i<= (b); ++i)
@@ -58,13 +58,34 @@ inline namespace CP {
 }
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
-const int MX = (2e5+43); //Check the limits idiot
+const int MX = (50+43); //Check the limits idiot
 int N;
-int a[MX];
+string a[MX];
 
 
 void test_case() {
-    
+    cin >> N;
+    FOR(i, 0, N) cin >> a[i];
+    vt<vt<int>> colSums(N, vt<int>(N)), rowSums(N, vt<int>(N));
+    FOR(i, 0, N)
+        FOR(j, 0, N)
+            colSums[i][j] = rowSums[i][j] = (a[i][j] == 'X');
+    FOR(i, 0, N)
+        FOR(j, 1, N) colSums[i][j] += colSums[i][j-1];
+    FOR(j, 0, N)
+        FOR(i, 1, N) rowSums[i][j] += rowSums[i-1][j];
+
+    vt<int> ans;
+    int val = -1;
+
+    FOR(i, 0, N) {
+        FOR(j, 0, N) {
+            if(rowSums[i].back() == N-1 || colSums.back()[j] == N-1) {
+                
+            }
+        }
+    }
+
     
 }
 

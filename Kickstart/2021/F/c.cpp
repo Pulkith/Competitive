@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.18.2021 13:02:04
  * Potatoes FTW!
  **/ 
 
@@ -60,11 +60,42 @@ inline namespace CP {
 
 const int MX = (2e5+43); //Check the limits idiot
 int N;
-int a[MX];
+pr<int, int> a[MX];
+int X, Y;
+
+ 
+bool inside(pr<int, int> point, vt<pr<int, int>> ps) {
+    
+    double x = point.f, y = point.s;
+    
+    bool inside = false;
+    for (int i = 0, j = sz(ps) - 1; i < sz(ps); j = i++) {
+        double xi = ps[i].f, yi = ps[i].s;
+        double xj = ps[j].f, yj = ps[j].s;
+        
+        bool intersect = ((yi > y) != (yj > y))
+            && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+        if (intersect) inside = !inside;
+    }
+    
+    return inside;
+};
+
 
 
 void test_case() {
-    
+    cin >> N;
+    FOR(i, 0, N) cin >> a[i].f >> a[i].s;
+    cin >> X >> Y;
+
+    FOR(i, 0, 1 << N) {
+        vt<pr<int, int>> points;
+        FOR(j, 0, N) 
+            if((1<<j)& 1)
+                points.pb(a[j]);
+
+    }
+
     
 }
 

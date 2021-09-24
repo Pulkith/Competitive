@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 08.27.2021 21:30:12
  * Potatoes FTW!
  **/ 
 
@@ -21,7 +21,7 @@ using namespace std;
 #define all(c) (c).begin(), (c).end()
 #define sz(x) (int)(x).size()
 #define ts(x) to_string(x)
-#define has(container, element) ((bool)(container.find(element) != container.end()))
+#define has(container, element) container.find(element) != container.end()
 
 #define FOR(i,a,b) for (int i = (a); i < (b); ++i)
 #define FORE(i, a, b) for(int i = (a); i<= (b); ++i)
@@ -59,12 +59,19 @@ inline namespace CP {
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
 const int MX = (2e5+43); //Check the limits idiot
-int N;
+int N, K;
 int a[MX];
 
 
 void test_case() {
-    
+    cin >> N >> K;
+    string ans = "";
+
+    FOR(i, 0, N) {
+        ans += (i % K) + 'a';
+    }
+
+    put(ans);
     
 }
 

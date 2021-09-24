@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 08.29.2021 12:31:59
  * Potatoes FTW!
  **/ 
 
@@ -21,7 +21,7 @@ using namespace std;
 #define all(c) (c).begin(), (c).end()
 #define sz(x) (int)(x).size()
 #define ts(x) to_string(x)
-#define has(container, element) ((bool)(container.find(element) != container.end()))
+#define has(container, element) container.find(element) != container.end()
 
 #define FOR(i,a,b) for (int i = (a); i < (b); ++i)
 #define FORE(i, a, b) for(int i = (a); i<= (b); ++i)
@@ -59,12 +59,31 @@ inline namespace CP {
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
 const int MX = (2e5+43); //Check the limits idiot
-int N;
-int a[MX];
+int N, Q;
 
 
 void test_case() {
-    
+    cin >> N;
+    map<string, set<string>> subs;
+
+    FOR(i, 0, N) {
+        string s; cin >> s;
+        FOR(j, 0, sz(s)) {
+            string cur = "";
+            FOR(k, j, sz(s)) {
+                cur += s[k];
+                subs[cur].insert(s);
+            }
+        }
+    }
+    cin >> Q;
+    while(Q--) {
+        string s; cin >> s;
+        if(subs.find(s) == subs.end()) cout << 0 << " " << "-" << '\n';
+        else {
+            cout << sz(subs[s]) << " " << *subs[s].begin() << '\n';
+        }
+    }
     
 }
 
@@ -72,7 +91,6 @@ int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

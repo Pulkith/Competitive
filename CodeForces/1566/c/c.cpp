@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.16.2021 23:48:46
  * Potatoes FTW!
  **/ 
 
@@ -60,11 +60,33 @@ inline namespace CP {
 
 const int MX = (2e5+43); //Check the limits idiot
 int N;
-int a[MX];
 
 
 void test_case() {
-    
+   cin >> N;
+   string a, b;
+   cin >> a >> b; 
+
+   int ans = 0;
+
+   FOR(i, 0, N) {
+        if(a[i] == b[i] && a[i] == '0')  ++ans;
+        if(a[i] != b[i]) ans += 2;
+   }
+   vt<bool> used(N);
+   FOR(i, 0, N) {
+    if(a[i] == b[i] && a[i] == '1') {
+        if(i > 0 && a[i-1] == b[i-1] && a[i-1] == '0' && !used[i-1]) {
+            ++ans;
+        }
+        else if(i < N-1 && a[i+1] == b[i+1] && a[i+1] == '0' && !used[i+1]) {
+            ++ans;
+            used[i+1] = 1;
+        }
+    }
+   }
+
+   put(ans);
     
 }
 

@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 08.28.2021 00:08:01
  * Potatoes FTW!
  **/ 
 
@@ -21,7 +21,7 @@ using namespace std;
 #define all(c) (c).begin(), (c).end()
 #define sz(x) (int)(x).size()
 #define ts(x) to_string(x)
-#define has(container, element) ((bool)(container.find(element) != container.end()))
+#define has(container, element) container.find(element) != container.end()
 
 #define FOR(i,a,b) for (int i = (a); i < (b); ++i)
 #define FORE(i, a, b) for(int i = (a); i<= (b); ++i)
@@ -60,22 +60,34 @@ inline namespace CP {
 
 const int MX = (2e5+43); //Check the limits idiot
 int N;
-int a[MX];
 
 
 void test_case() {
-    
-    
+    string s; cin >> s; N = sz(s);
+    map<char, int> cnt;
+    int vowels = 0;
+    vt<bool> isVowel(26);
+    isVowel[0] = isVowel[4] = isVowel['I' - 'A'] = isVowel['O' - 'A'] = isVowel['U' - 'A'] = 1;
+    FOR(i, 0, N) vowels += isVowel[s[i] - 'A'], ++cnt[s[i]];
+    int ans = N * 2, contstants = N - vowels;
+    FOR(i, 0, 26) {
+        if(isVowel[i]) cmin(ans, (vowels - cnt['A' + i]) * 2 + contstants);
+        else cmin(ans, (contstants - cnt['A' + i]) * 2 + vowels);
+    }
+    cout << ans << '\n';
 }
 
 int main () {
     CP::IO().SetIO()->FastIO().Input(0);
+    //CP::IO().setIn("/Users/despicablemonkey/Desktop/Competitive/Facebook/2021/Qualification/in1.txt");
+    //CP::IO().setOut("/Users/despicablemonkey/Desktop/Competitive/Facebook/2021/Qualification/ans1.txt");
 
     my_brain_hurts
     cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
-        print_test_case(tt);
+        //print_test_case(tt);
+        cout << "Case #" << tt <<": ";
         test_case();
     }
 

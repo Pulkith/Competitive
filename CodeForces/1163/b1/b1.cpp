@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.03.2021 17:01:56
  * Potatoes FTW!
  **/ 
 
@@ -21,7 +21,7 @@ using namespace std;
 #define all(c) (c).begin(), (c).end()
 #define sz(x) (int)(x).size()
 #define ts(x) to_string(x)
-#define has(container, element) ((bool)(container.find(element) != container.end()))
+#define has(container, element) container.find(element) != container.end()
 
 #define FOR(i,a,b) for (int i = (a); i < (b); ++i)
 #define FORE(i, a, b) for(int i = (a); i<= (b); ++i)
@@ -64,7 +64,31 @@ int a[MX];
 
 
 void test_case() {
-    
+    cin >> N;
+    FOR(i, 0, N) cin >> a[i];
+    vt<vt<int>> colors(N, vt<int>(10));
+
+    FOR(i, 0, N) {
+        FOR(j, 0, 10) {
+            if(i != 0) colors[i][j] += colors[i-1][j];
+            if(a[i] == j+1) ++colors[i][j];
+        }
+    }
+
+    int ans = 0;
+
+    FOR(i, 0, N) {
+        vt<int> opts;
+        FOR(j, 0, 10) 
+            if(colors[i][j] != 0)
+                opts.pb(colors[i][j]);
+        sort(all(opts));
+        if(sz(opts) == 1) cmax(ans, i+1);
+        else if(opts[0] == 1 && opts[1] == opts.back()) cmax(ans, i+1);
+        else if(opts[0] == opts[sz(opts) - 2] && opts[0] + 1 == opts.back()) cmax(ans, i+1);
+    }
+
+    put(ans);
     
 }
 
@@ -72,7 +96,6 @@ int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

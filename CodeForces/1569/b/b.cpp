@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.08.2021 23:49:53
  * Potatoes FTW!
  **/ 
 
@@ -64,7 +64,33 @@ int a[MX];
 
 
 void test_case() {
-    
+    cin >> N;
+    string wants;
+     cin >> wants;
+     vector<string> ans(N, string(N, '='));
+     for(int i = 0; i < N; ++i) ans[i][i] = 'X';
+
+
+    vt<int> twos;
+    FOR(i, 0, N)
+        if(wants[i] == '2')
+            twos.pb(i);
+    if(sz(twos) == 1) putr("NO");
+    FOR(i, 0, sz(twos)) {
+        int opp = (i == 0) ? twos.back() : twos[i-1];
+        ans[twos[i]][opp] = '+';
+        ans[opp][twos[i]] = '-';
+    }
+
+    FOR(i, 0, N) {
+        int wins = 0;
+        FOR(j, 0, N) wins += (ans[i][j] == '+');
+        if(wants[i] == '2' && wins == 0) putr("NO");
+    }
+
+     cout << "YES" << '\n';
+     for(int i = 0; i < N; ++i)
+        cout << ans[i] << '\n';
     
 }
 

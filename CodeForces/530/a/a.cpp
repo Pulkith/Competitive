@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 08.29.2021 12:46:22
  * Potatoes FTW!
  **/ 
 
@@ -21,7 +21,7 @@ using namespace std;
 #define all(c) (c).begin(), (c).end()
 #define sz(x) (int)(x).size()
 #define ts(x) to_string(x)
-#define has(container, element) ((bool)(container.find(element) != container.end()))
+#define has(container, element) container.find(element) != container.end()
 
 #define FOR(i,a,b) for (int i = (a); i < (b); ++i)
 #define FORE(i, a, b) for(int i = (a); i<= (b); ++i)
@@ -64,7 +64,22 @@ int a[MX];
 
 
 void test_case() {
-    
+    double A, B, C;
+    cin >> A >> B >> C;
+
+    double tl = -B;
+    double inner = (B * B) - 4 * A * C;
+    int b = 2 * A;
+    if(inner < 0 || b == 0) assert(0);
+    double tr = sqrt(inner);
+
+    double sol1 = (tl + tr) / b;
+    double sol2 = (tl - tr) / b;
+
+    if(sol1 == sol2) putr(sol1);
+    else {
+        cout << min(sol1, sol2) << " " << max(sol1, sol2) << '\n';
+    }
     
 }
 
@@ -72,7 +87,6 @@ int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

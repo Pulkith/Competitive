@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.08.2021 23:45:54
  * Potatoes FTW!
  **/ 
 
@@ -64,7 +64,12 @@ int a[MX];
 
 
 void test_case() {
-    
+    string s;
+    cin >> N >> s;
+    for(int i = 0; i < N-1; ++i) {
+        if(s[i] != s[i+1]) putr(ts(i+1) + " " + ts(i+2));
+    }
+    putr("-1 -1");
     
 }
 

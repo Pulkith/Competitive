@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.15.2021 23:31:46
  * Potatoes FTW!
  **/ 
 
@@ -64,7 +64,14 @@ int a[MX];
 
 
 void test_case() {
-    
+    cin >> N;
+    string s; cin >> s;
+    int a1 = 0, a2 = 0;
+    FOR(i, 1, N) {
+        if(s[i] == 'F' && s[i-1] == 'S') ++a1;
+        else if(s[i] == 'S' && s[i-1] == 'F') ++a2;
+    }
+    put(a1 > a2 ? "YES" : "NO");
     
 }
 
@@ -72,7 +79,6 @@ int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

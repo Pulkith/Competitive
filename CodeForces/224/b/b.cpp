@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 08.29.2021 12:54:29
  * Potatoes FTW!
  **/ 
 
@@ -21,7 +21,7 @@ using namespace std;
 #define all(c) (c).begin(), (c).end()
 #define sz(x) (int)(x).size()
 #define ts(x) to_string(x)
-#define has(container, element) ((bool)(container.find(element) != container.end()))
+#define has(container, element) container.find(element) != container.end()
 
 #define FOR(i,a,b) for (int i = (a); i < (b); ++i)
 #define FORE(i, a, b) for(int i = (a); i<= (b); ++i)
@@ -59,12 +59,38 @@ inline namespace CP {
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
 const int MX = (2e5+43); //Check the limits idiot
-int N;
+int N, K;
 int a[MX];
 
 
 void test_case() {
-    
+    cin >> N >> K;
+    set<int> cur;
+    FOR(i, 0, N) cin >> a[i];
+    int r = -1;
+
+    FOR(i, 0, N) {
+        cur.insert(a[i]);
+        r = i;
+        if(sz(cur) == K) break;
+    }
+
+    if(sz(cur) != K) putr("-1 -1");
+
+
+    int l = 0;
+
+    set<int> cur2;
+    for(int i = r; i >= l; --i) {
+        cur2.insert(a[i]);
+        if(sz(cur2) == K) {
+            l = i;
+            break;
+        }
+    }
+
+    cout << l+1 << " " << r+1 << '\n';
+
     
 }
 
@@ -72,7 +98,6 @@ int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

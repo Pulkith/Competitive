@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.15.2021 23:25:07
  * Potatoes FTW!
  **/ 
 
@@ -60,11 +60,29 @@ inline namespace CP {
 
 const int MX = (2e5+43); //Check the limits idiot
 int N;
-int a[MX];
 
 
 void test_case() {
-    
+    cin >> N;
+    vt<int> l;
+    l.pb(1); l.pb(1);
+    while(1) {
+        int a = l.back();
+        int b = l[sz(l) - 2];
+        l.pb(a+b);
+        if(a+b > N) break;
+    }
+
+    string ans = "";
+
+    for(int i = 0; i < N; ++i) {
+        ans += "o";
+        if(binary_search(l.begin(), l.end(), i+1))
+            ans[i] = 'O';
+    }
+
+    put(ans);
+
     
 }
 
@@ -72,7 +90,6 @@ int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.24.2021 10:49:23
  * Potatoes FTW!
  **/ 
 
@@ -60,11 +60,35 @@ inline namespace CP {
 
 const int MX = (2e5+43); //Check the limits idiot
 int N;
-int a[MX];
+string s; 
 
+string small(string t) {
+    string smallest = t;
+    FOR(i, 0, sz(t)) {
+        t += t[0];
+        t.erase(t.begin());
+        if(t < smallest) smallest = t;
+    }
+    return smallest;
+}
 
 void test_case() {
-    
+    cin >> N;
+    cin >> s;
+
+    string ans = s;
+
+    FOR(i, 0, 10) {
+        FOR(j, 0, sz(s)) {
+            if(s[j] < '9') ++s[j];
+            else s[j] = '0';
+        }
+        string minn = small(s);
+        if(minn < ans) ans = minn;
+    }
+
+    put(ans);
+
     
 }
 
@@ -72,7 +96,6 @@ int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

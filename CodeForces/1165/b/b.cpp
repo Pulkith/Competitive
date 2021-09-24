@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.19.2021 23:26:05
  * Potatoes FTW!
  **/ 
 
@@ -64,7 +64,16 @@ int a[MX];
 
 
 void test_case() {
-    
+    cin >> N;
+    FOR(i, 0, N) cin >> a[i];
+    sort(a, a+N);
+    int day = 1;
+
+    FOR(i, 0, N) {
+        if(a[i] >= day) ++day;
+    }
+
+    put(day - 1); 
     
 }
 
@@ -72,7 +81,7 @@ int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
+
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

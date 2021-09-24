@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.11.2021 11:46:05
  * Potatoes FTW!
  **/ 
 
@@ -64,15 +64,33 @@ int a[MX];
 
 
 void test_case() {
+    cin >> N;
+    FOR(i, 0, N) cin >> a[i];
+
+    int ans = N;
+    FOR(i, 0, N) {
+        set<int> prefix;
+        for(int j = 0; j < i; ++j) {
+            if(has(prefix, a[j])) putr(ans);
+            prefix.insert(a[j]);
+        }
+        for(int j = N-1; j >= i; --j) {
+            if(has(prefix, a[j])) {
+                cmin(ans, j - i + 1);
+                break;
+            } 
+            cmin(ans, j - i);
+            prefix.insert(a[j]);
+        }
+    } 
     
-    
+    put(ans);
 }
 
 int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

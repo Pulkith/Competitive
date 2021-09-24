@@ -64,11 +64,20 @@ int a[MX];
 
 void test_case() {
     cin >> N;
-    int c1 = N / 3, c2 = N / 3;
-    N %= 3;
-    if(N == 2) ++c2;
-    if(N == 1) ++c1;
-    cout << c1 << ' ' << c2 << '\n'
+    string s; cin >> s;
+    string g = "ACTG";
+    int ans =  4 * 26;
+    FOR(i, 0, N - 3) {
+        int cur = 0;
+        FOR(j, 0, 4) {
+            auto x = s[i+j];
+            auto y = g[j];
+            cur += min(max(x, y) - min(x, y), 26 + (min(x, y) - max(x, y)));
+        }
+        cmin(ans, cur);
+    }
+
+    put(ans);
     
 }
 
@@ -76,7 +85,6 @@ int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

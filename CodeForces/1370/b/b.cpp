@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.11.2021 22:11:46
  * Potatoes FTW!
  **/ 
 
@@ -64,7 +64,26 @@ int a[MX];
 
 
 void test_case() {
-    
+    cin >> N; 
+    FOR(i, 0, N * 2) cin >> a[i];
+    int odd = 0, even = 0, ops = 0;
+    FOR(i, 0, N * 2) {
+        if(a[i]&1) {
+            if(odd) {
+                ++ops;
+                cout << odd << " " << i+1 << '\n';
+                odd = 0;
+            } else odd = i+1;
+        }
+        else {
+            if(even) {
+                cout << even << " " << i+1 << '\n';
+                ++ops;
+                even = 0;
+            } else even = i+1;
+        }
+        if(ops == N-1) break;
+    }
     
 }
 

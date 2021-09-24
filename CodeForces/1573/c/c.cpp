@@ -1,10 +1,12 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.18.2021 14:31:27
  * Potatoes FTW!
  **/ 
 
 #include<bits/stdc++.h>
+#include <cstdio>
+#include <queue>
 #if LOCAL
     #include <DespicableMonkey/Execution_Time.h>
     #include <DespicableMonkey/Debug.h>
@@ -58,13 +60,60 @@ inline namespace CP {
 }
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
+struct B {
+    int need = 0;
+    set<int> children;
+    int page = 0;
+};
+
 const int MX = (2e5+43); //Check the limits idiot
 int N;
-int a[MX];
+map<int, B> graph;
 
+struct pred { 
+    bool operator()(const int &l, const int &r) { 
+    return (graph[l].need == graph[r].need) ? graph[l].page < graph[r].page : graph[l].need < graph[r].need;
+} };
 
 void test_case() {
-    
+    cin >> N;
+
+    set<int, pred> pq;
+
+    FOR(i, 0, N) {
+        graph[i] = B();
+        graph[i].page = i;
+    }
+
+    FOR(i, 0, N) {
+        int n; cin >> n;
+        FOR(j, 0, n) {
+            int x; cin >> x;
+            ++graph[i].need;
+            graph[x-1].children.insert(i);
+        }
+    }
+    int last = N+1, ans = 0;
+    while(sz(pq)) {
+        auto k = *pq.begin();
+        auto obj = graph[k];
+        dbg(k);
+        dbg(obj.need);
+        if(obj.need > 0) putr("-1");
+        if(obj.page > last) ++ans;
+
+        for(auto c : obj.children) {
+            auto v = pq.find(c);
+            pq.erase(v);
+            --graph[c].need;
+            pq.insert(c);
+        }
+        last = obj.page;
+        pq.erase(pq.begin());
+    }
+
+
+    put(ans);
     
 }
 

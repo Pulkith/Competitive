@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.23.2021 01:44:58
  * Potatoes FTW!
  **/ 
 
@@ -59,12 +59,41 @@ inline namespace CP {
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
 const int MX = (2e5+43); //Check the limits idiot
-int N;
-int a[MX];
+int N, M;
+ll a[MX];
+pr<ll, ll> drags[MX];
 
 
 void test_case() {
-    
+    cin >> N;
+    FOR(i, 0, N) cin >> a[i];
+    sort(a, a+N);
+    cin >> M;
+    FOR(i, 0, M ) cin >> drags[i].f >> drags[i].s;
+    ll sum = accumulate(a, a+N, 0LL);
+    set<ll> heros;
+    FOR(i, 0, N) heros.insert(a[i]);
+    FOR(i, 0, M) {
+        if(a[N-1] < drags[i].f) {
+            ll ans = drags[i].f - a[N-1];
+            ll rem = sum - a[N-1];
+            put(ans + max(0LL, drags[i].s - rem));
+        } else {
+            auto bound = heros.lower_bound(drags[i].f);
+            ll r1 = drags[i].s - (sum - *bound);
+            cmax(r1, 0LL);
+            
+            if(*bound != a[0]) {
+                --bound;
+                ll ans = drags[i].f - *bound;
+                ll rem = sum - *bound;
+                ans += max(0LL, drags[i].s - rem);
+                cmin(r1, ans);
+            }
+
+            put(r1);
+        }
+    }
     
 }
 
@@ -72,7 +101,6 @@ int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

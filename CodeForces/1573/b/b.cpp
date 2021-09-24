@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.18.2021 14:06:42
  * Potatoes FTW!
  **/ 
 
@@ -60,11 +60,28 @@ inline namespace CP {
 
 const int MX = (2e5+43); //Check the limits idiot
 int N;
-int a[MX];
+int a[MX], b[MX];
 
 
 void test_case() {
-    
+    cin >> N;
+    FOR(i, 0, N) cin >> a[i];
+    FOR(i, 0, N) cin >> b[i];
+    int ans = (1e9);
+    vt<int> dis(N * 2 + 1);
+    int cur = N * 2;
+    FOR(i, 0, N) {
+        while(a[i] < cur) {
+            dis[cur] = i;
+            cur -= 2;
+        }
+    }
+    FOR(i, 0, N) {
+        int num = b[i];
+        cmin(ans, dis[num] + i);
+    }
+
+    put(ans);
     
 }
 

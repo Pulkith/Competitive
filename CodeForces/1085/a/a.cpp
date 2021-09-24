@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 08.27.2021 21:32:52
  * Potatoes FTW!
  **/ 
 
@@ -21,7 +21,7 @@ using namespace std;
 #define all(c) (c).begin(), (c).end()
 #define sz(x) (int)(x).size()
 #define ts(x) to_string(x)
-#define has(container, element) ((bool)(container.find(element) != container.end()))
+#define has(container, element) container.find(element) != container.end()
 
 #define FOR(i,a,b) for (int i = (a); i < (b); ++i)
 #define FORE(i, a, b) for(int i = (a); i<= (b); ++i)
@@ -64,15 +64,30 @@ int a[MX];
 
 
 void test_case() {
-    
-    
+    string t; cin >> t;
+    string ans = "";
+    int l = 0, r = sz(t) - 1;
+    if(sz(t)%2==0) {
+        ans += t[r--];
+    }
+
+    bool left = true;
+    while(l != r) {
+        if(left) ans += t[l++];
+        else ans += t[r--];
+        left = !left;
+    }
+    ans += t[l];
+    reverse(all(ans));
+
+
+    put(ans);
 }
 
 int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

@@ -1,7 +1,7 @@
 
 template<class T> struct Seg { // comb(ID,b) = b
     const T ID = (1e18); T comb(T l, T r) { return min(l, r); }
-    int n; vector<T> seg;
+    int n; vt<T> seg;
     void init(int _n) { n = _n; seg.assign(2*n,ID); }
     void pull(int p) { seg[p] = comb(seg[2*p],seg[2*p+1]); }
     void upd(int p, T val) { // set val at position p

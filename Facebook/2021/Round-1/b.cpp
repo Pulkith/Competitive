@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.11.2021 13:18:50
  * Potatoes FTW!
  **/ 
 
@@ -60,22 +60,39 @@ inline namespace CP {
 
 const int MX = (2e5+43); //Check the limits idiot
 int N;
-int a[MX];
-
-
 void test_case() {
-    
-    
+    cin >> N;
+    string s; cin >> s;
+    vt<pr<int, pr<int, int>>> round1, segs;
+    FOR(i, 0, N) {
+        if(s[i] == 'X') round1.pb({1, {i, i}});
+        if(s[i] == 'O') round1.pb({0, {i, i}});
+    }
+    if(sz(round1)) segs.pb(round1[0]);
+    FOR(i, 1, sz(round1)) {
+        if(segs.back().f == round1[i].f) segs.back().s.s = round1[i].s.s;
+        else segs.pb(round1[i]);
+    }
+    ll ans = 0;
+    if(sz(segs) > 1) {
+        for(int i = 1; i < sz(segs); ++i) {
+            ans += (segs[i-1].s.s + 1) * 1LL * (N - segs[i].s.f);
+            ans %= (1000000007);
+        }
+    }
+    put(ans);
 }
 
 int main () {
-    CP::IO().SetIO()->FastIO().Input(0);
+    CP::IO().SetIO()->FastIO().Input(1);
+    CP::IO().setOut("ans1.txt");
 
     my_brain_hurts
     cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);
+        cout << "Case #" << tt << ": ";
         test_case();
     }
 

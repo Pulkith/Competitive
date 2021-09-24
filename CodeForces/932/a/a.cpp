@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.06.2021 23:37:02
  * Potatoes FTW!
  **/ 
 
@@ -64,7 +64,11 @@ int a[MX];
 
 
 void test_case() {
-    
+    string s; cin >> s;
+    string ans = s;
+    reverse(all(s));
+    ans += s;
+    put(ans);
     
 }
 
@@ -72,7 +76,6 @@ int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

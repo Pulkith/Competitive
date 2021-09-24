@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.16.2021 23:27:59
  * Potatoes FTW!
  **/ 
 
@@ -59,12 +59,14 @@ inline namespace CP {
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
 const int MX = (2e5+43); //Check the limits idiot
-int N;
+int N, S;
 int a[MX];
 
 
 void test_case() {
-    
+    cin >> N >> S;
+    N = N / 2 + 1;
+    put(S / N);
     
 }
 

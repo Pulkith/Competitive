@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 08.29.2021 13:08:29
  * Potatoes FTW!
  **/ 
 
@@ -21,7 +21,7 @@ using namespace std;
 #define all(c) (c).begin(), (c).end()
 #define sz(x) (int)(x).size()
 #define ts(x) to_string(x)
-#define has(container, element) ((bool)(container.find(element) != container.end()))
+#define has(container, element) container.find(element) != container.end()
 
 #define FOR(i,a,b) for (int i = (a); i < (b); ++i)
 #define FORE(i, a, b) for(int i = (a); i<= (b); ++i)
@@ -64,7 +64,18 @@ int a[MX];
 
 
 void test_case() {
-    
+    cin >> N;
+    multiset<int> nums;
+    FOR(i, 0, N) {
+        cin >> a[i];
+        nums.insert(a[i]);
+    }
+
+    int ans = 0;
+    FORE(i, 1, N)
+        ans += nums.find(i) == nums.end();
+
+    put(ans);
     
 }
 
@@ -72,7 +83,6 @@ int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

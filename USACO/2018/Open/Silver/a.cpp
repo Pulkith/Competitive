@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.04.2021 11:06:36
  * Potatoes FTW!
  **/ 
 
@@ -60,19 +60,34 @@ inline namespace CP {
 
 const int MX = (2e5+43); //Check the limits idiot
 int N;
-int a[MX];
+int a[MX], b[MX];
 
 
 void test_case() {
-    
+    cin >> N;
+    FOR(i, 0, N) {
+        cin >> a[i];
+        b[i] = a[i];
+    }
+    sort(a, a+N);
+    map<int, int> shouldIndex;
+    FOR(i, 0, N) {
+        if(!has(shouldIndex, a[i]))
+            shouldIndex[a[i]] = i;
+    }
+    int ans = 0;
+    FOR(i, 0, N) {
+        cmax(ans, i - shouldIndex[b[i]]++);
+    }
+
+    put(ans + 1);
     
 }
 
 int main () {
-    CP::IO().SetIO()->FastIO().Input(0);
+    CP::IO().SetIO("sort")->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

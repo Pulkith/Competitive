@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.09.2021 18:13:13
  * Potatoes FTW!
  **/ 
 
@@ -62,9 +62,43 @@ const int MX = (2e5+43); //Check the limits idiot
 int N;
 int a[MX];
 
+int mod = 998244353;
 
 void test_case() {
-    
+    map<int, int> facts;
+    cin >> N;
+    ll ans = 1;
+    FORE(i, 1, N) {
+        ans *= i;
+        ans %= mod;
+        facts[i] = ans;
+    }
+    FOR(i, 0, N) cin >> a[i];
+    sort(a, a+N);
+    facts[0] = 1;
+    if(a[N-1] == a[N - 2]) putr(facts[N]);
+    if(a[N-2] + 1 < a[N-1]) putr(0);
+    map<int, int> cnt;
+    FOR(i, 0, N) ++cnt[a[i]];
+    ll res = facts[N];
+    ll res_perm = facts[(N - 1 - cnt[a[N-2]])];
+    ll sum = 0;
+    for(int i = cnt[a[N-2]]; i < N; ++i) {
+        int nums = cnt[a[N-2]];
+        int slots = i;
+        ll numerical = facts[slots] / (facts[slots - nums]);
+        numerical %= mod;
+        numerical *= res_perm;
+        numerical %= mod;
+        sum += numerical;
+        sum %= mod;
+    }
+
+    put(res - sum);
+
+
+
+
     
 }
 

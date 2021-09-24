@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.11.2021 12:24:27
  * Potatoes FTW!
  **/ 
 
@@ -59,13 +59,71 @@ inline namespace CP {
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
 const int MX = (2e5+43); //Check the limits idiot
-int N;
-int a[MX];
+int N, M, A, B;
 
 
 void test_case() {
-    
-    
+    cin >> N >> M >> A >> B;
+    int intersections = N + M - 1;
+
+    if(intersections > A || intersections > B) putr("IMPOSSIBLE");
+    if(intersections * 1000 < A || intersections * 1000 < B) putr("IMPOSSIBLE");
+    vt<vt<int>> ans(N, vt<int>(M, 1000));
+    if((N == 2 && M == 2)) {
+        if(abs(A-B) > 1000) putr("IMPOSSIBLE");
+    }
+    else if((N == 3 && M == 2) || (M == 3 && N == 2)) {
+
+    } else {
+        int A_low = (A <= (intersections-1) * 1000 + 1) ? 1 : (A - ((intersections-1) * 1000));
+        int A_high = (A >= (intersections-1) + 1000) ?  1000 : (A - (intersections - 1));
+
+        int B_low = (B <= (intersections-1) * 1000 + 1) ? 1 : (B - ((intersections - 1) * 1000));
+        int B_high = (B >= (intersections - 1) + 1000) ? 1000 : (B - (intersections - 1));
+
+        if(A_low > B_high || A_high < B_low) putr("IMPOSSIBLE");
+        put("POSSIBLE");
+        int mutual = -1;
+        if(A_low >= B_low && A_low <= B_high) mutual = A_low;
+        if(A_high >= B_low && A_high <= B_high) mutual = A_high;
+        if(B_low >= A_low && B_high <= A_high) mutual = B_low;
+        if(B_high >= A_low && B_high <= A_high) mutual = B_high;
+        assert(mutual != -1);
+
+        ans[1][M-2] = mutual;
+
+        int A_avg = (A - mutual) / (intersections - 1);
+        int B_avg = (B - mutual) / (intersections - 1);
+        A -= mutual; B -= mutual;
+        for(int i = 0; i < M - 1; ++i) {
+            A -= A_avg;
+            ans[0][i] = A_avg;
+        }
+        for(int i = 2; i < N; ++i) {
+            A -= A_avg;
+            ans[i][M-2] = A_avg;
+        }
+        for(int i = M-1; i >= 0; --i) {
+            if(i == M-2) continue;
+            ans[1][i] = B_avg;
+            B -= B_avg;
+        }
+        for(int i = 2; i < N; ++i) {
+            ans[i][0] = B_avg;
+            B -= B_avg;
+        }
+
+        ans[N-1][M-1] = A;
+        ans[0][M-1] = B;
+
+        int Aa = ans[N-1][M-1];
+        int Bb = ans[0][M-1];
+        //assert(Aa >= 1 && Aa <= 1000 && Bb >= 1 && Bb <= 1000);
+
+        for(int i = 0; i < N; ++i)
+            for(int j = 0; j < M; ++j)
+                cout << ans[i][j] << " \n"[j == M-1];
+    }
 }
 
 int main () {
@@ -76,6 +134,7 @@ int main () {
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);
+        cout << "Case #" << ": "; 
         test_case();
     }
 

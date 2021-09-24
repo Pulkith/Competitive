@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.20.2021 23:43:49
  * Potatoes FTW!
  **/ 
 
@@ -64,7 +64,18 @@ int a[MX];
 
 
 void test_case() {
-    
+    int s; cin >> s;
+
+    auto sum = [&](string st) -> int {
+        int ans = 0;
+        for(auto c : st)
+            ans += (c - '0');
+        return ans;
+    };
+
+    while(!(sum(ts(s)) % 4  == 0)) ++s;
+
+    put(s);
     
 }
 
@@ -72,7 +83,6 @@ int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

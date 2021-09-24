@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.11.2021 12:11:53
  * Potatoes FTW!
  **/ 
 
@@ -64,18 +64,37 @@ int a[MX];
 
 
 void test_case() {
-    
-    
+    cin >> N;
+    string s; cin >> s;
+    bool x = false;
+    FOR(i, 0, N) {
+        if(s[i] == 'O' || s[i] == 'X') {
+            if(s[i] == 'X') x = true;
+            break;
+        }
+    }
+
+    int ans = 0;
+    FOR(i, 0, N) {
+        if((s[i] == 'O' && x) || (s[i] == 'X' && !x)) {
+            ++ans;
+            x = !x;
+        }
+    }
+    cout << ans << '\n';
 }
 
 int main () {
     CP::IO().SetIO()->FastIO().Input(0);
+    CP::IO().setOut("a_output.txt");
+    CP::IO().setIn("a_input.txt");
 
     my_brain_hurts
     cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);
+        cout << "Case #" << tt << ": ";
         test_case();
     }
 

@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.23.2021 01:30:39
  * Potatoes FTW!
  **/ 
 
@@ -64,7 +64,14 @@ int a[MX];
 
 
 void test_case() {
-    
+    cin >> N;
+    FOR(i, 0, N) {
+        string ans = "";
+        FORE(j, 0, i) ans += "(";
+        FORE(j, 0, i) ans += ")";
+        while(sz(ans) < N * 2) ans += "()";
+        put(ans);
+    }
     
 }
 

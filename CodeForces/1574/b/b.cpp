@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.23.2021 01:36:13
  * Potatoes FTW!
  **/ 
 
@@ -58,13 +58,20 @@ inline namespace CP {
 }
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
-const int MX = (2e5+43); //Check the limits idiot
-int N;
-int a[MX];
+const int MX = (3+43); //Check the limits idiot
+ll N;
+ll a[MX];
 
 
 void test_case() {
-    
+    FOR(i, 0, 3) cin >> a[i];
+    cin >> N;
+    sort(a, a+3);
+
+    ll mm = max(a[2] - a[1]- a[0] - 1, 0LL);
+    ll mx = a[0] + a[1] + a[2] - 3;
+    if(N >=  mm && N <= mx) putr("YES");
+    putr("NO");
     
 }
 

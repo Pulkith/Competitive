@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.20.2021 23:47:09
  * Potatoes FTW!
  **/ 
 
@@ -59,12 +59,24 @@ inline namespace CP {
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
 const int MX = (2e5+43); //Check the limits idiot
-int N;
+int N, M, H;
 int a[MX];
 
 
 void test_case() {
-    
+    cin >> N >> H >> M;
+    FOR(i, 0, N) a[i] = H;
+    FOR(i, 0, M) {
+        int x, y, z;
+        cin >> x >> y >> z;
+        --x; --y;
+        FORE(j, x, y)
+            cmin(a[j], z);
+    }
+
+    ll ans = 0;
+    FOR(i, 0, N) ans += a[i] * 1LL * a[i];
+    put(ans);
     
 }
 
@@ -72,7 +84,6 @@ int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

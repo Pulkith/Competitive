@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.18.2021 11:52:19
  * Potatoes FTW!
  **/ 
 
@@ -58,14 +58,30 @@ inline namespace CP {
 }
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
-const int MX = (2e5+43); //Check the limits idiot
+const int MX = (5e5+43); //Check the limits idiot
 int N;
-int a[MX];
 
 
 void test_case() {
-    
-    
+    cin >> N;
+    string s; cin >> s;
+    vt<ll> close(N);
+    ll cur = -1;
+    FOR(i, 0, N) {
+        if(s[i] == '1') cur = (i);
+        close[i] = cur;
+    }
+    cur = -1;
+    for(int i = N-1; i >= 0; --i) {
+        if(s[i] == '1') cur = (i);
+        if(cur != -1 && (close[i] == -1 || (cur-i < abs(close[i] - i))))
+            close[i] = cur;
+    }
+    ll ans = 0;
+
+    for(int i = 0; i < N; ++i)
+        ans += abs(close[i] - i);
+    put(ans);
 }
 
 int main () {
@@ -76,6 +92,7 @@ int main () {
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);
+        cout << "Case #" << tt << ": ";
         test_case();
     }
 

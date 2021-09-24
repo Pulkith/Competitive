@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.04.2021 11:35:30
  * Potatoes FTW!
  **/ 
 
@@ -64,15 +64,22 @@ int a[MX];
 
 
 void test_case() {
-    
+    cin >> N;
+    FOR(i, 0, N) cin >> a[i];
+    sort(a, a+N);
+    reverse(a, a+N);
+    int size = 0;
+    FOR(i, 0, N) {
+        if(size <= a[i]) ++size;
+    }
+    put(size);
     
 }
 
 int main () {
-    CP::IO().SetIO()->FastIO().Input(0);
+    CP::IO().SetIO("lemonade")->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

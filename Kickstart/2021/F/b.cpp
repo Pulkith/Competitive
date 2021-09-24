@@ -1,9 +1,10 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.18.2021 12:08:22
  * Potatoes FTW!
  **/ 
 
+#include <algorithm>
 #include<bits/stdc++.h>
 #if LOCAL
     #include <DespicableMonkey/Execution_Time.h>
@@ -58,13 +59,72 @@ inline namespace CP {
 }
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
-const int MX = (2e5+43); //Check the limits idiot
-int N;
-int a[MX];
+const int MX = (3e5+43); //Check the limits idiot
+int D, N, K;
 
 
 void test_case() {
-    
+    cin >> D >> N >> K;
+    vt<vt<int>> H(N, vt<int>(3));
+
+    FOR(i, 0, N)
+        cin >> H[i][2] >> H[i][0] >> H[i][1];
+    vt<ll> ans(D + 1);
+
+    vt<vt<int>> start(D+2), end(D+2);
+
+    FOR(i, 0, N) {
+        start[H[i][0]].pb(i);
+        end[H[i][1]].pb(i);
+    }
+
+    ll curmax = 0;
+    set<pr<int, int>> current;
+    set<pr<int, int>> other;
+
+    FORE(i, 1, D) {
+        if(sz(start[i])) {
+            FOR(j, 0, sz(start[i])) {
+                if(sz(current) < K) {
+                    curmax += H[start[i][j]][2];
+                    current.insert({H[start[i][j]][2], start[i][j]});
+                }
+                else if(H[start[i][j]][2] > (*current.begin()).f) {
+                    auto k = *current.begin();
+                    other.insert({k.f, k.s});
+                    curmax -= k.f;
+                    current.erase(k);
+                    current.insert({H[start[i][j]][2], start[i][j]});
+                    curmax += (H[start[i][j]][2]);
+                } 
+                else {
+                    other.insert({H[start[i][j]][2], start[i][j]});
+                }
+            }
+        }
+
+        ans[i] = curmax;
+
+        if(sz(end[i])) {
+            FOR(j, 0, sz(end[i])) {
+                if(current.find({H[end[i][j]][2], end[i][j]}) != current.end()) {
+                    curmax -= H[end[i][j]][2];
+                    current.erase(current.lower_bound({H[end[i][j]][2], end[i][j]}));
+                } else {
+                    other.erase(other.lower_bound({H[end[i][j]][2], end[i][j]}));
+                }
+            }
+        }
+
+        while(sz(current) < K && sz(other)) {
+            auto bck = --other.end();
+            current.insert(*bck);
+            curmax += (*bck).f;
+            other.erase(bck);
+        }
+    }
+    put(*max_element(ans.begin(), ans.end()));
+
     
 }
 
@@ -76,6 +136,7 @@ int main () {
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);
+        cout << "Case #" << tt << ": "; 
         test_case();
     }
 

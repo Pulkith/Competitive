@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.06.2021 23:42:16
  * Potatoes FTW!
  **/ 
 
@@ -62,9 +62,13 @@ const int MX = (2e5+43); //Check the limits idiot
 int N;
 int a[MX];
 
-
 void test_case() {
-    
+    int A, B;
+    cin >> A >> B;
+    int C = (A+B) / 2;
+    int D1 = abs(A - C);
+    int D2 = abs(B - C);
+    put((D1 * (D1+1)) / 2 + (D2 * (D2+1)) / 2);
     
 }
 
@@ -72,7 +76,6 @@ int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

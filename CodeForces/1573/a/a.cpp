@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.18.2021 13:55:27
  * Potatoes FTW!
  **/ 
 
@@ -64,7 +64,16 @@ int a[MX];
 
 
 void test_case() {
-    
+    cin >> N;
+    string s; cin >> s;
+    int ans = 0;
+    FOR(i, 0, N) {
+       ans += (s[i] - '0');
+       if(s[i] != '0')
+        ans += (i != N-1);
+    }
+
+    put(ans);
     
 }
 

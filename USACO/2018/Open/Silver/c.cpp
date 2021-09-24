@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.04.2021 12:02:03
  * Potatoes FTW!
  **/ 
 
@@ -58,21 +58,75 @@ inline namespace CP {
 }
 /*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
-const int MX = (2e5+43); //Check the limits idiot
+const int MX = (3e2+43); //Check the limits idiot
 int N;
-int a[MX];
+int a[MX][MX];
+int ff1vis[MX][MX];
+const int dx[4] = {1, 0, -1, 0}, dy[4] = {0, 1, 0, -1}; //DRUL
+set<pr<int, int>> vis[MX][MX];
 
+int ff1(int i, int j, int index) {
+    int cur = 1;
+    ff1vis[i][j] = index;
+    FOR(k, 0, 4){
+        int ni = i + dx[k];
+        int nj = j + dy[k];
+        if(ni >= 0 && ni < N && nj >= 0 && nj < N && !ff1vis[ni][nj] && a[ni][nj] == a[i][j])
+            cur += ff1(ni, nj, index);
+    }
+    return cur;
+}
+
+int ff2(int i, int j, int c1, int c2) {
+    vis[i][j].insert({c1, c2});
+    int cur = 1;
+    FOR(k, 0, 4) {
+        int di = i + dx[k];
+        int dj = j + dy[k];
+        if(di >= 0 && di < N && dj >= 0 && dj < N && 
+            (a[di][dj] == c1 || a[di][dj] == c2) &&
+            vis[di][dj].find({c1, c2}) == vis[di][dj].end()
+            )
+                cur += ff2(di, dj, c1, c2);
+    }
+    return cur;
+}
 
 void test_case() {
-    
+    cin >> N;
+    FOR(i, 0, N)
+        FOR(j, 0, N)
+            cin >> a[i][j];
+    int ans1 = 0, ans2 = 0;
+    int index = 1;
+    FOR(i, 0, N)
+        FOR(j, 0, N)
+            if(!ff1vis[i][j])
+                cmax(ans1, ff1(i, j, index++));
+    FOR(i, 0, N) 
+        FOR(j, 0, N)
+            FOR(k, 0, 4) {
+                int di = i + dx[k];
+                int dj = j + dy[k];
+                if(di >= 0 && di < N && dj >= 0 && dj < N){
+                    int c1 = a[di][dj];
+                    int c2 = a[i][j];
+                    if(c1 > c2) swap(c1, c2);
+                    if(vis[i][j].find({c1, c2}) == vis[i][j].end())
+                        cmax(ans2, ff2(i, j, c1, c2));
+                }
+            }
+
+    put(ans1);
+    put(ans2);
+
     
 }
 
 int main () {
-    CP::IO().SetIO()->FastIO().Input(0);
+    CP::IO().SetIO("multimoo")->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

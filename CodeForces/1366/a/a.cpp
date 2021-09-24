@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.11.2021 22:24:21
  * Potatoes FTW!
  **/ 
 
@@ -64,7 +64,9 @@ int a[MX];
 
 
 void test_case() {
-    
+    int A, B;
+    cin >> A >> B;
+    cout << min({A, B, (A+B) / 3}) << '\n';
     
 }
 

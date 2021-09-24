@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.06.2021 15:04:00
  * Potatoes FTW!
  **/ 
 
@@ -64,7 +64,18 @@ int a[MX];
 
 
 void test_case() {
-    
+    cin >> N;
+    string s; cin >> s;
+    string ans = string(N, ' ');
+    FOR(i, 0, N) {
+        if(s[i] == 'R' || s[i] == 'L') {
+            ans[i++] = 'L';
+            ans[i] = 'R';
+        } else {
+            ans[i] = (s[i] == 'D' ? 'U' : 'D');
+        }
+    }
+    put(ans);
     
 }
 

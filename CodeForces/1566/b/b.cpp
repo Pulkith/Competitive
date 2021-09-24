@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.16.2021 23:34:38
  * Potatoes FTW!
  **/ 
 
@@ -64,7 +64,25 @@ int a[MX];
 
 
 void test_case() {
-    
+    string s; cin >> s;
+    int o = false, o1 = false;
+    FOR(i, 0, sz(s)) {
+        o |= (s[i] == '0');
+        o1 |= (s[i] == '1');
+    }
+    int all_together = true;
+    bool found = false;
+    FOR(i, 0, sz(s)) {
+        if(s[i] == '0') {
+            if(found && s[i-1] != '0')  all_together = false;
+            found = true;
+        }
+    }
+
+    if(all_together && found) putr(1);
+    if(o1 && o) putr(2);
+    if(o1) putr(0);
+    if(o) putr(1);
     
 }
 
