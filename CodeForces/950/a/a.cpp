@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 10.04.2021 23:22:41
  * Potatoes FTW!
  **/ 
 
@@ -59,11 +59,16 @@ inline namespace CP {
 
 const int MX = (2e5+43);
 int N;
-int a[MX];
 
 
 void test_case() {
-    
+    int l, r, a;
+    cin >> l >> r >> a;
+    if(r < l) swap(l, r);
+    int minn = min(l + a, r);
+    r -= minn;
+    a -= minn - l;
+    put(minn * 2 + a / 2 * 2);
     
 }
 
@@ -71,7 +76,6 @@ int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

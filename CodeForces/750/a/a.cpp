@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 10.02.2021 23:45:30
  * Potatoes FTW!
  **/ 
 
@@ -58,12 +58,19 @@ inline namespace CP {
 }
 
 const int MX = (2e5+43);
-int N;
+int N, K;
 int a[MX];
 
 
 void test_case() {
-    
+    cin >> N >> K;
+    int tot = 60 * 4 - K;
+    int x = 1;
+    while(tot && x * 5 <= tot && x <= N) {
+        tot -= x * 5;
+        ++x;
+    }
+    put(x-1);
     
 }
 
@@ -71,7 +78,6 @@ int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

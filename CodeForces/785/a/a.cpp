@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 10.02.2021 23:41:55
  * Potatoes FTW!
  **/ 
 
@@ -63,7 +63,18 @@ int a[MX];
 
 
 void test_case() {
-    
+    int T; cin >> T;
+    int ans = 0;
+    while(T -- ) {
+        string s; cin >> s;
+        if(s == "Tetrahedron") ans += 4;
+        if(s == "Cube") ans += 6;
+        if(s == "Dodecahedron") ans += 12;
+        if(s == "Icosahedron") ans += 20;
+        if(s == "Octahedron") ans += 8;
+
+    }
+    put(ans);
     
 }
 
@@ -71,7 +82,6 @@ int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

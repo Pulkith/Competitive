@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.30.2021 22:43:31
  * Potatoes FTW!
  **/ 
 
@@ -63,7 +63,17 @@ int a[MX];
 
 
 void test_case() {
-    
+    cin >> N;
+    ll cur  = 1;
+    int mod = 1e9 + 7;
+    FORE(i, 1, N) {
+        cur *= i;
+        cur %= mod;
+    }
+
+    cur = cur * cur;
+    cur %= mod;
+    put(cur);
     
 }
 

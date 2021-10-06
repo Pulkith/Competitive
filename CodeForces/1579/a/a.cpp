@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.28.2021 22:27:17
  * Potatoes FTW!
  **/ 
 
@@ -63,7 +63,11 @@ int a[MX];
 
 
 void test_case() {
-    
+    string s; cin >> s;
+    int A = count(all(s), 'A');
+    int B = count(all(s), 'B');
+    int C = sz(s) - A - B;
+    put(B == A+C ? "YES" : "NO");
     
 }
 

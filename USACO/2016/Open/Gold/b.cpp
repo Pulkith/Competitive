@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.29.2021 22:52:34
  * Potatoes FTW!
  **/ 
 
@@ -58,20 +58,61 @@ inline namespace CP {
 }
 
 const int MX = (2e5+43);
-int N;
-int a[MX];
+int N, M;
+vt<int> adj[MX];
+int order[MX];
+bool ans[MX];
+
+struct DSU {
+    vector<int> e;
+    DSU(int _N) { e = vector<int>(_N, -1); }
+    int get(int x) { return e[x] < 0 ? x : e[x] = get(e[x]); } // get representive component (uses path compression)
+    bool same_set(int a, int b) { return get(a) == get(b); }
+    int size(int x) { return -e[get(x)]; }
+    bool unite(int x, int y) {  // union by size
+        x = get(x), y = get(y);
+        if (x == y) return false;
+        if (e[x] > e[y]) swap(x, y);
+        e[x] += e[y]; e[y] = x; return true;
+    }
+};
+
 
 
 void test_case() {
-    
-    
+    cin >> N >> M;
+    FOR(i, 0, M) {
+        int u, v; cin >> u >> v;
+        --u; --v;
+        adj[u].pb(v);
+        adj[v].pb(u);
+    }
+    FOR(i, 0, N) {
+        cin >> order[i];
+        --order[i];
+    }
+    set<int> open;
+    DSU d(N);
+    vt<pr<int, int>> ununited;
+
+    for(int i = N-1; i >= 0; --i) {
+        open.insert(order[i]);
+        for(auto v : adj[order[i]]) 
+            if(has(open, v))
+                d.unite(order[i], v);
+        if(!d.same_set(order[i], order[N-1]))
+            ununited.pb({order[i], order[N-1]});
+        while(sz(ununited) && d.same_set(ununited.back().first, ununited.back().s)) ununited.pop_back();
+        ans[i] = !sz(ununited);
+    }
+
+    FOR(i, 0, N) cout << (ans[i] ? "YES" : "NO") << '\n';
 }
 
 int main () {
-    CP::IO().SetIO()->FastIO().Input(0);
+    CP::IO().SetIO("closing")->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

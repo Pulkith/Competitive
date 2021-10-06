@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 10.04.2021 23:32:16
  * Potatoes FTW!
  **/ 
 
@@ -63,7 +63,13 @@ int a[MX];
 
 
 void test_case() {
-    
+    cin >> N;
+    int ans = 0;
+    FOR(i, 1, N) {
+        if(N - i < i) break;
+        ans += ((N-i) % i ) == 0;
+    }
+    put(ans);
     
 }
 
@@ -71,7 +77,6 @@ int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

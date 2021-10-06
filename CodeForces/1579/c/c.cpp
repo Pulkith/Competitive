@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.28.2021 22:42:25
  * Potatoes FTW!
  **/ 
 
@@ -57,13 +57,35 @@ inline namespace CP {
     };
 }
 
-const int MX = (2e5+43);
-int N;
-int a[MX];
+const int MX = (100+43);
+int N, M, K;
+int a[MX][MX];
 
 
 void test_case() {
-    
+    cin >> N >> M >> K;
+    FOR(i, 0, N) {
+        string s; cin >> s;
+        FOR(j, 0, M) a[i][j] = (s[j] == '*');
+    }
+    vt<vt<bool>> poss(N, vt<bool>(M));
+    FOR(i, 0, N) {
+        FOR(j, 0, M) {
+            if(a[i][j]) {
+                int k = 0;
+                while(i - k > 0 && j-k > 0 && j + k < M-1 && a[i-k-1][j-k-1] && a[i-k-1][j+k+1]) ++k;
+                if(k >= K) {
+                    while(k >= 0) {
+                        poss[i-k][j-k] = poss[i-k][j+k] = 1;
+                        --k;
+                    }
+                }
+            }
+        }
+    }
+    bool ok = true;
+    FOR(i, 0, N) FOR(j, 0, M) if(a[i][j]) ok &= poss[i][j];
+    put(ok ? "YES" : "NO");
     
 }
 

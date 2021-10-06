@@ -1,10 +1,11 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.30.2021 22:47:24
  * Potatoes FTW!
  **/ 
 
 #include<bits/stdc++.h>
+#include <numeric>
 #if LOCAL
     #include <DespicableMonkey/Execution_Time.h>
     #include <DespicableMonkey/Debug.h>
@@ -63,7 +64,19 @@ int a[MX];
 
 
 void test_case() {
-    
+    cin >> N;
+    FOR(i, 0, N) cin >> a[i];
+    sort(a, a+N);
+    int sum = accumulate(a, a+N, 0);
+    int cur = 0;
+    int maxx = abs(sum);
+    FOR(i, 0, N) {
+        sum -= a[i];
+        cur += a[i];
+        cmax(maxx, max(sum - cur, cur - sum));
+    }
+
+    put(maxx);
     
 }
 
@@ -71,7 +84,7 @@ int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
+
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

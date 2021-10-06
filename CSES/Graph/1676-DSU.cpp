@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.29.2021 22:40:57
  * Potatoes FTW!
  **/ 
 
@@ -58,12 +58,41 @@ inline namespace CP {
 }
 
 const int MX = (2e5+43);
-int N;
-int a[MX];
+int N, M;
+
+struct DSU {
+    vector<int> e;
+    DSU(int _N) { e = vector<int>(_N, -1); }
+    int get(int x) { return e[x] < 0 ? x : e[x] = get(e[x]); } // get representive component (uses path compression)
+    bool same_set(int a, int b) { return get(a) == get(b); }
+    int size(int x) { return -e[get(x)]; }
+    bool unite(int x, int y) {  // union by size
+        x = get(x), y = get(y);
+        if (x == y) return false;
+        if (e[x] > e[y]) swap(x, y);
+        e[x] += e[y]; e[y] = x; return true;
+    }
+};
 
 
 void test_case() {
-    
+    cin >> N >> M;
+    DSU d(N);
+
+    int cnt = N, mx = 0;
+
+    FOR(i, 0, M) {
+        int X, Y;
+        cin >> X >> Y;
+        --X; --Y;
+        if(!d.same_set(X, Y)) {
+            --cnt;
+            d.unite(X, Y);
+            cmax(mx, d.size(X));
+        }
+
+        cout << cnt << " " << mx << '\n';
+    }
     
 }
 
@@ -71,7 +100,6 @@ int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

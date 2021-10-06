@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.25.2021 11:41:44
  * Potatoes FTW!
  **/ 
 
@@ -57,24 +57,64 @@ inline namespace CP {
     };
 }
 
-const int MX = (2e5+43);
-int N;
-int a[MX];
+const int MX = (2e5+43); 
+int N, M;
 
 
 void test_case() {
-    
-    
+    cin >> N >> M;
+    vector<vector<int>> g(N, vector<int>(M));
+    map<int, multiset<int>> mp;
+    FOR(i, 0, M) {
+        int x; cin >> x;
+        mp[x].insert(1);
+    }
+
+    FOR(i, 0, N) FOR(j, 0, M) cin >> g[i][j];
+
+    ll ans = 0;
+
+    FOR(i, 0, N) {
+        map<int, multiset<int>> nxt_mp;
+        priority_queue<int> rem;
+        FOR(j, 0, M) {
+            if(sz(mp[g[i][j]]) > 0) {
+                int e = *(mp[g[i][j]].begin());
+                mp[g[i][j]].erase(mp[g[i][j]].begin());
+                nxt_mp[g[i][j]].insert(e);
+                g[i][j] = -1;
+            }
+        }
+
+       for(auto c : mp)
+            for(auto k : c.s)
+                rem.push(k);
+
+        FOR(j, 0, M) {
+            if(g[i][j] != -1) {
+                int t = rem.top();
+                rem.pop();
+                ans += !t;
+                nxt_mp[g[i][j]].insert(0);
+            }
+        }
+        mp = nxt_mp;
+    }
+
+    put(ans);
 }
 
 int main () {
     CP::IO().SetIO()->FastIO().Input(0);
+    CP::IO().SetIO()->FastIO().Input(1);
+    CP::IO().setOut("ans1.txt");
 
     my_brain_hurts
     cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);
+        cout << "Case #" << tt << ": ";
         test_case();
     }
 

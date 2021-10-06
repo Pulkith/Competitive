@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.25.2021 23:12:27
  * Potatoes FTW!
  **/ 
 
@@ -59,11 +59,22 @@ inline namespace CP {
 
 const int MX = (2e5+43);
 int N;
-int a[MX];
+int a[MX][4];
 
 
 void test_case() {
-    
+    cin >> N;
+    FOR(i, 0, N)
+        FOR(j, 0, 4) 
+            cin >> a[i][j];
+
+    int his = a[0][0] + a[0][1] + a[0][2] + a[0][3];
+    int ans = 1;
+    FOR(i, 1, N) {
+        int l = a[i][0] + a[i][1] + a[i][2] + a[i][3];
+        ans += (l > his);
+    }
+    put(ans);
     
 }
 
@@ -71,7 +82,6 @@ int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.28.2021 22:32:28
  * Potatoes FTW!
  **/ 
 
@@ -63,7 +63,22 @@ int a[MX];
 
 
 void test_case() {
-    
+    cin >> N;
+    FOR(i, 0, N) cin >> a[i];
+    vt<vt<int>> ans;
+    FOR(i, 1, N) {
+        if(a[i] < a[i-1]) {
+            int j = i;
+            while(j > 0 && a[j-1] > a[j]) {
+                swap(a[j], a[j-1]);
+                --j;
+            }
+            ans.pb({j + 1, i + 1, i - j});
+        }
+    }
+    put(sz(ans));
+    for(auto v : ans)
+        cout << v[0] << ' ' << v[1] << ' ' << v[2] << '\n';
     
 }
 

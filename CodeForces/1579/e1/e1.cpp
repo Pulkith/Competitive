@@ -1,10 +1,11 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.29.2021 20:16:00
  * Potatoes FTW!
  **/ 
 
 #include<bits/stdc++.h>
+#include <deque>
 #if LOCAL
     #include <DespicableMonkey/Execution_Time.h>
     #include <DespicableMonkey/Debug.h>
@@ -63,7 +64,18 @@ int a[MX];
 
 
 void test_case() {
-    
+    cin >> N;
+    FOR(i, 0, N) cin >> a[i];
+    deque<int> ans;
+    FOR(i, 0, N) {
+        if(!sz(ans) || a[i] < ans.front()) ans.push_front(a[i]);
+        else ans.push_back(a[i]);
+    }
+
+    while(sz(ans)) {
+        cout << ans.front() << " \n"[sz(ans) == 1];
+        ans.pop_front();
+    }
     
 }
 

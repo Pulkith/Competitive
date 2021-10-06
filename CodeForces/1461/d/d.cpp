@@ -1,10 +1,12 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.29.2021 00:49:13
  * Potatoes FTW!
  **/ 
 
+#include <algorithm>
 #include<bits/stdc++.h>
+#include <iterator>
 #if LOCAL
     #include <DespicableMonkey/Execution_Time.h>
     #include <DespicableMonkey/Debug.h>
@@ -58,13 +60,37 @@ inline namespace CP {
 }
 
 const int MX = (2e5+43);
-int N;
-int a[MX];
+int N, Q;
+ll a[MX], prefix[MX];
 
 
 void test_case() {
-    
-    
+    cin >> N >> Q;
+    FOR(i, 0, N) {
+        cin >> a[i];
+    }
+    sort(a, a+N);
+    FOR(i, 0, N) prefix[i] = a[i] + (i > 0 ? prefix[i-1] : 0);
+    set<ll> possible;
+    function<void(int, int)> merge = [&](int l, int r) {
+        possible.insert(prefix[r] - (l == 0 ? 0 : prefix[l-1]));
+        dbg(prefix[r], prefix[l]);
+        if(l == r) return;
+        dbg(l, r);
+        int mid = (a[l] + a[r]) / 2;
+        auto bound = upper_bound(a + l, a+r+1, mid);
+        int new_split = bound - a;
+        if(new_split <= r && new_split > l) merge(new_split, r);
+        --new_split;
+        if(new_split >= l && new_split < r) merge(l, new_split);
+    };
+
+    merge(0, N-1);  
+
+    while(Q--) {
+        int q; cin >> q;
+        cout << (has(possible, q) ? "Yes" : "No") << '\n';
+    }  
 }
 
 int main () {

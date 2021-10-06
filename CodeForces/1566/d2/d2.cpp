@@ -1,10 +1,12 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.29.2021 20:26:58
  * Potatoes FTW!
  **/ 
 
+#include <algorithm>
 #include<bits/stdc++.h>
+#include <functional>
 #if LOCAL
     #include <DespicableMonkey/Execution_Time.h>
     #include <DespicableMonkey/Debug.h>
@@ -57,14 +59,52 @@ inline namespace CP {
     };
 }
 
-const int MX = (2e5+43);
-int N;
-int a[MX];
+const int MX = (300+43);
+int N, M;
+int a[MX * MX], b[MX * MX], ans[MX][MX];
 
 
 void test_case() {
-    
-    
+    cin >> N >> M;
+    FOR(i, 0, N * M) {
+        cin >> a[i];
+        b[i] = i;
+    }
+    sort(b, b + (N*M), [&](int l, int r) -> bool {  return a[l] < a[r]; });
+    int currow = 0, curcol = 0;
+    FOR(i, 0, N * M) {
+        int len = 0, length = 1;
+        while(i + len + 1 < N * M && a[b[i+len+1]] == a[b[i]]) ++len, ++length;
+        sort(b + i, b + i + length, greater<int>()); //late to early
+        int right = i + len;
+        while(right >= i) {
+            int coldis = min(M - curcol, length);
+            for(int j = right - coldis + 1; j <= right; ++j) {
+                ans[currow][curcol] = b[j];
+                if(++curcol == M) ++currow, curcol = 0;
+                --length;
+            }
+            right -= coldis;
+        }
+        i += len;
+    }
+
+    int res = 0;
+    FOR(i, 0, N) {
+        vt<int> cur;
+        FOR(j, 0, M) {
+            if(sz(cur) && cur[0] < ans[i][j])
+                res += --lower_bound(all(cur), ans[i][j]) - cur.begin() + 1;
+            cur.pb(ans[i][j]);
+            sort(all(cur));
+        }
+    }
+
+    put(res);
+
+    //for every row -> sort late to early
+    //for multi row, first row -> earliest, last row -> latest
+
 }
 
 int main () {

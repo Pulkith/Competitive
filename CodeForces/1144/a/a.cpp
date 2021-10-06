@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.26.2021 23:17:15
  * Potatoes FTW!
  **/ 
 
@@ -63,7 +63,15 @@ int a[MX];
 
 
 void test_case() {
-    
+    string s; cin >> s;
+    sort(all(s));
+    set<char> found;
+    found.insert(s[0]);
+    FOR(i, 1, sz(s)) {
+        if(s[i] - 1 != s[i-1] || found.find(s[i]) != found.end()) putr("NO");
+        found.insert(s[i]);
+    }
+    put("YES");
     
 }
 

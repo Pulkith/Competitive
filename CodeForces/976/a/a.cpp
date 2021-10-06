@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.30.2021 22:51:11
  * Potatoes FTW!
  **/ 
 
@@ -63,7 +63,10 @@ int a[MX];
 
 
 void test_case() {
-    
+    cin >> N;
+    string s; cin >> s;
+    if(s == "0") putr(0);
+    else put("1" + string(count(all(s), '0'), '0'));
     
 }
 
@@ -71,7 +74,6 @@ int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 10.04.2021 23:28:33
  * Potatoes FTW!
  **/ 
 
@@ -59,11 +59,20 @@ inline namespace CP {
 
 const int MX = (2e5+43);
 int N;
-int a[MX];
+string s;
 
 
 void test_case() {
-    
+    cin >> N >> s;
+
+    auto is = [&](char c) {
+        return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u';
+    };
+
+    FOR(i, 0, sz(s) - 1) {
+        if(is(s[i]) && is(s[i+1])) s.erase(s.begin() + i), --i;
+    }
+    put(s);
     
 }
 
@@ -71,7 +80,6 @@ int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

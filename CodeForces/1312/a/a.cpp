@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.27.2021 23:04:53
  * Potatoes FTW!
  **/ 
 
@@ -58,13 +58,13 @@ inline namespace CP {
 }
 
 const int MX = (2e5+43);
-int N;
+int N, M;
 int a[MX];
 
 
 void test_case() {
-    
-    
+    cin >>N >> M;
+    put(N % M ? "NO" : "YES");
 }
 
 int main () {

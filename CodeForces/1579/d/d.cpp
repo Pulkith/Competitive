@@ -1,6 +1,6 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.29.2021 15:20:51
  * Potatoes FTW!
  **/ 
 
@@ -59,11 +59,35 @@ inline namespace CP {
 
 const int MX = (2e5+43);
 int N;
-int a[MX];
+pr<int, int> a[MX];
 
 
 void test_case() {
-    
+    cin >> N;
+    FOR(i, 0, N) {
+        cin >> a[i].f;
+        a[i].s = i + 1;
+    }
+    set<pr<int, int>> rem;
+    vt<pr<int, int>> ans;
+    FOR(i, 0, N) if(a[i].f != 0) rem.insert(a[i]);
+    while(sz(rem) > 1) {
+        auto it = rem.end(); --it;
+        auto l = *it, s = *(--it);
+        ans.pb({l.s, s.s});
+        rem.erase(l); rem.erase(s);
+        if(l.f > 1) {
+            l.f -= 1;
+            rem.insert(l);
+        }
+        if(s.f > 1) {
+            s.f -= 1;
+            rem.insert(s);
+        }
+    }
+
+    put(sz(ans));
+    FOR(i, 0, sz(ans)) cout << ans[i].f<< " " << ans[i].s << '\n';
     
 }
 

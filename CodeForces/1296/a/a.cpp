@@ -1,10 +1,11 @@
 /**
- * author: $%U%$
- * created: $%M%$.$%D%$.$%Y%$ $%h%$:$%m%$:$%s%$
+ * author: DespicableMonkey
+ * created: 09.27.2021 23:06:40
  * Potatoes FTW!
  **/ 
 
 #include<bits/stdc++.h>
+#include <numeric>
 #if LOCAL
     #include <DespicableMonkey/Execution_Time.h>
     #include <DespicableMonkey/Debug.h>
@@ -63,7 +64,15 @@ int a[MX];
 
 
 void test_case() {
-    
+    cin >> N;
+    FOR(i,0, N) cin >> a[i];
+    ll sum = accumulate(a, a+N, 0LL);
+    if(sum % 2) putr("YES");
+    bool even = 0, odd = 0;
+    FOR(i, 0, N) even |= (a[i] % 2 == 0);
+    FOR(i, 0, N) odd |= (a[i] % 2);
+    putr(even && odd ? "YES" : "NO");
+
     
 }
 
