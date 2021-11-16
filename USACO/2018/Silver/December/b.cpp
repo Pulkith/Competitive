@@ -1,6 +1,6 @@
 /**
  * author: DespicableMonkey
- * created: 07.25.2021 01:08:38
+ * created: 11.08.2021 23:57:24
  * Potatoes FTW!
  **/ 
 
@@ -21,6 +21,7 @@ using namespace std;
 #define all(c) (c).begin(), (c).end()
 #define sz(x) (int)(x).size()
 #define ts(x) to_string(x)
+#define has(container, element) ((bool)(container.find(element) != container.end()))
 
 #define FOR(i,a,b) for (int i = (a); i < (b); ++i)
 #define FORE(i, a, b) for(int i = (a); i<= (b); ++i)
@@ -49,43 +50,59 @@ inline namespace CP {
         IO FastIO() { cin.tie(nullptr)->sync_with_stdio(0); return *this; }
         IO* SetIO(string __s = "", string __t = "") {
             cin.exceptions(cin.failbit); // throws exception when do smth illegal ex. try to read letter into int
-            if(sz(__t)) setIn(__s), setOut(__t);
-            else if (sz(__s)) setIn(__s+".in"), setOut(__s+".out"); // for old USACO
+            if(sz(__t) && !debug_active) setIn(__s), setOut(__t);
+            else if (sz(__s) && !debug_active) setIn(__s+".in"), setOut(__s+".out"); // for old USACO
             return this;
         }
     };
 }
-/*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
-const int MX = (5e4+43); //Check the limits idiot
+const int MX = (2e5+43);
 int N;
-pr<int, int> a[MX];
 
+
+template<typename T, typename U>  bool operator< (vt<int> &l, vt<int> &r) {
+    return l[0] < r[0];
+}
 
 void test_case() {
     cin >> N;
-    FOR(i, 0, N) cin >> a[i].f >> a[i].s;
-    sort(a, a+N, [&]())
-    vt<int> lmin(N), rmin(N), lmax(N)r, max(N);
+    map<int, vt<pr<int, int>>> a;
     FOR(i, 0, N) {
-        if(i == 0) lmin[i] = lmax[i] = a[i].f;
-        else {
-            lmin[i] = min(lmin[i-1], a[i].f);
-            lmax[i] = max(lmax[i-1], a[i].f);
-        }
+        int u, v;
+        cin >> u >> v;
+        a[u].pb({-i, v});
     }
-    for(int i = N-1; i >= 0; --i) {
-        if(i == N-1) rmin = rmax = a[i].f;
-        else {
-            rmin = min(rmin[i+1], a[i].f);
-            rmax = min(rmax[i+1], a[i].f);
+
+    int ans = 0;
+    priority_queue<vt<int>> waiting;
+    int time = -1, until = 0;
+    for(auto [x, y] : a) {
+        for(auto v : y) {
+            waiting.push({v.f, v.s, x});
         }
+        while(sz(waiting) && x >= time + until) {
+            time = max(time + until, waiting.top()[2]);
+            cmax(ans, time - waiting.top()[2]);
+            until = waiting.top()[1];
+            waiting.pop();
+        }
+
     }
+    time += until + 1;
+    while(sz(waiting)) {
+        cmax(ans, time - waiting.top()[2]);
+        time += waiting.top()[1];
+        waiting.pop();
+    }
+
+    put(ans);
+
     
 }
 
 int main () {
-    CP::IO().SetIO()->FastIO().Input(0);
+    CP::IO().SetIO("convention2")->FastIO().Input(0);
 
     my_brain_hurts
 

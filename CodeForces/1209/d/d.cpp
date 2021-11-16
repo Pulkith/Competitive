@@ -1,6 +1,6 @@
 /**
  * author: DespicableMonkey
- * created: 07.25.2021 01:08:38
+ * created: 11.08.2021 23:16:31
  * Potatoes FTW!
  **/ 
 
@@ -21,6 +21,7 @@ using namespace std;
 #define all(c) (c).begin(), (c).end()
 #define sz(x) (int)(x).size()
 #define ts(x) to_string(x)
+#define has(container, element) ((bool)(container.find(element) != container.end()))
 
 #define FOR(i,a,b) for (int i = (a); i < (b); ++i)
 #define FORE(i, a, b) for(int i = (a); i<= (b); ++i)
@@ -49,38 +50,32 @@ inline namespace CP {
         IO FastIO() { cin.tie(nullptr)->sync_with_stdio(0); return *this; }
         IO* SetIO(string __s = "", string __t = "") {
             cin.exceptions(cin.failbit); // throws exception when do smth illegal ex. try to read letter into int
-            if(sz(__t)) setIn(__s), setOut(__t);
-            else if (sz(__s)) setIn(__s+".in"), setOut(__s+".out"); // for old USACO
+            if(sz(__t) && !debug_active) setIn(__s), setOut(__t);
+            else if (sz(__s) && !debug_active) setIn(__s+".in"), setOut(__s+".out"); // for old USACO
             return this;
         }
     };
 }
-/*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
-const int MX = (5e4+43); //Check the limits idiot
-int N;
-pr<int, int> a[MX];
+const int MX = (2e5+43);
+int N, G;
+int a[MX];
 
 
 void test_case() {
-    cin >> N;
-    FOR(i, 0, N) cin >> a[i].f >> a[i].s;
-    sort(a, a+N, [&]())
-    vt<int> lmin(N), rmin(N), lmax(N)r, max(N);
-    FOR(i, 0, N) {
-        if(i == 0) lmin[i] = lmax[i] = a[i].f;
-        else {
-            lmin[i] = min(lmin[i-1], a[i].f);
-            lmax[i] = max(lmax[i-1], a[i].f);
-        }
+    cin >> N >> G;
+    FOR(i, 0, G) {
+        int u, v;
+        cin >> u >> v;
+        ++a[u];
+        ++a[v];
     }
-    for(int i = N-1; i >= 0; --i) {
-        if(i == N-1) rmin = rmax = a[i].f;
-        else {
-            rmin = min(rmin[i+1], a[i].f);
-            rmax = min(rmax[i+1], a[i].f);
-        }
+    int used = 0;
+    FOR(i, 0, MX-2) {
+        used += min(1, a[i]);
     }
+    put(G - used + 1);
+
     
 }
 

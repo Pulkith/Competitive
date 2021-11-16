@@ -1,9 +1,3 @@
-/**
- * author: DespicableMonkey
- * created: 07.25.2021 01:08:38
- * Potatoes FTW!
- **/ 
-
 #include<bits/stdc++.h>
 #if LOCAL
     #include <DespicableMonkey/Execution_Time.h>
@@ -21,6 +15,7 @@ using namespace std;
 #define all(c) (c).begin(), (c).end()
 #define sz(x) (int)(x).size()
 #define ts(x) to_string(x)
+#define has(container, element) ((bool)(container.find(element) != container.end()))
 
 #define FOR(i,a,b) for (int i = (a); i < (b); ++i)
 #define FORE(i, a, b) for(int i = (a); i<= (b); ++i)
@@ -49,48 +44,65 @@ inline namespace CP {
         IO FastIO() { cin.tie(nullptr)->sync_with_stdio(0); return *this; }
         IO* SetIO(string __s = "", string __t = "") {
             cin.exceptions(cin.failbit); // throws exception when do smth illegal ex. try to read letter into int
-            if(sz(__t)) setIn(__s), setOut(__t);
-            else if (sz(__s)) setIn(__s+".in"), setOut(__s+".out"); // for old USACO
+            if(sz(__t) && !debug_active) setIn(__s), setOut(__t);
+            else if (sz(__s) && !debug_active) setIn(__s+".in"), setOut(__s+".out"); // for old USACO
             return this;
         }
     };
 }
-/*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
+const int MX = (5e5+43);
+int N, siz;
+int a[MX], reff[MX], refb[MX];
 
-const int MX = (5e4+43); //Check the limits idiot
-int N;
-pr<int, int> a[MX];
-
+void print() {
+    int e = 0; 
+    while(e < N) { 
+        cout << a[e] << (reff[e] < N ? "" : "\n"); 
+        e = reff[e]; 
+    }
+}
 
 void test_case() {
-    cin >> N;
-    FOR(i, 0, N) cin >> a[i].f >> a[i].s;
-    sort(a, a+N, [&]())
-    vt<int> lmin(N), rmin(N), lmax(N)r, max(N);
-    FOR(i, 0, N) {
-        if(i == 0) lmin[i] = lmax[i] = a[i].f;
-        else {
-            lmin[i] = min(lmin[i-1], a[i].f);
-            lmax[i] = max(lmax[i-1], a[i].f);
+    cin >> N; string s; cin >> s;
+    FOR(i, 0, N) a[i] = (s[i] - '0');
+    for(int i = 0; i <= 500000; ++i) reff[i] = i+1, refb[i] = i-1;
+    vt<set<int>> locs(10);
+
+    FOR(i, 0, N-1)
+        if((a[i]+1) % 10 == a[i+1])
+            locs[a[i]].insert(i);
+
+
+    bool loop = 1;
+    while(loop) {
+        loop = 0;
+        for(int i = 0; i < 10; ++i) {
+            for(auto e : locs[i]) {
+                if(a[e] == -1 || a[reff[e]] == -1) continue;
+                a[e] = (a[e] + 2) % 10;
+                int c = reff[e];
+                if(e != 0 && has(locs[a[refb[e]]], refb[e]))  locs[a[refb[e]]].erase(refb[e]);
+                reff[e] = reff[reff[e]];
+                refb[reff[e]] = e;
+                reff[c] = refb[c] = a[c] = -1; 
+                if(refb[e] >= 0 && (a[refb[e]]+1)%10 == a[e]) locs[a[refb[e]]].insert(refb[e]), loop = 1;
+                else if(reff[e] < N && (a[e]+1)%10 == a[reff[e]]) locs[a[e]].insert(e), loop = 1;
+            }
+            locs[i] = set<int>();
         }
     }
-    for(int i = N-1; i >= 0; --i) {
-        if(i == N-1) rmin = rmax = a[i].f;
-        else {
-            rmin = min(rmin[i+1], a[i].f);
-            rmax = min(rmax[i+1], a[i].f);
-        }
-    }
-    
+
+    print();
 }
 
 int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
+    cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
-        print_test_case(tt);
+        cout << "Case #" << tt << ": ";
         test_case();
     }
 

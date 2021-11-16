@@ -1,6 +1,6 @@
 /**
  * author: DespicableMonkey
- * created: 07.25.2021 01:08:38
+ * created: 11.11.2021 23:23:55
  * Potatoes FTW!
  **/ 
 
@@ -21,6 +21,7 @@ using namespace std;
 #define all(c) (c).begin(), (c).end()
 #define sz(x) (int)(x).size()
 #define ts(x) to_string(x)
+#define has(container, element) ((bool)(container.find(element) != container.end()))
 
 #define FOR(i,a,b) for (int i = (a); i < (b); ++i)
 #define FORE(i, a, b) for(int i = (a); i<= (b); ++i)
@@ -49,38 +50,28 @@ inline namespace CP {
         IO FastIO() { cin.tie(nullptr)->sync_with_stdio(0); return *this; }
         IO* SetIO(string __s = "", string __t = "") {
             cin.exceptions(cin.failbit); // throws exception when do smth illegal ex. try to read letter into int
-            if(sz(__t)) setIn(__s), setOut(__t);
-            else if (sz(__s)) setIn(__s+".in"), setOut(__s+".out"); // for old USACO
+            if(sz(__t) && !debug_active) setIn(__s), setOut(__t);
+            else if (sz(__s) && !debug_active) setIn(__s+".in"), setOut(__s+".out"); // for old USACO
             return this;
         }
     };
 }
-/*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
-const int MX = (5e4+43); //Check the limits idiot
+const int MX = (2e5+43);
 int N;
-pr<int, int> a[MX];
+int a[MX];
 
 
 void test_case() {
     cin >> N;
-    FOR(i, 0, N) cin >> a[i].f >> a[i].s;
-    sort(a, a+N, [&]())
-    vt<int> lmin(N), rmin(N), lmax(N)r, max(N);
-    FOR(i, 0, N) {
-        if(i == 0) lmin[i] = lmax[i] = a[i].f;
-        else {
-            lmin[i] = min(lmin[i-1], a[i].f);
-            lmax[i] = max(lmax[i-1], a[i].f);
-        }
+    ll z = 0, o =0;
+    FOR(i, 0,  N) {
+        cin >> a[i];
+        if(a[i] == 0) ++z;
+        if(a[i] == 1) ++o;
     }
-    for(int i = N-1; i >= 0; --i) {
-        if(i == N-1) rmin = rmax = a[i].f;
-        else {
-            rmin = min(rmin[i+1], a[i].f);
-            rmax = min(rmax[i+1], a[i].f);
-        }
-    }
+    FOR(i, 0, z) o *= 2;
+    put(o);
     
 }
 
@@ -88,6 +79,7 @@ int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
+    cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

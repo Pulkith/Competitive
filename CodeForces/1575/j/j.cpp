@@ -1,6 +1,6 @@
 /**
  * author: DespicableMonkey
- * created: 07.25.2021 01:08:38
+ * created: 10.09.2021 17:12:41
  * Potatoes FTW!
  **/ 
 
@@ -21,6 +21,7 @@ using namespace std;
 #define all(c) (c).begin(), (c).end()
 #define sz(x) (int)(x).size()
 #define ts(x) to_string(x)
+#define has(container, element) ((bool)(container.find(element) != container.end()))
 
 #define FOR(i,a,b) for (int i = (a); i < (b); ++i)
 #define FORE(i, a, b) for(int i = (a); i<= (b); ++i)
@@ -49,38 +50,52 @@ inline namespace CP {
         IO FastIO() { cin.tie(nullptr)->sync_with_stdio(0); return *this; }
         IO* SetIO(string __s = "", string __t = "") {
             cin.exceptions(cin.failbit); // throws exception when do smth illegal ex. try to read letter into int
-            if(sz(__t)) setIn(__s), setOut(__t);
-            else if (sz(__s)) setIn(__s+".in"), setOut(__s+".out"); // for old USACO
+            if(sz(__t) && !debug_active) setIn(__s), setOut(__t);
+            else if (sz(__s) && !debug_active) setIn(__s+".in"), setOut(__s+".out"); // for old USACO
             return this;
         }
     };
 }
-/*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
-const int MX = (5e4+43); //Check the limits idiot
-int N;
-pr<int, int> a[MX];
+const int MX = (1e3+43);
+int N, M, K;
+int a[MX][MX];
+int b[100000];
 
 
 void test_case() {
-    cin >> N;
-    FOR(i, 0, N) cin >> a[i].f >> a[i].s;
-    sort(a, a+N, [&]())
-    vt<int> lmin(N), rmin(N), lmax(N)r, max(N);
-    FOR(i, 0, N) {
-        if(i == 0) lmin[i] = lmax[i] = a[i].f;
-        else {
-            lmin[i] = min(lmin[i-1], a[i].f);
-            lmax[i] = max(lmax[i-1], a[i].f);
-        }
+    cin >> N >> M >> K;
+    for(int i = N-1; i >= 0; --i){
+        FOR(j, 0, M) 
+            cin >> a[i][j];
     }
-    for(int i = N-1; i >= 0; --i) {
-        if(i == N-1) rmin = rmax = a[i].f;
-        else {
-            rmin = min(rmin[i+1], a[i].f);
-            rmax = min(rmax[i+1], a[i].f);
+    FOR(i, 0, K) cin >> b[i];
+    vt<set<int>> cols(M);
+    FOR(i, 0, N)
+        FOR(j, 0, M)
+            if(a[i][j] != 2) 
+                cols[j].insert(i);
+
+    FOR(i, 0, K) {
+        int c = b[i] - 1, r = N - 1;
+        while(sz(cols[c]) != 0 && r >= 0) {
+            auto lb = cols[c].upper_bound(r);
+            if(lb == cols[c].begin()) break;
+
+            int u = *(--lb), c1 = c;
+            cols[c].erase(*lb);
+            r = u;
+
+            if(a[u][c] == 1) ++c;
+            else if(a[u][c] == 2) --r;
+            else --c;
+
+            a[u][c1] = 2;
         }
+        cout << (c+1) << " ";
     }
+    cout << '\n';
+
     
 }
 

@@ -1,6 +1,6 @@
 /**
  * author: DespicableMonkey
- * created: 07.25.2021 01:08:38
+ * created: 10.16.2021 08:38:58
  * Potatoes FTW!
  **/ 
 
@@ -21,6 +21,7 @@ using namespace std;
 #define all(c) (c).begin(), (c).end()
 #define sz(x) (int)(x).size()
 #define ts(x) to_string(x)
+#define has(container, element) ((bool)(container.find(element) != container.end()))
 
 #define FOR(i,a,b) for (int i = (a); i < (b); ++i)
 #define FORE(i, a, b) for(int i = (a); i<= (b); ++i)
@@ -49,38 +50,48 @@ inline namespace CP {
         IO FastIO() { cin.tie(nullptr)->sync_with_stdio(0); return *this; }
         IO* SetIO(string __s = "", string __t = "") {
             cin.exceptions(cin.failbit); // throws exception when do smth illegal ex. try to read letter into int
-            if(sz(__t)) setIn(__s), setOut(__t);
-            else if (sz(__s)) setIn(__s+".in"), setOut(__s+".out"); // for old USACO
+            if(sz(__t) && !debug_active) setIn(__s), setOut(__t);
+            else if (sz(__s) && !debug_active) setIn(__s+".in"), setOut(__s+".out"); // for old USACO
             return this;
         }
     };
 }
-/*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
-const int MX = (5e4+43); //Check the limits idiot
-int N;
-pr<int, int> a[MX];
+const int MX = (2e5+43);
+int N, K;
+int a[MX];
 
 
 void test_case() {
-    cin >> N;
-    FOR(i, 0, N) cin >> a[i].f >> a[i].s;
-    sort(a, a+N, [&]())
-    vt<int> lmin(N), rmin(N), lmax(N)r, max(N);
+    cin >> N >> K;
+    FOR(i, 0, N) cin >> a[i];
+    vt<vt<int>> sums;
+    set<int> q_sums;
+    int ans = -1;
     FOR(i, 0, N) {
-        if(i == 0) lmin[i] = lmax[i] = a[i].f;
-        else {
-            lmin[i] = min(lmin[i-1], a[i].f);
-            lmax[i] = max(lmax[i-1], a[i].f);
+        int cur = 0;
+        FOR(j, i, N) {
+            cur += a[j];
+            if(K - cur == 0) ans = (ans == -1 ? (j - i + 1) : min(ans, (j - i + 1)));
+            if(has(q_sums, K - cur)) {
+                int len = (1e9 + 10);
+                FOR(k, 0, sz(sums)) {
+                    if(sums[k][0] == K-cur && sums[k][2] < i)
+                        cmin(len, sums[k][1]);
+                }
+                if(len < (1e9)) 
+                    ans = (ans == -1) ? len + (j - i + 1) : min(ans, len + (j - i + 1));
+            }
         }
-    }
-    for(int i = N-1; i >= 0; --i) {
-        if(i == N-1) rmin = rmax = a[i].f;
-        else {
-            rmin = min(rmin[i+1], a[i].f);
-            rmax = min(rmax[i+1], a[i].f);
+        FOR(j, 0, i){
+            int c = a[i] + sums[sz(sums) - i][0];
+            sums.pb({c, i - j + 1, i});
+            q_sums.insert(c);
         }
+        sums.pb({a[i], 1, i});
+        q_sums.insert(a[i]);
     }
+    put(ans);
     
 }
 
@@ -88,9 +99,11 @@ int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
+    cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);
+        cout << "Case #" << tt << ": ";
         test_case();
     }
 

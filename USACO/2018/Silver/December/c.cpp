@@ -1,6 +1,6 @@
 /**
  * author: DespicableMonkey
- * created: 07.25.2021 01:08:38
+ * created: 11.09.2021 00:26:28
  * Potatoes FTW!
  **/ 
 
@@ -21,6 +21,7 @@ using namespace std;
 #define all(c) (c).begin(), (c).end()
 #define sz(x) (int)(x).size()
 #define ts(x) to_string(x)
+#define has(container, element) ((bool)(container.find(element) != container.end()))
 
 #define FOR(i,a,b) for (int i = (a); i < (b); ++i)
 #define FORE(i, a, b) for(int i = (a); i<= (b); ++i)
@@ -49,43 +50,73 @@ inline namespace CP {
         IO FastIO() { cin.tie(nullptr)->sync_with_stdio(0); return *this; }
         IO* SetIO(string __s = "", string __t = "") {
             cin.exceptions(cin.failbit); // throws exception when do smth illegal ex. try to read letter into int
-            if(sz(__t)) setIn(__s), setOut(__t);
-            else if (sz(__s)) setIn(__s+".in"), setOut(__s+".out"); // for old USACO
+            if(sz(__t) && !debug_active) setIn(__s), setOut(__t);
+            else if (sz(__s) && !debug_active) setIn(__s+".in"), setOut(__s+".out"); // for old USACO
             return this;
         }
     };
 }
-/*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
-const int MX = (5e4+43); //Check the limits idiot
-int N;
-pr<int, int> a[MX];
+const int MX = (100+43);
+int N, K, len;
 
+const int MOD = 1'000'000'007, INF = 2 * MOD; //0xc0, 0x3f. Pos, Neg Inf for memset. Comparison = 0x3f3f3f3f
+const int dx[4] = {1, 0, -1, 0}, dy[4] = {0, 1, 0, -1}; //DRUL
+
+set<pr<int,int>> change;
+int a[MX][10], cur[MX][10];
+
+void ff(int u, int v, int c, bool real) {
+    auto& mp = (real ? a : cur);
+    mp[u][v] = 0;  ++len;
+    FOR(i, 0, 4) {
+        int du = u + dx[i], dv = v + dy[i];
+        if(du >= 0 && du < N && dv >= 0 && dv < 10 && mp[du][dv] == c)
+            ff(du, dv, c, real);
+    }
+}
 
 void test_case() {
-    cin >> N;
-    FOR(i, 0, N) cin >> a[i].f >> a[i].s;
-    sort(a, a+N, [&]())
-    vt<int> lmin(N), rmin(N), lmax(N)r, max(N);
+    cin >> N >> K;
+
     FOR(i, 0, N) {
-        if(i == 0) lmin[i] = lmax[i] = a[i].f;
-        else {
-            lmin[i] = min(lmin[i-1], a[i].f);
-            lmax[i] = max(lmax[i-1], a[i].f);
+        string s; cin >> s;
+        FOR(j, 0, 10) {
+            cur[i][j] = a[i][j] = s[j] - '0';
+            if(a[i][j])
+                change.insert({i, j});
         }
     }
-    for(int i = N-1; i >= 0; --i) {
-        if(i == N-1) rmin = rmax = a[i].f;
-        else {
-            rmin = min(rmin[i+1], a[i].f);
-            rmax = min(rmax[i+1], a[i].f);
+
+    while(sz(change) > 0) {
+        vt<pr<int, int>> rem;
+        for(auto p : change){
+            if(cur[p.f][p.s]) {
+                len = 0; ff(p.f, p.s, cur[p.f][p.s], 0);
+                if(len >= K) rem.pb({p.f, p.s});
+            }
+        }
+        change.clear();
+        for(auto p : rem) ff(p.f, p.s, a[p.f][p.s], 1);
+        FOR(i, 0, 10) {
+            int ind = N-1;
+            for(int j = N-1; j >= 0; --j) {
+                if(a[j][i]) {
+                    if(ind != j) change.insert({ind, i});
+                    swap(a[ind][i], a[j][i]); 
+                    cur[ind][i] = a[ind][i];
+                    cur[j][i] = a[j][i];
+                    --ind;
+                } 
+            }
         }
     }
+    FOR(i, 0, N) FOR(j, 0, 10) cout << a[i][j] << (j == 9 ? "\n" : "");
     
 }
 
 int main () {
-    CP::IO().SetIO()->FastIO().Input(0);
+    CP::IO().SetIO("mooyomooyo")->FastIO().Input(0);
 
     my_brain_hurts
 

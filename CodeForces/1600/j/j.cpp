@@ -1,6 +1,6 @@
 /**
  * author: DespicableMonkey
- * created: 07.25.2021 01:08:38
+ * created: 10.21.2021 22:39:54
  * Potatoes FTW!
  **/ 
 
@@ -21,6 +21,7 @@ using namespace std;
 #define all(c) (c).begin(), (c).end()
 #define sz(x) (int)(x).size()
 #define ts(x) to_string(x)
+#define has(container, element) ((bool)(container.find(element) != container.end()))
 
 #define FOR(i,a,b) for (int i = (a); i < (b); ++i)
 #define FORE(i, a, b) for(int i = (a); i<= (b); ++i)
@@ -49,38 +50,60 @@ inline namespace CP {
         IO FastIO() { cin.tie(nullptr)->sync_with_stdio(0); return *this; }
         IO* SetIO(string __s = "", string __t = "") {
             cin.exceptions(cin.failbit); // throws exception when do smth illegal ex. try to read letter into int
-            if(sz(__t)) setIn(__s), setOut(__t);
-            else if (sz(__s)) setIn(__s+".in"), setOut(__s+".out"); // for old USACO
+            if(sz(__t) && !debug_active) setIn(__s), setOut(__t);
+            else if (sz(__s) && !debug_active) setIn(__s+".in"), setOut(__s+".out"); // for old USACO
             return this;
         }
     };
 }
-/*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
-const int MX = (5e4+43); //Check the limits idiot
-int N;
-pr<int, int> a[MX];
-
+const int MX = (1e3+43);
+int N, M;
+string a[MX][MX];
+const int MOD = 1'000'000'007, INF = 2 * MOD; //0xc0, 0x3f. Pos, Neg Inf for memset. Comparison = 0x3f3f3f3f
+const int dx[4] = {1, 0, -1, 0}, dy[4] = {0, 1, 0, -1}; //DRUL
 
 void test_case() {
-    cin >> N;
-    FOR(i, 0, N) cin >> a[i].f >> a[i].s;
-    sort(a, a+N, [&]())
-    vt<int> lmin(N), rmin(N), lmax(N)r, max(N);
+    cin >> N >> M;
     FOR(i, 0, N) {
-        if(i == 0) lmin[i] = lmax[i] = a[i].f;
-        else {
-            lmin[i] = min(lmin[i-1], a[i].f);
-            lmax[i] = max(lmax[i-1], a[i].f);
+        FOR(j, 0, M) {
+            int c; cin >> c;
+            a[i][j] = ts((c & 8) == 8) + ts((c & 4) == 4) + ts((c & 2) == 2) + ts(c & 1);
         }
     }
-    for(int i = N-1; i >= 0; --i) {
-        if(i == N-1) rmin = rmax = a[i].f;
-        else {
-            rmin = min(rmin[i+1], a[i].f);
-            rmax = min(rmax[i+1], a[i].f);
+    vt<int> sizes;
+    vt<vt<bool>> vis(N, vt<bool>(M));
+
+    function<int(int, int)> dfs = [&](int i, int j) -> int{
+        vis[i][j] = 1;
+        int sz = 1;
+        FOR(k, 0, 4) {
+            int ni = i + dx[k];
+            int nj = j  + dy[k];
+
+            if(ni >= 0 && ni < N && nj >= 0 && nj < M && !vis[ni][nj] && (
+                ni > i && a[i][j][2] == '0' ||
+                ni < i && a[i][j][0] == '0' ||
+                nj > j && a[i][j][1] == '0' ||
+                nj < j && a[i][j][3] == '0'
+            ))
+                sz += dfs(ni, nj);
+
+        }
+        return sz;
+    };
+
+
+
+    FOR(i, 0, N) {
+        FOR(j, 0, M) {
+            if(!vis[i][j])
+                sizes.pb(dfs(i, j));
         }
     }
+
+    sort(all(sizes)); reverse(all(sizes));
+    outv(sizes);
     
 }
 

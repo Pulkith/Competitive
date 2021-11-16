@@ -1,6 +1,6 @@
 /**
  * author: DespicableMonkey
- * created: 07.25.2021 01:08:38
+ * created: 11.08.2021 22:35:44
  * Potatoes FTW!
  **/ 
 
@@ -21,6 +21,7 @@ using namespace std;
 #define all(c) (c).begin(), (c).end()
 #define sz(x) (int)(x).size()
 #define ts(x) to_string(x)
+#define has(container, element) ((bool)(container.find(element) != container.end()))
 
 #define FOR(i,a,b) for (int i = (a); i < (b); ++i)
 #define FORE(i, a, b) for(int i = (a); i<= (b); ++i)
@@ -49,38 +50,57 @@ inline namespace CP {
         IO FastIO() { cin.tie(nullptr)->sync_with_stdio(0); return *this; }
         IO* SetIO(string __s = "", string __t = "") {
             cin.exceptions(cin.failbit); // throws exception when do smth illegal ex. try to read letter into int
-            if(sz(__t)) setIn(__s), setOut(__t);
-            else if (sz(__s)) setIn(__s+".in"), setOut(__s+".out"); // for old USACO
+            if(sz(__t) && !debug_active) setIn(__s), setOut(__t);
+            else if (sz(__s) && !debug_active) setIn(__s+".in"), setOut(__s+".out"); // for old USACO
             return this;
         }
     };
 }
-/*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
-const int MX = (5e4+43); //Check the limits idiot
+const int MX = (2e5+43);
 int N;
-pr<int, int> a[MX];
+ll a[MX], prefix[MX];
 
 
 void test_case() {
     cin >> N;
-    FOR(i, 0, N) cin >> a[i].f >> a[i].s;
-    sort(a, a+N, [&]())
-    vt<int> lmin(N), rmin(N), lmax(N)r, max(N);
-    FOR(i, 0, N) {
-        if(i == 0) lmin[i] = lmax[i] = a[i].f;
-        else {
-            lmin[i] = min(lmin[i-1], a[i].f);
-            lmax[i] = max(lmax[i-1], a[i].f);
-        }
+    FOR(i, 0, N) cin >> a[i];
+    sort(a, a+N); reverse(a, a+N);
+    int X, Xint, Y, Yint;
+    cin >> X >> Xint >> Y >> Yint;
+    ll K; cin >> K;
+    prefix[0] = a[0];
+    FOR(i, 1, N) prefix[i] = prefix[i-1] + a[i];
+
+    int tA = 0, tB = 0, both = 0;
+    if(Y > X) {
+        swap(X, Y);
+        swap(Xint, Yint);
     }
-    for(int i = N-1; i >= 0; --i) {
-        if(i == N-1) rmin = rmax = a[i].f;
-        else {
-            rmin = min(rmin[i+1], a[i].f);
-            rmax = min(rmax[i+1], a[i].f);
+
+    FORE(num, 1, N) {
+        if(num % Xint == 0 && num % Yint == 0) ++both;
+        else if(num % Xint == 0) ++tA;
+        else if(num % Yint == 0) ++tB;
+        ll cur = 0;
+        int lastindex = -1;
+        if(both) {
+            cur += (X + Y) / 100.0 * prefix[both-1];
+            lastindex = both-1;
         }
+        if(tA) {
+            cur += (X) / 100.0 * (prefix[lastindex + tA] - (lastindex == -1 ? 0 : prefix[lastindex]));
+            lastindex += tA;
+        }
+        if(tB) {
+            cur += (Y) / 100.0 * (prefix[lastindex + tB] - (lastindex == -1 ? 0 : prefix[lastindex]));
+            lastindex += tB;
+        }
+
+        if(cur >= K) putr(num);
     }
+    putr(-1);
+
     
 }
 
@@ -88,6 +108,7 @@ int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
+    cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);

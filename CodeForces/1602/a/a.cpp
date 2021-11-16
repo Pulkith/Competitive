@@ -1,6 +1,6 @@
 /**
  * author: DespicableMonkey
- * created: 09.18.2021 11:52:33
+ * created: 10.25.2021 23:21:51
  * Potatoes FTW!
  **/ 
 
@@ -56,15 +56,27 @@ inline namespace CP {
         }
     };
 }
-/*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
-const int MX = (2e5+43); //Check the limits idiot
+const int MX = (2e5+43);
 int N;
 int a[MX];
 
 
 void test_case() {
-    
+    string s; cin >> s;
+    char minn = s[0];
+    FOR(i, 0, sz(s)) cmin(minn, s[i]);
+    bool found  = 0;
+    string a = "", b = "";
+    FOR(i, 0, sz(s)) {
+        if(s[i] == minn && !found) {
+            found = 1;
+            a += s[i];
+        } else {
+            b += s[i];
+        }
+    }
+    cout << a << ' ' << b << '\n';
     
 }
 

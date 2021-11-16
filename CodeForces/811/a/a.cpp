@@ -1,6 +1,6 @@
 /**
  * author: DespicableMonkey
- * created: 09.18.2021 11:52:19
+ * created: 11.14.2021 11:13:00
  * Potatoes FTW!
  **/ 
 
@@ -56,33 +56,20 @@ inline namespace CP {
         }
     };
 }
-/*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
-const int MX = (5e5+43); //Check the limits idiot
-int N;
+const int MX = (2e5+43);
+int A, B;
 int a[MX];
 
 
 void test_case() {
-    cin >> N;
-    string s; cin >> s;
-    vt<int> close(N);
-    int cur = -1;
-    FOR(i, 0, N) {
-        if(s[i] == '1') cur = (i);
-        close[i] = cur;
-    }
-    cur = -1;
-    for(int i = N-1; i >= 0; --i) {
-        if(s[i] == '1') cur = (i);
-        if(close[i] == -1 || (cur-i < abs(close[i] - i)))
-            close[i] = cur;
+    cin >> A >> B;
+    for(int i = 1; i < 50000000 && A >= 0 && B >= 0; ++i) {
+        if(i & 1) A -= i;
+        else B -= i;
     }
 
-    int ans = 0;
-
-    for(int i = 0; i < N; ++i)
-        ans += abs(close[i] - i);
+    put(A < 0 ? "Vladik" : "Valera");
     
 }
 
@@ -90,11 +77,9 @@ int main () {
     CP::IO().SetIO()->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);
-        cout << "Case #" << tt << ": ";
         test_case();
     }
 

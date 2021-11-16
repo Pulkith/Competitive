@@ -1,6 +1,6 @@
 /**
  * author: DespicableMonkey
- * created: 09.18.2021 11:52:31
+ * created: 11.13.2021 14:21:33
  * Potatoes FTW!
  **/ 
 
@@ -56,23 +56,60 @@ inline namespace CP {
         }
     };
 }
-/*|||||||||||||||||| ||||||||||||||||||  CODE STARTS HERE  |||||||||||||||||| |||||||||||||||||| */
 
-const int MX = (2e5+43); //Check the limits idiot
+const int MX = (2e5+43);
 int N;
 int a[MX];
 
+struct FT {
+    vector<ll> s;
+    FT(int n) : s(n) {}
+    void update(int pos, ll dif) { // a[pos] += dif
+        for (; pos < sz(s); pos |= pos + 1) s[pos] += dif;
+    }
+    ll query(int pos) { // sum of values in [0, pos)
+        ll res = 0;
+        for (; pos > 0; pos &= pos - 1) res += s[pos-1];
+        return res;
+    }
+    int lower_bound(ll sum) {// min pos st sum of [0, pos] >= sum
+        // Returns n if no sum is >= sum, or -1 if empty sum is.
+        if (sum <= 0) return -1;
+        int pos = 0;
+        for (int pw = 1 << 25; pw; pw >>= 1) {
+            if (pos + pw <= sz(s) && s[pos + pw-1] < sum)
+                pos += pw, sum -= s[pos-1];
+        }
+        return pos;
+    }
+};
+
+
 
 void test_case() {
-    
+    cin >> N;
+    FOR(i, 0, N) cin >> a[i];
+    int sorted = 0;
+    for(int i = N-1; i >= 0; --i) {
+        if(i == N-1 || a[i] < a[i+1]) ++sorted;
+        else break;
+    }
+    put(N - sorted);
+
+    FT f(N + 1);
+    for(int i = N-1; i >= (N - sorted); --i)
+        f.update(a[i], 1);
+    for(int i = 0; i < (N - sorted); ++i) {
+        cout << (N - sorted - i - 1 + f.query(a[i])) << " \n"[i == (N-sorted - 1)];
+        f.update(a[i], 1);
+    }
     
 }
 
 int main () {
-    CP::IO().SetIO()->FastIO().Input(0);
+    CP::IO().SetIO("sleepy")->FastIO().Input(0);
 
     my_brain_hurts
-    cin >> Test_Cases;
 
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);
