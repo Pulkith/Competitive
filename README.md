@@ -12,8 +12,8 @@ The code utilizes various advanced data structures and algorithims including Gra
 
 **Competitive Programming Achievements:**
  ## High School COMPETITIONS
- - **1st place (twice)** at Univerisity of Texas at Dallas Battle of the Brains(Advanced Category 2020, 2021, 150 teams)
- - **2nd place** Lockheed Martin CodeQuest(2021)
+ - **1st place (twice)** at Univerisity of Texas at Dallas Battle of the Brains(Advanced Category 2020 & 2021, 150 teams)
+ - **2nd place** Lockheed Martin CodeQuest(2021, 130 teams)
  - **State Alternate** UIL(2021)
  - **State Finalist** BPA Java Programming(2021)
  - **1st place** at Clements High School Advanced(2021)
