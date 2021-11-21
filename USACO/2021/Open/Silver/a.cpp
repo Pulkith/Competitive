@@ -59,89 +59,74 @@ inline namespace CP {
 
 const int MX = 30; //Check the limits idiot
 int N;
-pr<int, int> a[MX][MX];
-map<pr<int, int>, char> lets;
-
+string a[MX][MX];
+bool vis[MX][MX][20000];
 const int MOD = 1'000'000'007, INF = 2 * MOD; //0xc0, 0x3f. Pos, Neg Inf for memset. Comparison = 0x3f3f3f3f
 const int dx[4] = {1, 0, -1, 0}, dy[4] = {0, 1, 0, -1}; //DRUL
 
-void test_case() {
-    cin >> N;
-    FOR(i, 0, N) {
-        string s; cin >> s;
-        for(int j = 0; j < N * 3; j += 3) {
-            if(s[j] == '#') a[i][j / 3] = {0, 0};
-            else {
-                lets[{i, j/3}] = (s[j] == 'M' ? '2' : '1');
-                a[i][j / 3] = {s[j+1] - '0', s[j+2] - '0'};
-            }
-        }
-    }
-
-
-
-    set<string> wins;
-
-    auto is_win = [&](string x) -> bool {
-        FOR(i, 0, 3) 
-            if(x.substr(i * 3, 3) == "211" || x.substr(i*3, 3) == "112") return 1;
-        FOR(i, 0, 3)
-            if((x[i] == '2' && x[i+3] == '1' && x[i+6] == '1') || (x[i] == '1' && x[i+3] == '1' && x[i+6] == '2')) return 1;
-
-
-        if(x[0] == '2' && x[4] == '1' && x[8] == '1') return 1;
-        if(x[0] == '1' && x[4] == '2' && x[8] == '2') return 1;
-
-        if(x[2] == '2' && x[4] == '1' && x[6] == '1') return 1;
-        if(x[2] == '1' && x[4] == '2' && x[6] == '2') return 1;
-
-        return false;
-    };
-
-    vt<vt<bool>> vis(N, vt<bool>(N));
-
-    function<void(int, int, string)> dfs = [&](int i, int j, string cur) {
-        vis[i][j] = 1;
-        pr<int, int> index = a[i][j];
-        if(cur[(i-1) * 3 + (j-1)] == '0') cur[(i-1) * 3 + (j-1)] = lets[{i, j}];
-        bool full = 1;
-
-        if(is_win(cur)) {
-            wins.insert(cur);
-            return;
-        }
-
-        FOR(k, 0, 9) full &= (cur[k] != '0');
-
-        if(full) return;
-
-        FOR(k, 0, 4) {
-            int ni = i + dx[k];
-            int nj = j + dy[k];
-
-            if(ni >= 0 && ni < N && nj >= 0 && nj < N && !vis[ni][nj] && a[ni][nj].f != 0)
-                dfs(ni, nj, cur);
-        }
-
-    };
-
-    FOR(i, 0, N) {
-        FOR(j, 0, N)
-            if(a[i][j].f != 0){
-                vis = vt<vt<bool>>(N, vt<bool>(N, false));
-                dfs(i, j, string(9, '0'));
-            }
-    }
-
-    put(sz(wins));
-    
+map<string, int> ids;
+set<int> wins;
+int pow3[10];
+bool iswin(int n) {
+    int g[3][3];
+    FOR(i, 0, 3) FOR(j, 0, 3) {g[i][j] = (n % 3); n /= 3;}
+    bool win = 0;
+    FOR(i, 0, 3) win |= g[i][1] == 2 && ((g[i][0] == 1 && g[i][2] == 2) || (g[i][0] == 2 && g[i][2] == 1));
+    FOR(i, 0, 3) win |= g[1][i] == 2 && ((g[0][i] == 1 && g[2][i] == 2) || (g[0][i] == 2 && g[2][i] == 1));
+    win |= g[1][1] == 2 && (((g[0][0] == 1 && g[2][2] == 2) || (g[0][0] == 2 && g[2][2] == 1)) ||
+                            ((g[0][2] == 1 && g[2][0] == 2) || (g[0][2] == 2 && g[2][0] == 1)));
+    return win;
 }
 
+void dfs(int i, int j, int state) {
+    vis[i][j][state] = true;
+    if(a[i][j][0] > '0') {
+        int ni = a[i][j][1] - '1', nj = a[i][j][2] - '1'; 
+        int idx = ni * 3 + nj;
+        if((state / pow3[idx]) % 3 == 0) {
+            state += (a[i][j][0] - '0') * pow3[idx]; //only works if idx == 0
+            // state = (state % pow3[idx]) + (a[i][j][0] - '0') * pow3[idx] + (state - state % pow3[idx+1]);
+            // ^ other way to add a[i][j][0] to index idx while keeping other values
+            if(iswin(state)) {
+                wins.insert(state);
+                return;
+            }
+        }
+    }
+
+    for(int k = 0; k < 4; ++k) {
+        int ni = i + dx[k], nj = j + dy[k];
+        if(ni >= 0 && ni < N && nj >= 0 && nj < N && a[ni][nj][0] > '-' && !vis[ni][nj][state])
+            dfs(ni, nj, state);
+    }
+
+}
+
+void test_case() {
+    cin >> N;
+    int sti = 0, stj = 0;
+    FOR(i, 0, N) {
+        string s; cin >> s;
+        for(int j = 0; j < N; ++j){
+            FOR(k, 0, 3) a[i][j] += s[j * 3 + k];
+            if(a[i][j][0] == 'O') a[i][j][0] = '2';
+            else if(a[i][j][0] == 'B') {
+                a[i][j][0] = '0'; sti = i; stj = j;
+            }
+            else if(a[i][j][0] == 'M') a[i][j][0] = '1';
+            else if(a[i][j][0] == '.') a[i][j][0] = '0';
+            else a[i][j][0] = '-';
+        }
+
+    }
+    dfs(sti, stj, 0);
+    put(sz(wins));
+}
 int main () {
     CP::IO().SetIO()->FastIO().Input(0);
-
+    pow3[0] = 1;
+    FORE(i, 1, 9) pow3[i] = pow3[i-1] * 3;
     my_brain_hurts
-
     for(int tt = 1; tt <= Test_Cases; ++tt){
         print_test_case(tt);
         test_case();
