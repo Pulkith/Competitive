@@ -1,26 +1,30 @@
 /**
  * Description: shortest path
  * Source: own
- * Verification: https://open.kattis.com/problems/shortestpath1
+ * Verification: http://www.usaco.org/index.php?page=viewproblem2&cpid=899
  */
 
-template<class C, bool directed> struct Dijkstra {
-	int SZ; V<C> dist; 
-	V<V<pair<int,C>>> adj;
-	void init(int _SZ) { SZ = _SZ; adj.clear(); adj.rsz(SZ); }
-	void ae(int u, int v, C cost) {
-		adj[u].pb({v,cost}); if (!directed) adj[v].pb({u,cost}); }
-	void gen(int st) {
-		dist.assign(SZ,numeric_limits<C>::max());
-		using T = pair<C,int>; pqg<T> pq; 
-		auto ad = [&](int a, C b) {
-			if (dist[a] <= b) return;
-			pq.push({dist[a] = b,a});
-		}; ad(st,0);
-		while (sz(pq)) {
-			T x = pq.top(); pq.pop(); if (dist[x.s] < x.f) continue;
-			each(y,adj[x.s]) ad(y.f,x.f+y.s);
-		}
-	}
-};
+vt<pr<int, int>> adj[MX];
+priority_queue<pair<int, int>, vt<pair<int,int>>, greater<pair<int, int>>> pq;
+int dis[MX];
+int parent[MX];
+void dijkstra(int src) {
+    pq.push({src, 1});
+    dis[src] = 0;
+    parent[src] = src;
 
+    while(sz(pq)) {
+      int u = pq.top().s;
+      pq.pop();
+      for(auto e : adj[u]) {
+        int v = e.f;
+        int w = e.s;
+        if(dis[v] == dis[u] + w && u < parent[v]) //unnecessary if parent not needed
+          parent[v] = u;
+        if(cmin(dis[v], dis[u] + w)) {
+          pq.push({dis[v], v});
+          parent[v] = u;
+        }
+      }
+    }
+}

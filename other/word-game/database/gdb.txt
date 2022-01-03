@@ -1,2 +1,0 @@
-gdb
-Completed: gdb [1 words found]

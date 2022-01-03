@@ -1,5 +1,0 @@
-hdl
-hdlc
-maighdlin
-vhdl
-Completed: hdl [4 words found]

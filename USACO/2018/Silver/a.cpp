@@ -197,7 +197,7 @@ void solve() {
 }
 
 int main () {
-    setIO("reststops");
+    setIO("lifeguards");
 
     #if LOCAL
         //setIn("in1.txt");

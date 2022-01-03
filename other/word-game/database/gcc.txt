@@ -1,2 +1,0 @@
-gcc
-Completed: gcc [1 words found]

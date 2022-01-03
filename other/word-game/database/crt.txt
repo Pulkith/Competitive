@@ -1,4 +1,0 @@
-crt
-crtc
-crts
-Completed: crt [3 words found]

@@ -1,3 +1,0 @@
-adpcm
-dpc
-Completed: dpc [2 words found]

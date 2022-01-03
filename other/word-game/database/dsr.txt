@@ -1,4 +1,0 @@
-adsr
-dsr
-dsri
-Completed: dsr [3 words found]

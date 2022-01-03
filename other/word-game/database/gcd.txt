@@ -1,2 +1,0 @@
-gcd
-Completed: gcd [1 words found]

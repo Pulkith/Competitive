@@ -1,4 +1,0 @@
-cpsr
-psr
-upsring
-Completed: psr [3 words found]

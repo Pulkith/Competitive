@@ -22,7 +22,7 @@
 using namespace std;
 //STATIC Minimum Range Queries. O(NLogN + Q)
 //Source: https://www.youtube.com/watch?v=0jWeUdxrGm4
-
+//inclusive queries ( [a, b] ), 0-indexed
 
 //works for min, max, gcd;
 //doesnt work for sum(becuase of possible overlapping middle)

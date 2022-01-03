@@ -1,5 +1,0 @@
-arccos
-arccosine
-rcc
-rcch
-Completed: rcc [4 words found]
