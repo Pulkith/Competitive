@@ -12,7 +12,6 @@ struct edge{int u, v, w;};
 typedef struct  edge E;
 
 int parents[MX];
-bool used[MX * 5];
 vector <E> graph; // Store the inputted graph (u, v, w).
 vector <E> selected_edges; // Store the edges which is selected for the MST from given graph.
 
