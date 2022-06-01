@@ -12,22 +12,28 @@ The code utilizes various advanced data structures and algorithims including Gra
 
 **Competitive Programming Achievements:**
  ## High School COMPETITIONS
- - **1st place (twice)** at Univerisity of Texas at Dallas Battle of the Brains(Advanced Category 2020 & 2021, 150 teams)
+ - **1st place (thrice)** at Univerisity of Texas at Dallas Battle of the Brains(Advanced Category 2020 & 2021 & 2022, 150 teams)
  - **2nd place** Lockheed Martin CodeQuest(2021, 130 teams)
- - **State Alternate** UIL(2021)
+ - **1st place** HP CodeWars (2022, 130 teams)
+ - **State Champion** UIL(2022)
+ - **National Champion** BPA Mobile App Development(2021)
  - **State Finalist** BPA Java Programming(2021)
  - **1st place** at Clements High School Advanced(2021)
+ - **1st place** at Trinity Valley Advanced(2021)
+ - **1st place (twice)** at Invitationals (2021)
+ - **1st place (numerous times)** at VCMs (2021)
  - **1st place** at VCode Novice(2020)
+ - **2nd place** at UT Austin Programming Contest(2022)
 
   ## International COMPETITIONS
- - **Green** on CodeForces
- - **Gold** at United States of America Computing Olympiad
+  - **Platinum** at United States of America Computing Olympiad
+  - **Green** on CodeForces
   
   ## Company COMPETITIONS (most competitors are in college/working professionals)
  - **Facebook Hacker Cup top 5%** & Round 1,2 Qualifier(2021)
- - **Google Codejam Round 1 Qualifier**  (2021)
+ - **Google Codejam Round 1 Qualifier**  (2021, 2022)
  - **Google Kickstart Round H Top 5%** (2021)
- - **Google Kickstart Round F Top 8%** (2021
+ - **Google Kickstart Round F Top 8%** (2021)
   ## Overview
 - Skeleton Command to Run CPP file in terminal: **g++ -std=c++17 -o a.out file.cpp && ./a.out**
  - Debug Command:  g++ -DLOCAL=1 -O2 -Wall -Wshadow -Wuninitialized -Wfloat-equal -Wno-unused-variable -Wshift-overflow -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fsanitize=undefined -std=c++17 -o a $file && ./a'
